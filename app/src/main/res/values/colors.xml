@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorRateText">#ffffff</color>
+    <color name="coloronetwo">#ff0000</color>
+    <color name="colortwothree">#ffcc00</color>
+    <color name="colorthreefour">#9cdf00</color>
+    <color name="colorfourfive">#007700</color>
+    <color name="colorna">#808080</color>
+    <color name="colorPrimary">#ed2067</color>
+    <color name="colorPrimaryDark">#b92267</color>
+    <color name="colorAccent">#ffa800</color>
+    <color name="contact_name">#333333</color>
+    <color name="contact_number">#8c8c8c</color>
+    <color name="card_background">#f1efef</color>
+
+
+</resources>
