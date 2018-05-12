@@ -1,5 +1,6 @@
 package com.example.vibrantzz3.snipsearch;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -76,6 +77,11 @@ public class Home extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
+
+            Intent intent = new Intent(Home.this , SalonProfile.class);
+            //intent.putExtra("id",userid);
+            startActivity(intent);
+            finish();
 
         } else if (id == R.id.nav_slideshow) {
 
