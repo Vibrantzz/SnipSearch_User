@@ -82,6 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/imageView13"
         android:layout_centerHorizontal="true"
+        android:visibility="invisible"
         app:srcCompat="@drawable/divider" />
 
     <!--<com.facebook.login.widget.LoginButton

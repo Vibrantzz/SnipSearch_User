@@ -1,0 +1,1122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/colorPrimary"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.vibrantzz3.snipsearch.Home">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapstoolbar"
+            android:navigationIcon="@drawable/icon"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:background="?attr/colorPrimary"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleTextAppearance="@android:color/transparent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/salonimage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/profilepic"
+                    android:transitionName="profile"
+                    app:layout_collapseMode="parallax" />
+
+                <!--<ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="27dp"
+                    android:src="@drawable/icon" />-->
+
+                <!--<ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="29dp"
+                    android:src="@drawable/icon2" />-->
+
+                <!--<ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="12dp"
+                    android:src="@drawable/backarrow" />-->
+
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="22dp"
+                    android:layout_marginTop="140dp"
+                    android:src="@drawable/ratingimage" />
+
+            </RelativeLayout>
+
+            <!--<android.support.v7.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:title="@string/app_name"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+                </android.support.v7.widget.Toolbar>-->
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:navigationIcon="@drawable/backarrow"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@android:color/transparent"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:layout_collapseMode="pin"
+                >
+            </android.support.v7.widget.Toolbar>
+
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="181dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="95dp"
+
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp">
+
+                    <!--<ImageView
+                        android:layout_width="348dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentStart="true"
+                        android:paddingLeft="10dp"
+                        android:src="@drawable/line" />-->
+
+                    <ImageView
+                        android:id="@+id/logo"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="11dp"
+                        android:src="@drawable/logo1" />
+
+                    <TextView
+                        android:id="@+id/salonName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginStart="75dp"
+                        android:paddingBottom="3dp"
+                        android:text="Happy in the Head Hair Studio"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/salonAddr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_alignStart="@+id/salonName"
+                        android:layout_below="@+id/salonName"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Bandra, Hill Road"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/salonTimings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/logo"
+                        android:layout_below="@+id/logo"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Open now"
+                        android:textColor="@color/customeblue"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/timestat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/salonName"
+                        android:layout_below="@+id/logo"
+                        android:text="| Mon: 10 AM - 10 PM" />
+
+                    <!--<TextView
+                        android:id="@+id/salonRate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="13dp"
+                        android:paddingBottom="5dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="5dp"
+                        android:text="0.0"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />-->
+
+                </RelativeLayout>
+                <!--</android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="100dp">-->
+
+                <LinearLayout
+                    android:layout_width="372dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="80dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="10dp"
+                    android:weightSum="3">
+
+                    <ImageView
+                        android:layout_width="350dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentStart="true"
+                        android:paddingLeft="10dp"
+                        android:src="@drawable/line" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="356dp"
+                    android:layout_height="81dp"
+                    android:layout_marginTop="80dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="10dp"
+                    android:weightSum="3">
+
+                    <LinearLayout
+                        android:layout_width="63dp"
+                        android:layout_height="87dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/scall"
+                            android:layout_width="25dp"
+                            android:layout_height="30dp"
+                            app:srcCompat="@drawable/notcalled" />
+
+                        <ImageView
+                            android:id="@+id/snotcall"
+                            android:layout_width="25dp"
+                            android:layout_height="30dp"
+                            android:visibility="gone"
+                            app:srcCompat="@drawable/called" />
+
+                        <TextView
+                            android:id="@+id/scalltxt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center"
+                            android:paddingBottom="3dp"
+                            android:text="ENQUIRY"
+                            android:textSize="8dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="70dp"
+                        android:layout_height="87dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/sfave"
+                            android:layout_width="25dp"
+                            android:layout_height="30dp"
+                            app:srcCompat="@drawable/unfav" />
+
+                        <ImageView
+                            android:id="@+id/sunfave"
+                            android:layout_width="25dp"
+                            android:layout_height="30dp"
+                            android:visibility="gone"
+                            app:srcCompat="@drawable/fav" />
+
+                        <TextView
+                            android:id="@+id/textView17"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:gravity="center"
+                            android:text="FAVOURITE"
+                            android:textSize="8dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="71dp"
+                        android:layout_height="87dp"
+                        android:layout_marginLeft="6dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/svisited"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            app:srcCompat="@drawable/visitedbtn" />
+
+                        <ImageView
+                            android:id="@+id/sunvisited"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:visibility="gone"
+                            app:srcCompat="@drawable/unvisited" />
+
+                        <TextView
+                            android:id="@+id/svisitedtxt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center"
+                            android:paddingBottom="3dp"
+                            android:text="BEEN HERE"
+                            android:textSize="8dp" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="60dp"
+                        android:layout_height="87dp"
+                        android:layout_marginLeft="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/sbm"
+                            android:layout_width="25dp"
+                            android:layout_height="30dp"
+                            app:srcCompat="@drawable/bookmark" />
+
+                        <ImageView
+                            android:id="@+id/sunbm"
+                            android:layout_width="25dp"
+                            android:layout_height="30dp"
+                            android:visibility="gone"
+                            app:srcCompat="@drawable/unbookmarked" />
+
+                        <TextView
+                            android:id="@+id/textView23"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:gravity="center_horizontal"
+                            android:text="BOOKMARK"
+                            android:textSize="8dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="125dp"
+                        android:layout_height="75dp"
+                        android:layout_marginLeft="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingBottom="3dp">
+
+                        <ImageView
+                            android:id="@+id/sbm1"
+                            android:layout_width="120dp"
+                            android:layout_height="85dp"
+                            android:paddingTop="10dp"
+                            app:srcCompat="@drawable/book" />
+
+                        <ImageView
+                            android:id="@+id/sbm2"
+                            android:layout_width="120dp"
+                            android:layout_height="85dp"
+                            android:paddingTop="10dp"
+                            android:visibility="gone"
+                            app:srcCompat="@drawable/booked" />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="372dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="160dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="10dp"
+                    android:weightSum="3">
+
+                    <ImageView
+                        android:layout_width="350dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentStart="true"
+                        android:paddingLeft="10dp"
+                        android:src="@drawable/line" />
+
+                </LinearLayout>
+
+
+            </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="3dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="267dp"
+
+                    android:paddingBottom="3dp">
+
+                    <TextView
+                        android:id="@+id/textView13"
+                        android:layout_width="80dp"
+                        android:layout_height="25dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="2dp"
+                        android:paddingBottom="5dp"
+                        android:text="Services"
+                        android:textColor="@android:color/black"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/viewservice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignEnd="@+id/p4"
+                        android:layout_alignParentTop="true"
+                        android:paddingBottom="5dp"
+                        android:text="See All"
+                        android:textColor="@color/customeblue"
+                        android:textStyle="bold" />
+
+
+
+                    <ImageView
+                        android:id="@+id/p1"
+                        android:layout_width="80dp"
+                        android:layout_height="90dp"
+                        android:layout_below="@+id/textView13"
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/picture1" />
+
+                    <ImageView
+                        android:id="@+id/p4"
+                        android:layout_width="80dp"
+                        android:layout_height="90dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_below="@+id/textView13"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/picture2" />
+
+
+                    <ImageView
+                        android:id="@+id/p3"
+                        android:layout_width="80dp"
+                        android:layout_height="90dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_below="@+id/textView13"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="97dp"
+                        android:src="@drawable/picture1" />
+
+                    <ImageView
+                        android:id="@+id/p2"
+                        android:layout_width="80dp"
+                        android:layout_height="90dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/textView13"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="97dp"
+                        android:src="@drawable/picture2" />
+
+
+                    <TextView
+                        android:id="@+id/textView16"
+                        android:layout_width="80dp"
+                        android:layout_height="25dp"
+                        android:layout_below="@+id/p1"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="13dp"
+                        android:paddingBottom="5dp"
+                        android:text="Photos"
+                        android:textColor="@android:color/black"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/viewphotos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/viewservice"
+                        android:layout_alignTop="@+id/textView16"
+                        android:paddingBottom="5dp"
+                        android:text="See All"
+                        android:textColor="@color/customeblue"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/p5"
+                        android:layout_width="80dp"
+                        android:layout_height="90dp"
+                        android:layout_below="@+id/textView16"
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/picture1" />
+
+                    <ImageView
+                        android:id="@+id/p8"
+                        android:layout_width="80dp"
+                        android:layout_height="90dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_below="@+id/textView16"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/picture2" />
+
+
+                    <ImageView
+                        android:id="@+id/p6"
+                        android:layout_width="80dp"
+                        android:layout_height="97dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_below="@+id/textView16"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="98dp"
+                        android:src="@drawable/picture1" />
+
+                    <ImageView
+                        android:id="@+id/p7"
+                        android:layout_width="80dp"
+                        android:layout_height="97dp"
+                        android:layout_alignStart="@+id/p2"
+                        android:layout_below="@+id/textView16"
+                        android:layout_marginTop="-2dp"
+                        android:src="@drawable/picture2" />
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_sadd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:orientation="vertical"
+                    android:paddingTop="5dp">
+
+                    <TextView
+                        android:id="@+id/detail"
+                        android:layout_width="80dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="12dp"
+                        android:paddingBottom="5dp"
+                        android:text="Details"
+                        android:textColor="@android:color/black"
+                        android:textSize="15sp" />
+
+                    <!--<TextView
+                        android:id="@+id/textView24"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="3dp"
+                        android:text="CONTACT"
+                        android:textColor="@android:color/black"
+                        android:textSize="10sp" />-->
+
+                    <!--<TextView
+                        android:id="@+id/scontact"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:text="TextView"
+                        android:textSize="12sp" />-->
+
+                    <!--
+                    <TextView
+                        android:id="@+id/textView29"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="PAYMENT"
+                        android:textColor="@android:color/black"
+                        android:textSize="10sp" />
+-->
+
+                    <!--<TextView
+                        android:id="@+id/spay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:text="TextView"
+                        android:textSize="12sp" />
+-->
+                    <TextView
+                        android:id="@+id/textView26"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/detail"
+                        android:layout_marginLeft="10dp"
+                        android:text="ADDRESS"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/saddress"
+                        android:layout_width="229dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textView26"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:text="Dwarkesh Complex, Near Hotel Klassic Gold, Off C G Road, Navrangpura, Ahmedabad"
+                        android:textColor="@android:color/black"
+                        android:textSize="11sp" />
+
+                    <ImageView
+                        android:layout_width="67dp"
+                        android:layout_height="67dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/googlemaps" />
+
+                    <TextView
+                        android:id="@+id/mapsclick"
+                        android:layout_width="177dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/detail"
+                        android:layout_below="@+id/saddress"
+                        android:layout_marginTop="-5dp"
+                        android:paddingBottom="3dp"
+                        android:text="Directions >"
+                        android:textColor="@color/customeblue"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_sreviews1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="58dp"
+                    android:paddingBottom="5dp">
+
+                    <TextView
+                        android:id="@+id/service"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="SERVICES"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/sofferdesc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/service"
+                        android:layout_below="@+id/service"
+                        android:layout_marginBottom="3dp"
+                        android:text="Bridal, Spa, Trainning, Waxing"
+                        android:textColor="@android:color/black"
+                        android:textSize="11dp" />
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_sreviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="58dp"
+                    android:paddingBottom="5dp">
+
+                    <TextView
+                        android:id="@+id/type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="TYPE"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/typedesc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/type"
+                        android:layout_below="@+id/type"
+                        android:layout_marginBottom="3dp"
+                        android:text="Beauty, Academy, Hair"
+                        android:textColor="@android:color/black"
+                        android:textSize="11dp" />
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_sdetails"
+                android:layout_width="match_parent"
+                android:layout_height="105dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/info"
+                        android:layout_width="411dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:text="MORE INFO"
+                        android:textSize="13sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="187dp"
+                            android:layout_height="wrap_content">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="90dp"
+                                android:orientation="vertical"
+                                android:paddingBottom="5dp"
+                                android:paddingLeft="10dp"
+                                android:paddingTop="5dp">
+
+                                <ImageView
+                                    android:id="@+id/checkwifi"
+                                    android:layout_width="15dp"
+                                    android:layout_height="15dp"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginTop="3dp"
+                                    app:srcCompat="@drawable/check" />
+
+                                <TextView
+                                    android:id="@+id/textView18"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignBottom="@+id/checkwifi"
+                                    android:layout_marginStart="6dp"
+                                    android:textSize="11dp"
+                                    android:layout_toEndOf="@+id/checkwifi"
+                                    android:text="Wifi" />
+
+                                <ImageView
+                                    android:id="@+id/checkparking"
+                                    android:layout_width="15dp"
+                                    android:layout_height="15dp"
+                                    android:layout_alignStart="@+id/checkwifi"
+                                    android:layout_below="@+id/textView18"
+                                    android:layout_marginTop="8dp"
+                                    app:srcCompat="@drawable/check" />
+
+                                <TextView
+                                    android:id="@+id/textView19"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="11dp"
+                                    android:layout_alignBottom="@+id/checkparking"
+                                    android:layout_alignStart="@+id/textView18"
+                                    android:text="Parking" />
+
+                                <ImageView
+                                    android:id="@+id/checkac"
+                                    android:layout_width="15dp"
+                                    android:layout_height="15dp"
+                                    android:layout_alignStart="@+id/checkparking"
+                                    android:layout_below="@+id/textView19"
+                                    android:layout_marginTop="6dp"
+                                    app:srcCompat="@drawable/check" />
+
+                                <TextView
+                                    android:id="@+id/textView20"
+                                    android:textSize="11dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignBottom="@+id/checkac"
+                                    android:layout_alignStart="@+id/textView19"
+                                    android:text="AC" />
+                            </RelativeLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="90dp"
+                                android:orientation="vertical"
+                                android:paddingBottom="5dp"
+                                android:paddingTop="5dp">
+
+
+                                <ImageView
+                                    android:id="@+id/checkids"
+                                    android:layout_width="15dp"
+                                    android:layout_height="20dp"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginTop="3dp"
+                                    app:srcCompat="@drawable/uncheck" />
+
+                                <TextView
+                                    android:id="@+id/textView21"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignBottom="@+id/checkids"
+                                    android:layout_marginStart="6dp"
+                                    android:textSize="11dp"
+                                    android:layout_toEndOf="@+id/checkids"
+                                    android:text="Kids Friendly" />
+
+                                <ImageView
+                                    android:id="@+id/checkladies"
+                                    android:layout_width="15dp"
+                                    android:layout_height="15dp"
+                                    android:layout_alignStart="@+id/checkids"
+                                    android:layout_below="@+id/textView21"
+                                    android:layout_marginTop="8dp"
+                                    app:srcCompat="@drawable/uncheck" />
+
+                                <TextView
+                                    android:id="@+id/textView22"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="11dp"
+                                    android:layout_alignBottom="@+id/checkladies"
+                                    android:layout_alignStart="@+id/textView21"
+                                    android:text="Unisex" />
+                            </RelativeLayout>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_sreviewss"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="337dp"
+                    android:paddingBottom="5dp">
+
+                    <TextView
+                        android:id="@+id/viewphotos3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="270dp"
+                        android:layout_alignTop="@+id/review"
+                        android:paddingBottom="5dp"
+                        android:text="See all (23)"
+                        android:textColor="@color/customeblue"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="151dp"
+                        android:layout_height="53dp"
+                        android:layout_alignEnd="@+id/viewphotos3"
+                        android:layout_alignParentBottom="true"
+                        android:src="@drawable/symbol" />
+
+                    <TextView
+                        android:id="@+id/review"
+                        android:layout_width="80dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="12dp"
+                        android:paddingBottom="5dp"
+                        android:text="Reviews"
+                        android:textColor="@android:color/black"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:id="@+id/logo1"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_below="@+id/review"
+                        android:layout_alignStart="@+id/review"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/logo1" />
+
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_alignBottom="@+id/name2"
+                        android:layout_alignEnd="@+id/viewphotos3"
+                        android:src="@drawable/rate48" />
+
+                    <TextView
+                        android:id="@+id/name1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="69dp"
+                        android:layout_marginTop="54dp"
+                        android:text="Sumesh Nair"
+                        android:textColor="@android:color/black"
+                        android:textSize="13dp" />
+
+                    <TextView
+                        android:id="@+id/textView31"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/name1"
+                        android:layout_below="@+id/name1"
+                        android:text="ANDHERI EAST, MUMBAI"
+                        android:textSize="8dp" />
+
+                    <TextView
+                        android:id="@+id/reviewtxt"
+                        android:layout_width="338dp"
+                        android:layout_height="80dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignStart="@+id/review"
+                        android:layout_below="@+id/logo1"
+                        android:layout_marginBottom="180dp"
+                        android:paddingTop="5dp"
+                        android:text="After a long time without cutting my hair I had Harriet at Ashby for a big change with a lot of hair taking off. She was so warm, kind and reassuring and took the time to talk to me about what I wanted and how to style it"
+                        android:textColor="@android:color/black"
+                        android:textSize="11dp" />
+
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_alignBottom="@+id/name1"
+                        android:layout_alignEnd="@+id/viewphotos3"
+                        android:src="@drawable/rate48" />
+
+
+                    <ImageView
+                        android:layout_width="350dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+
+                        android:layout_alignTop="@+id/logo2"
+                        android:layout_marginTop="-10dp"
+                        android:paddingLeft="10dp"
+                        android:src="@drawable/line" />
+
+
+                    <TextView
+                        android:id="@+id/readmoretxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textView31"
+                        android:layout_alignEnd="@+id/name1"
+                        android:layout_marginTop="50dp"
+                        android:text=".....read more"
+                        android:textColor="@color/customeblue"
+                        android:textSize="11dp" />
+
+                    <TextView
+                        android:id="@+id/review1"
+                        android:layout_width="80dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="12dp"
+                        android:paddingBottom="5dp"
+                        android:text="Reviews"
+                        android:textColor="@android:color/black"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:id="@+id/logo2"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignStart="@+id/review"
+                        android:layout_below="@+id/reviewtxt"
+                        android:layout_marginTop="-174dp"
+                        android:src="@drawable/logo1" />
+
+                    <TextView
+                        android:id="@+id/name2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="69dp"
+                        android:layout_marginTop="180dp"
+                        android:text="Sumesh Nair"
+                        android:textColor="@android:color/black"
+                        android:textSize="13dp" />
+
+                    <TextView
+                        android:id="@+id/textView32"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/name1"
+                        android:layout_below="@+id/name2"
+                        android:text="ANDHERI EAST, MUMBAI"
+                        android:textSize="8dp" />
+
+                    <TextView
+                        android:id="@+id/reviewtxt1"
+                        android:layout_width="338dp"
+                        android:layout_height="103dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignStart="@+id/review"
+                        android:layout_below="@+id/logo2"
+                        android:layout_marginBottom="56dp"
+                        android:paddingTop="5dp"
+                        android:text="After a long time without cutting my hair I had Harriet at Ashby for a big change with a lot of hair taking off. She was so warm, kind and reassuring and took the time to talk to me about what I wanted and how to style it"
+                        android:textColor="@android:color/black"
+                        android:textSize="11dp" />
+
+                    <TextView
+                        android:id="@+id/readmoretxt1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textView32"
+                        android:layout_alignEnd="@+id/name1"
+                        android:layout_marginTop="46dp"
+                        android:text=".....read more"
+                        android:textColor="@color/customeblue"
+                        android:textSize="11dp" />
+
+                    <ImageView
+                        android:layout_width="350dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+
+                        android:layout_below="@+id/readmoretxt1"
+                        android:paddingLeft="10dp"
+                        android:src="@drawable/line" />
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_svreviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:paddingBottom="5dp">
+
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <!--<android.support.v7.widget.CardView
+                android:id="@+id/card_sareviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:paddingBottom="5dp">
+
+                    <TextView
+                        android:id="@+id/addrev"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+
+                        android:layout_margin="5dp"
+                        android:layout_marginTop="12dp"
+                        android:text="Write your review!"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>-->
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

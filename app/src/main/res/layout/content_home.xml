@@ -1,16 +1,338 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="#f1efef"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Home"
     tools:showIn="@layout/app_bar_home">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@color/colorRateText"></RelativeLayout>
-</android.support.constraint.ConstraintLayout>
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorRateText"
+            android:paddingBottom="15dp"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="3dp">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="11dp"
+                android:fontFamily="sans-serif"
+                android:text="YOUR LOCATION"
+                android:textColor="@color/txtheadings"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignStart="@+id/textView2"
+                android:layout_below="@+id/textView2"
+                android:layout_marginTop="8dp"
+                app:srcCompat="@drawable/logo2" />
+
+            <TextView
+                android:id="@+id/txtuloc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/imageView2"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="48dp"
+                android:paddingBottom="2dp"
+                android:text="Sahara Star, Vile Parle East"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txtchangeloc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/imageView2"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="22dp"
+                android:paddingBottom="2dp"
+                android:text="CHANGE"
+                android:textColor="@color/txtright" />
+
+
+            <SearchView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_below="@+id/imageView2"
+                android:layout_marginLeft="18dp"
+                android:layout_marginRight="18dp"
+                android:layout_marginTop="5dp"
+                android:background="#f1efef"
+                android:iconifiedByDefault="false"
+                android:queryHint="Search for salons, spas, etc">
+
+            </SearchView>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true">
+
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="127dp"
+                        android:paddingLeft="18dp"
+                        android:paddingTop="5dp"
+                        android:text="Offers Zone"
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        tools:layout_editor_absoluteX="0dp"
+                        tools:layout_editor_absoluteY="131dp" />
+
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_below="@+id/frame_off"
+                        android:paddingLeft="18dp"
+                        android:paddingTop="8dp"
+                        android:text="Recommendations"
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_below="@+id/textView7"
+                        android:paddingLeft="18dp"
+                        android:paddingTop="3dp"
+                        android:text="Hair"
+                        android:textColor="@color/txtheadings"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/hairseeall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/textView9"
+                        android:layout_alignParentEnd="true"
+                        android:paddingRight="18dp"
+                        android:text="See All"
+                        android:textColor="@color/txtright"
+                        android:textSize="16sp" />
+
+                    <FrameLayout
+                        android:id="@+id/hairframe"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textView9"
+                        android:paddingLeft="10dp">
+
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/textView11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_below="@+id/hairframe"
+                        android:paddingLeft="18dp"
+                        android:paddingTop="5dp"
+                        android:text="Beauty"
+                        android:textColor="@color/txtheadings"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/beautyseeall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/textView11"
+                        android:layout_alignParentEnd="true"
+                        android:paddingRight="18dp"
+                        android:text="See All"
+                        android:textColor="@color/txtright"
+                        android:textSize="16sp" />
+
+                    <FrameLayout
+                        android:id="@+id/beautyframe"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textView11"
+                        android:paddingLeft="10dp"></FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/specsframe"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/beautyframe"
+                        android:layout_marginTop="5dp"
+                        android:paddingLeft="10dp">
+
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/textView19"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="false"
+                        android:layout_below="@+id/specsframe"
+                        android:layout_centerVertical="false"
+                        android:paddingLeft="18dp"
+                        android:paddingTop="5dp"
+                        android:text="Know your Stylist"
+                        android:textColor="@color/txtheadings"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/textView19"
+                        android:layout_alignParentEnd="true"
+                        android:paddingRight="18dp"
+                        android:text="See All"
+                        android:textColor="@color/txtright"
+                        android:textSize="16sp" />
+
+                    <FrameLayout
+                        android:id="@+id/stylistframe"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textView19"
+                        android:paddingLeft="10dp">
+
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/textView13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/stylistframe"
+                        android:paddingLeft="18dp"
+                        android:paddingTop="5dp"
+                        android:text="Spa"
+                        android:textColor="@color/txtheadings"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/spaseeall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/textView13"
+                        android:layout_alignParentEnd="true"
+                        android:paddingRight="18dp"
+                        android:text="See All"
+                        android:textColor="@color/txtright"
+                        android:textSize="16sp" />
+
+                    <FrameLayout
+                        android:id="@+id/spaframe"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="false"
+                        android:layout_below="@+id/textView13"
+                        android:paddingLeft="10dp">
+
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/textView15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/spaframe"
+                        android:paddingLeft="18dp"
+                        android:paddingTop="5dp"
+                        android:text="Academy"
+                        android:textColor="@color/txtheadings"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/academyseeall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/textView15"
+                        android:layout_alignParentEnd="true"
+                        android:paddingRight="18dp"
+                        android:text="See All"
+                        android:textColor="@color/txtright"
+                        android:textSize="16sp" />
+
+                    <FrameLayout
+                        android:id="@+id/academyframe"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="false"
+                        android:layout_alignParentStart="false"
+                        android:layout_below="@+id/textView15"
+                        android:paddingLeft="10dp">
+
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/textView17"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/academyframe"
+                        android:paddingLeft="18dp"
+                        android:paddingTop="5dp"
+                        android:text="Explore Brands"
+                        android:textColor="@color/txtheadings"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+
+                    <FrameLayout
+                        android:id="@+id/brandframe"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="false"
+                        android:layout_alignParentStart="false"
+                        android:layout_below="@+id/textView17"
+                        android:paddingLeft="10dp"></FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/frame_off"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textView5"
+                        android:paddingLeft="10dp">
+
+                    </FrameLayout>
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

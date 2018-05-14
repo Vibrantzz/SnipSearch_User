@@ -42,6 +42,14 @@
             android:name=".Home"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".HairList" />
+        <activity android:name=".BeautyList" />
+        <activity android:name=".SpaList" />
+        <activity android:name=".AcademyList" />
+        <activity
+            android:name=".SalonProfile"
+            android:colorMode="@color/colorPrimary"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

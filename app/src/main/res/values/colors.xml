@@ -12,6 +12,7 @@
     <color name="contact_name">#333333</color>
     <color name="contact_number">#8c8c8c</color>
     <color name="card_background">#f1efef</color>
-
-
+    <color name="txtright">#4f7dcc</color>
+    <color name="txtheadings">#707070</color>
+    <color name="customeblue">#4F7DCC</color>
 </resources>
