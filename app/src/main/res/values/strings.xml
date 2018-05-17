@@ -7,4 +7,13 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string-array name="names">
+        <item> Mon: 10 AM - 10 PM </item>
+        <item> Tue: 10 AM - 10 PM </item>
+        <item> Wed: 10 AM - 10 PM </item>
+        <item> Thu: 10 AM - 10 PM </item>
+        <item> Fri: 10 AM - 10 PM </item>
+        <item> Sat: 10 AM - 10 PM </item>
+        <item> Sun: 8 AM - 8 PM </item>
+    </string-array>
 </resources>

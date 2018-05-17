@@ -11,8 +11,12 @@
     <color name="colorPrimaryDark">#b92267</color>
     <color name="colorAccent">#ffa800</color>
     <color name="contact_name">#333333</color>
-    <color name="contact_number">#8c8c8c</color>
+    <color name="contact_number">#4F7DCC</color>
     <color name="card_background">#f1efef</color>
+    <color name="customeColorYellow">#afdf20</color>
+    <color name="customeColorOrange">#f9855a</color>
+
+
 
 
 </resources>
