@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/colorRateText
+"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.vibrantzz3.snipsearch.Review">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:navigationIcon="@drawable/backarrow3"
+        app:layout_collapseMode="pin"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+    </android.support.v7.widget.Toolbar>
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="564dp"
+            android:layout_marginTop="56dp">
+
+            <Button
+                android:id="@+id/submit"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="34dp"
+                android:background="@drawable/submitbutton" />
+
+            <!--<RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="0dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:id="@+id/textadd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Add Review"
+                    android:textColor="@android:color/black"
+                    android:textSize="18dp" />
+
+                &lt;!&ndash;<TextView
+                    android:id="@+id/viewservice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/p4"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="295dp"
+                    android:paddingBottom="5dp"
+                    android:text="Submit"
+                    android:textColor="@color/customeblue"
+                    android:textStyle="bold" />&ndash;&gt;
+
+                <ImageView
+                    android:layout_width="348dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/textadd"
+                    android:layout_marginTop="5dp"
+                    android:paddingLeft="10dp"
+                    android:src="@drawable/line" />
+
+
+            </RelativeLayout>
+-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="89dp"
+
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="78dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+
+                <!--<ImageView
+                android:layout_width="348dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:paddingLeft="10dp"
+                android:src="@drawable/line" />-->
+
+                <TextView
+                    android:id="@+id/ratetext"
+                    android:layout_width="match_parent"
+                    android:layout_height="74dp"
+                    android:layout_marginLeft="10dp"
+                    android:text="Rate this place"
+                    android:textColor="@android:color/black"
+                    android:textSize="15dp" />
+
+                <RatingBar
+                    android:id="@+id/rating"
+                    android:layout_width="240dp"
+                    android:layout_height="46dp"
+                    android:layout_alignBottom="@+id/ratetext"
+                    android:layout_marginLeft="10dp"
+                    android:numStars="5"
+                    android:stepSize="1"
+                    android:theme="@style/RatingBar" />
+
+
+                <!--<TextView
+                android:id="@+id/salonRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="13dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:text="0.0"
+                android:textSize="24sp"
+                android:textStyle="bold" />-->
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+
+                <!--<ImageView
+                android:layout_width="348dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:paddingLeft="10dp"
+                android:src="@drawable/line" />-->
+
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="11dp"
+                    android:src="@drawable/logo1" />
+
+                <TextView
+                    android:id="@+id/salonName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="75dp"
+                    android:fontFamily="@font/lato"
+                    android:paddingBottom="3dp"
+                    android:text="Happy in the Head Hair Studio"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/salonAddr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_alignStart="@+id/salonName"
+                    android:layout_below="@+id/salonName"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Bandra, Hill Road"
+                    android:textSize="14dp" />
+
+                <!--<TextView
+                android:id="@+id/salonRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="13dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:text="0.0"
+                android:textSize="24sp"
+                android:textStyle="bold" />-->
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="136dp"
+
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="180dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+
+                <!--<ImageView
+                android:layout_width="348dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:paddingLeft="10dp"
+                android:src="@drawable/line" />-->
+
+                <TextView
+                    android:id="@+id/writereviewtext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Write a Review"
+                    android:textColor="@android:color/black"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/counttext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="275dp"
+                    android:text="( 0/140 )"
+                    android:textSize="15dp" />
+
+                <EditText
+                    android:id="@+id/etname"
+                    android:layout_width="340dp"
+                    android:layout_height="96dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="45dp"
+                    android:autoLink="all"
+                    android:gravity="top|left"
+                    android:hint="message_edit_text_hint   hdfujuubdfdf dfhudhuf dhfudf hdufhdufh dhfudf dfhuh dfhuhdf shsdhjshd dshjdf dhjfhsdjf hjdfh sdscscscdcsc scd cs dsdcsdsc sdcscddcscd"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:textSize="12dp" />
+
+                <!--<ImageView
+                    android:layout_width="348dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/etname"
+                    android:layout_marginTop="15dp"
+                    android:paddingLeft="10dp"
+                    android:src="@drawable/line" />-->
+
+
+                <!--<TextView
+                android:id="@+id/salonRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="13dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:text="0.0"
+                android:textSize="24sp"
+                android:textStyle="bold" />-->
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="141dp"
+
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="144dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+
+
+                <!--<ImageView
+                android:layout_width="348dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:paddingLeft="10dp"
+                android:src="@drawable/line" />-->
+
+                <TextView
+                    android:id="@+id/addphototstext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Add Photots"
+                    android:textColor="@android:color/black"
+                    android:textSize="15dp" />
+
+                <ImageView
+                    android:id="@+id/imageUpload"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_below="@+id/addphototstext"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/cameraadd" />
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_below="@+id/addphototstext"
+                    android:layout_marginLeft="77dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/logo3" />
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_below="@+id/addphototstext"
+                    android:layout_marginLeft="143dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/logo3" />
+
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_below="@+id/addphototstext"
+                    android:layout_marginLeft="210dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/logo3" />
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_below="@+id/addphototstext"
+                    android:layout_marginLeft="278dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/logo3" />
+
+
+                <!--<TextView
+                android:id="@+id/salonRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="13dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:text="0.0"
+                android:textSize="24sp"
+                android:textStyle="bold" />-->
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+        <!--</android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp">-->
+
+
+
+
+
+
+</android.support.design.widget.CoordinatorLayout>

@@ -56,40 +56,38 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
             public void onClick(View view) {
 
 
-                        Intent in = new Intent(getApplicationContext(), login.class);
-                        startActivity(in);
-                    }});
+                Intent in = new Intent(getApplicationContext(), login.class);
+                startActivity(in);
+            }});
 
-            }
-
-
-                    @Override
-                    protected void onStart() {
-                        super.onStart();
-                        //salon_title.setVisibility(View.VISIBLE);
-                        //salon_title.startAnimation(slideDown);
-                        title.setVisibility(View.VISIBLE);
-                        title.startAnimation(fadein);
-                        pin.setVisibility(View.VISIBLE);
-                        pin.startAnimation(bounce);
-                        btn.setVisibility(View.VISIBLE);
-                        btn.startAnimation(slideUp);
-                    }
-
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-
-                    }
-                }
+    }
 
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //salon_title.setVisibility(View.VISIBLE);
+        //salon_title.startAnimation(slideDown);
+        title.setVisibility(View.VISIBLE);
+        title.startAnimation(fadein);
+        pin.setVisibility(View.VISIBLE);
+        pin.startAnimation(bounce);
+        btn.setVisibility(View.VISIBLE);
+        btn.startAnimation(slideUp);
+    }
+
+    @Override
+    public void onAnimationStart(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+
+    }
+}

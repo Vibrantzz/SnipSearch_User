@@ -92,6 +92,20 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ChangePassword"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".SalonProfile"
+            android:colorMode="@color/colorPrimary"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".Review"
+            android:colorMode="@color/colorPrimary"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".Preview"
+            android:colorMode="@color/colorPrimary"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
