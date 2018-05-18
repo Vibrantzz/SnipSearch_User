@@ -16,5 +16,6 @@
     <color name="txtheadings">#707070</color>
     <color name="customeblue">#4F7DCC</color>
     <color name="txtoffers">#f9855a</color>
-
+    <color name="customeColorYellow">#afdf20</color>
+    <color name="customeColorOrange">#f9855a</color>
 </resources>
