@@ -17,7 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorRateText"
-            android:paddingBottom="15dp"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="3dp">
 
@@ -29,16 +28,16 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="11dp"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/lato"
                 android:text="YOUR LOCATION"
                 android:textColor="@color/txtheadings"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/imageView2"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_alignStart="@+id/textView2"
                 android:layout_below="@+id/textView2"
                 android:layout_marginTop="8dp"
@@ -46,15 +45,17 @@
 
             <TextView
                 android:id="@+id/txtuloc"
-                android:layout_width="wrap_content"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/imageView2"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="48dp"
+                android:fontFamily="@font/lato"
                 android:paddingBottom="2dp"
                 android:text="Sahara Star, Vile Parle East"
                 android:textColor="@android:color/black"
-                android:textSize="18sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtchangeloc"
@@ -63,29 +64,48 @@
                 android:layout_alignBottom="@+id/imageView2"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="22dp"
+                android:fontFamily="@font/lato"
                 android:paddingBottom="2dp"
                 android:text="CHANGE"
-                android:textColor="@color/txtright" />
+                android:textColor="@color/txtright"
+                android:textSize="12sp" />
 
+
+            <ImageView
+                android:id="@+id/rectanglesearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="18dp"
+                android:paddingRight="18dp"
+                android:visibility="gone"
+                app:srcCompat="@drawable/rectangle14" />
 
             <SearchView
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_below="@+id/imageView2"
+                android:layout_alignParentTop="false"
+                android:layout_below="@+id/txtuloc"
+                android:layout_centerHorizontal="false"
                 android:layout_marginLeft="18dp"
                 android:layout_marginRight="18dp"
-                android:layout_marginTop="5dp"
-                android:background="#f1efef"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/rectangle14"
+                android:focusableInTouchMode="false"
                 android:iconifiedByDefault="false"
+                android:inputType="text"
+                android:paddingBottom="3dp"
+                android:paddingTop="5dp"
                 android:queryHint="Search for salons, spas, etc">
 
             </SearchView>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp">
 
                 <RelativeLayout
+                    android:id="@+id/rlcontent"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignParentStart="true"
@@ -97,12 +117,13 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
-                        android:layout_marginTop="127dp"
+                        android:layout_marginTop="110dp"
+                        android:fontFamily="@font/lato"
                         android:paddingLeft="18dp"
                         android:paddingTop="5dp"
                         android:text="Offers Zone"
                         android:textColor="@android:color/black"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold"
                         tools:layout_editor_absoluteX="0dp"
                         tools:layout_editor_absoluteY="131dp" />
@@ -113,11 +134,12 @@
                         android:layout_height="wrap_content"
 
                         android:layout_below="@+id/frame_off"
+                        android:fontFamily="@font/lato"
                         android:paddingLeft="18dp"
                         android:paddingTop="8dp"
                         android:text="Recommendations"
                         android:textColor="@android:color/black"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -126,11 +148,12 @@
                         android:layout_height="wrap_content"
 
                         android:layout_below="@+id/textView7"
+                        android:fontFamily="@font/lato"
                         android:paddingLeft="18dp"
                         android:paddingTop="3dp"
                         android:text="Hair"
                         android:textColor="@color/txtheadings"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -139,17 +162,17 @@
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@+id/textView9"
                         android:layout_alignParentEnd="true"
+                        android:fontFamily="@font/lato"
                         android:paddingRight="18dp"
                         android:text="See All"
                         android:textColor="@color/txtright"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <FrameLayout
                         android:id="@+id/hairframe"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/textView9"
-                        android:paddingLeft="10dp">
+                        android:layout_below="@+id/textView9">
 
                     </FrameLayout>
 
@@ -159,11 +182,12 @@
                         android:layout_height="wrap_content"
 
                         android:layout_below="@+id/hairframe"
+                        android:fontFamily="@font/lato"
                         android:paddingLeft="18dp"
                         android:paddingTop="5dp"
                         android:text="Beauty"
                         android:textColor="@color/txtheadings"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -172,25 +196,24 @@
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@+id/textView11"
                         android:layout_alignParentEnd="true"
+                        android:fontFamily="@font/lato"
                         android:paddingRight="18dp"
                         android:text="See All"
                         android:textColor="@color/txtright"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <FrameLayout
                         android:id="@+id/beautyframe"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/textView11"
-                        android:paddingLeft="10dp"></FrameLayout>
+                        android:layout_below="@+id/textView11"></FrameLayout>
 
                     <FrameLayout
                         android:id="@+id/specsframe"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/beautyframe"
-                        android:layout_marginTop="5dp"
-                        android:paddingLeft="10dp">
+                        android:layout_marginTop="5dp">
 
                     </FrameLayout>
 
@@ -201,11 +224,12 @@
                         android:layout_alignParentStart="false"
                         android:layout_below="@+id/specsframe"
                         android:layout_centerVertical="false"
+                        android:fontFamily="@font/lato"
                         android:paddingLeft="18dp"
                         android:paddingTop="5dp"
                         android:text="Know your Stylist"
                         android:textColor="@color/txtheadings"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -217,14 +241,13 @@
                         android:paddingRight="18dp"
                         android:text="See All"
                         android:textColor="@color/txtright"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <FrameLayout
                         android:id="@+id/stylistframe"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/textView19"
-                        android:paddingLeft="10dp">
+                        android:layout_below="@+id/textView19">
 
                     </FrameLayout>
 
@@ -234,11 +257,12 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_below="@+id/stylistframe"
+                        android:fontFamily="@font/lato"
                         android:paddingLeft="18dp"
                         android:paddingTop="5dp"
                         android:text="Spa"
                         android:textColor="@color/txtheadings"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -247,18 +271,18 @@
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@+id/textView13"
                         android:layout_alignParentEnd="true"
+                        android:fontFamily="@font/lato"
                         android:paddingRight="18dp"
                         android:text="See All"
                         android:textColor="@color/txtright"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <FrameLayout
                         android:id="@+id/spaframe"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="false"
-                        android:layout_below="@+id/textView13"
-                        android:paddingLeft="10dp">
+                        android:layout_below="@+id/textView13">
 
                     </FrameLayout>
 
@@ -268,11 +292,12 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_below="@+id/spaframe"
+                        android:fontFamily="@font/lato"
                         android:paddingLeft="18dp"
                         android:paddingTop="5dp"
                         android:text="Academy"
                         android:textColor="@color/txtheadings"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -281,10 +306,11 @@
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@+id/textView15"
                         android:layout_alignParentEnd="true"
+                        android:fontFamily="@font/lato"
                         android:paddingRight="18dp"
                         android:text="See All"
                         android:textColor="@color/txtright"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <FrameLayout
                         android:id="@+id/academyframe"
@@ -292,8 +318,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="false"
                         android:layout_alignParentStart="false"
-                        android:layout_below="@+id/textView15"
-                        android:paddingLeft="10dp">
+                        android:layout_below="@+id/textView15">
 
                     </FrameLayout>
 
@@ -303,11 +328,12 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_below="@+id/academyframe"
+                        android:fontFamily="@font/lato"
                         android:paddingLeft="18dp"
                         android:paddingTop="5dp"
                         android:text="Explore Brands"
                         android:textColor="@color/txtheadings"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
 
@@ -317,19 +343,25 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="false"
                         android:layout_alignParentStart="false"
-                        android:layout_below="@+id/textView17"
-                        android:paddingLeft="10dp"></FrameLayout>
+                        android:layout_below="@+id/textView17"></FrameLayout>
 
                     <FrameLayout
                         android:id="@+id/frame_off"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/textView5"
-                        android:paddingLeft="10dp">
+                        android:layout_below="@+id/textView5">
 
                     </FrameLayout>
 
                 </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/imageView20"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlcontent"
+                    android:layout_marginTop="5dp"
+                    app:srcCompat="@drawable/watermark" />
 
 
             </RelativeLayout>

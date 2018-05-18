@@ -18,8 +18,10 @@
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -41,15 +43,55 @@
         <activity
             android:name=".Home"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".HairList" />
-        <activity android:name=".BeautyList" />
-        <activity android:name=".SpaList" />
-        <activity android:name=".AcademyList" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".HairList"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".BeautyList"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".SpaList"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".AcademyList"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".SalonProfile"
+
             android:colorMode="@color/colorPrimary"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ViewFavouritesActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ViewBookmarksActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ViewVisitedActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".User"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
+        <activity android:name=".EditProfile"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+        <activity android:name=".ViewOffers"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".UserPicsActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ViewAppointments"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".Settings"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ChangePassword"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

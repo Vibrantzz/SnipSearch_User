@@ -1,85 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
 
-    android:layout_gravity="center">
-
-    <RelativeLayout
-        android:id="@+id/rl2"
+    <include
+        layout="@layout/app_bar_academylist"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorRateText"
-        android:paddingBottom="15dp">
+        android:layout_height="match_parent" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="11dp"
-            android:fontFamily="sans-serif"
-            android:text="YOUR LOCATION"
-            android:textColor="@color/txtheadings"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_home"
+        app:menu="@menu/activity_home_drawer" />
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignStart="@+id/textView2"
-            android:layout_below="@+id/textView2"
-            android:layout_marginTop="8dp"
-            app:srcCompat="@drawable/logo2" />
-
-        <TextView
-            android:id="@+id/txtuloc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/imageView2"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="48dp"
-            android:paddingBottom="2dp"
-            android:text="Sahara Star, Vile Parle East"
-            android:textColor="@android:color/black"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/txtchangeloc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/imageView2"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="22dp"
-            android:paddingBottom="2dp"
-            android:text="CHANGE"
-            android:textColor="@color/txtright" />
-
-
-        <SearchView
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_below="@+id/imageView2"
-            android:layout_marginLeft="18dp"
-            android:layout_marginRight="18dp"
-            android:layout_marginTop="5dp"
-            android:background="#f1efef"
-            android:iconifiedByDefault="false"
-            android:queryHint="Search for salons, spas, etc">
-
-        </SearchView>
-    </RelativeLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/al_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/rl2"
-
-        ></android.support.v7.widget.RecyclerView>
-</RelativeLayout>
+</android.support.v4.widget.DrawerLayout>

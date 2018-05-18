@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bookmark_card"
+    android:layout_width="match_parent"
+    android:layout_height="85dp"
+    android:layout_marginTop="3dp"
+    android:clickable="true"
+    android:visibility="visible"
+    app:cardElevation="0dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/thumbnail"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            app:cardCornerRadius="20dp">
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/simg"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/nyc1" />
+</RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:id="@+id/sname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/thumbnail"
+            android:layout_toEndOf="@+id/thumbnail"
+            android:fontFamily="@font/lato"
+            android:paddingLeft="8dp"
+            android:paddingTop="8dp"
+            android:text="Divine Hair Salon"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/saddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sname"
+            android:layout_toEndOf="@+id/thumbnail"
+            android:fontFamily="@font/lato"
+            android:paddingBottom="8dp"
+            android:paddingLeft="8dp"
+            android:paddingTop="8dp"
+            android:text="VILE PARLE EAST, MUMBAI"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/bgrate"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/thumbnail"
+            android:layout_marginEnd="18dp"
+            app:srcCompat="@drawable/ratingellipse" />
+
+        <TextView
+            android:id="@+id/txtrate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/sname"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="27dp"
+            android:fontFamily="@font/lato"
+            android:text="3.5"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
+

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/hairlist_card"
     android:layout_width="match_parent"
-    android:layout_height="130dp"
+    android:layout_height="105dp"
     android:layout_marginTop="8dp"
     android:clickable="true"
     android:paddingTop="3dp"
@@ -18,14 +18,15 @@
         android:orientation="vertical">
 
         <android.support.v7.widget.CardView
-            android:layout_width="105dp"
-            android:layout_height="105dp"
+            android:id="@+id/thumbnail"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:clipChildren="true"
-            app:cardCornerRadius="15dp">
+            app:cardCornerRadius="11dp">
 
             <ImageView
                 android:id="@+id/imageView16"
@@ -38,38 +39,40 @@
                 android:id="@+id/imageView17"
                 android:layout_width="match_parent"
                 android:layout_height="85dp"
-                android:layout_marginTop="26dp"
+                android:layout_marginTop="12dp"
                 app:srcCompat="@drawable/imgoverlay" />
 
             <ImageView
                 android:id="@+id/imageView18"
-                android:layout_width="35dp"
-                android:layout_height="45dp"
-                android:layout_marginLeft="70dp"
-                android:layout_marginTop="65dp"
+                android:layout_width="25dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="59dp"
+                android:layout_marginTop="55dp"
                 app:srcCompat="@drawable/ratingellipse" />
 
             <TextView
                 android:id="@+id/txtrating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="76dp"
-                android:layout_marginTop="78dp"
+                android:layout_marginLeft="62dp"
+                android:layout_marginTop="66dp"
+                android:fontFamily="@font/lato"
                 android:text="3.5"
                 android:textColor="@android:color/white"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textStyle="bold" />
         </android.support.v7.widget.CardView>
 
         <ImageView
             android:id="@+id/imageView19"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentEnd="true"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
 
-            android:layout_marginEnd="60dp"
-            android:layout_marginTop="22dp"
-            app:srcCompat="@drawable/greypin" />
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/thumbnail"
+            android:layout_marginEnd="61dp"
+            android:paddingBottom="2dp"
+            app:srcCompat="@drawable/nvpin" />
 
         <TextView
             android:id="@+id/textView12"
@@ -81,76 +84,78 @@
             android:paddingBottom="2dp"
             android:paddingLeft="3dp"
             android:text="600M"
-            android:textSize="18sp" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/sname"
-            android:layout_width="175dp"
+            android:layout_width="190dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignTop="@+id/imageView19"
-            android:layout_marginStart="102dp"
+            android:layout_alignTop="@+id/thumbnail"
+            android:layout_toEndOf="@+id/thumbnail"
+            android:fontFamily="@font/lato"
             android:paddingBottom="3dp"
-            android:paddingLeft="15dp"
+            android:paddingLeft="8dp"
             android:text="Divine Hair Salon"
             android:textColor="@android:color/black"
-            android:textSize="19sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/saddress"
-            android:layout_width="190dp"
+            android:layout_width="275dp"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/sname"
-            android:layout_centerVertical="true"
-            android:paddingBottom="3dp"
-            android:paddingLeft="15dp"
-            android:text="Vile Parle East, Mumbai"
-            android:textAllCaps="true"
-            android:textColor="@color/txtheadings"
-            android:textSize="14sp" />
+            android:layout_below="@+id/sname"
+            android:layout_toEndOf="@+id/thumbnail"
+            android:paddingBottom="1dp"
+            android:paddingLeft="8dp"
+            android:text="VILE PARLE EAST, MUMBAI"
+            android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/txtservices"
+            android:id="@+id/stype"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/sname"
             android:layout_below="@+id/saddress"
-            android:paddingBottom="3dp"
-            android:paddingLeft="15dp"
+            android:layout_toEndOf="@+id/thumbnail"
+            android:fontFamily="@font/lato"
+            android:paddingBottom="5dp"
+            android:paddingLeft="8dp"
             android:text="Haircut, Pedicures."
-            android:textColor="@color/txtheadings" />
+            android:textSize="12sp" />
 
         <FrameLayout
-            android:id="@+id/frame"
+            android:id="@+id/separator"
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/txtservices"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="115dp"
-            android:background="#f1efef">
+            android:layout_height="1dp"
+            android:layout_below="@+id/stype"
+            android:layout_marginBottom="3dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="15dp"
+            android:layout_toEndOf="@+id/thumbnail"
+            android:background="@color/contact_number">
 
         </FrameLayout>
 
         <ImageView
-            android:id="@+id/imageView20"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_alignStart="@+id/sname"
-            android:layout_below="@+id/txtservices"
-            android:layout_marginLeft="12dp"
-            android:paddingTop="5dp"
+            android:id="@+id/imageView15"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignStart="@+id/separator"
+            android:layout_below="@+id/separator"
+            android:paddingTop="3dp"
             app:srcCompat="@drawable/offericon" />
 
         <TextView
-            android:id="@+id/soffer"
-            android:layout_width="240dp"
+            android:id="@+id/soffers"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/frame"
-            android:layout_toEndOf="@+id/imageView20"
+            android:layout_below="@+id/separator"
+            android:layout_toEndOf="@+id/imageView15"
+            android:fontFamily="@font/lato"
             android:paddingLeft="3dp"
-            android:paddingTop="5dp"
-            android:text="40% off on your first visit!" />
+            android:paddingTop="3dp"
+            android:text="40% off on your first visit!"
+            android:textColor="@color/txtoffers"
+            android:textSize="12sp" />
 
     </RelativeLayout>
 

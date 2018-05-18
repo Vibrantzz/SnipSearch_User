@@ -13,11 +13,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private TextView uemail,uname,hairall,beautyall,spaall,academyall;
+    ImageView img,touser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,14 +37,29 @@ public class Home extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setItemIconTintList(null);
+        View headview=navigationView.getHeaderView(0);
+        img=headview.findViewById(R.id.imageView);
+        uname=headview.findViewById(R.id.uname);
+        touser=headview.findViewById(R.id.imgto);
+        uname.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                Intent intent = new Intent(Home.this , User.class);
 
+                startActivity(intent);
+
+                //InsertLocation(UName, GetCityName);
+            }
+        });
         hairall=(TextView)findViewById(R.id.hairseeall);
         hairall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Home.this , HairList.class);
                 startActivity(intent);
+                //finish();
 
             }
         });
@@ -53,6 +70,7 @@ public class Home extends AppCompatActivity
             public void onClick(View view) {
                 Intent intent = new Intent(Home.this , BeautyList.class);
                 startActivity(intent);
+                //finish();
 
             }
         });
@@ -63,7 +81,7 @@ public class Home extends AppCompatActivity
             public void onClick(View view) {
                 Intent intent = new Intent(Home.this , SpaList.class);
                 startActivity(intent);
-
+                //finish();
             }
         });
 
@@ -73,7 +91,7 @@ public class Home extends AppCompatActivity
             public void onClick(View view) {
                 Intent intent = new Intent(Home.this , AcademyList.class);
                 startActivity(intent);
-
+                //finish();
             }
         });
 
@@ -164,9 +182,7 @@ public class Home extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -178,18 +194,35 @@ public class Home extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            Intent intent = new Intent(Home.this , ViewAppointments.class);
+            startActivity(intent);
         } else if (id == R.id.nav_gallery) {
 
+            Intent intent = new Intent(Home.this , ViewBookmarksActivity.class);
+            startActivity(intent);
+
         } else if (id == R.id.nav_slideshow) {
+            Intent intent = new Intent(Home.this , ViewFavouritesActivity.class);
+            startActivity(intent);
+
 
         } else if (id == R.id.nav_manage) {
+            Intent intent = new Intent(Home.this , ViewOffers.class);
+            startActivity(intent);
 
-        } else if (id == R.id.nav_share) {
+        }else if (id == R.id.nav_settings) {
+            Intent intent = new Intent(Home.this , Settings.class);
+            startActivity(intent);
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_about) {
+
+        } else if (id == R.id.nav_feedback) {
+
+        } else if (id == R.id.nav_playstore) {
 
         }
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

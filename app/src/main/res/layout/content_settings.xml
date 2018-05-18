@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".Settings"
+    tools:showIn="@layout/app_bar_settings">
+
+    <TextView
+        android:id="@+id/txtname"
+        android:layout_width="275dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="25dp"
+        android:fontFamily="@font/lato"
+        android:paddingBottom="2dp"
+        android:paddingTop="3dp"
+        android:text="User Name"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/txtloc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="false"
+        android:layout_below="@+id/txtname"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/lato"
+        android:text="Mumbai"
+        android:textAllCaps="true"
+        android:textColor="@color/txtheadings" />
+
+    <FrameLayout
+        android:id="@+id/frame1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentStart="false"
+        android:layout_below="@+id/txtloc"
+        android:layout_marginTop="18dp"
+        android:background="@color/txtheadings">
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/rel1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/frame1"
+        android:onClick="GoToEdit">
+
+        <ImageView
+            android:id="@+id/imgprofile"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentTop="false"
+
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="18dp"
+            app:srcCompat="@drawable/profile" />
+
+        <TextView
+            android:id="@+id/txtedit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/imgprofile"
+
+            android:layout_marginLeft="60dp"
+            android:fontFamily="@font/lato"
+            android:text="Edit Profile"
+            android:textColor="@android:color/black" />
+
+        <ImageView
+            android:id="@+id/toedit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/imgprofile"
+            android:layout_marginRight="18dp"
+            app:srcCompat="@drawable/toicon" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/frame2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentStart="false"
+        android:layout_below="@+id/rel1"
+        android:layout_marginTop="18dp"
+        android:background="@color/txtheadings">
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/rel2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/frame2"
+        android:onClick="GoToPass">
+
+        <ImageView
+            android:id="@+id/imgpass"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentStart="false"
+
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="18dp"
+            app:srcCompat="@drawable/password" />
+
+        <TextView
+            android:id="@+id/txtpass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="18dp"
+            android:layout_toEndOf="@+id/imgpass"
+            android:fontFamily="@font/lato"
+            android:text="Change Password"
+            android:textColor="@android:color/black" />
+
+        <ImageView
+            android:id="@+id/topass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/imgpass"
+            android:layout_marginRight="18dp"
+            app:srcCompat="@drawable/toicon" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/frame3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/rel2"
+        android:layout_marginTop="18dp"
+        android:background="@color/txtheadings">
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/rel3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/frame3"
+        android:onClick="GoToHistory">
+
+        <ImageView
+            android:id="@+id/imghistory"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentStart="true"
+
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="18dp"
+            app:srcCompat="@drawable/time" />
+
+        <TextView
+            android:id="@+id/txthistory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="false"
+
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="18dp"
+            android:fontFamily="@font/lato"
+            android:text="Clear Search History"
+            android:textColor="@android:color/black" />
+
+        <ImageView
+            android:id="@+id/tohistory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/imghistory"
+            android:layout_marginRight="18dp"
+            app:srcCompat="@drawable/toicon" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/frame4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/rel3"
+        android:layout_marginTop="18dp"
+        android:background="@color/txtheadings">
+
+    </FrameLayout>
+</RelativeLayout>
