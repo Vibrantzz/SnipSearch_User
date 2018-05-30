@@ -1,6 +1,8 @@
 package com.example.vibrantzz3.snipsearch;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -100,25 +102,33 @@ toggle.setDrawerIndicatorEnabled(false);
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_appointment) {
             Intent intent = new Intent(ChangePassword.this , ViewAppointments.class);
             startActivity(intent);
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_bm) {
 
             Intent intent = new Intent(ChangePassword.this , ViewBookmarksActivity.class);
             startActivity(intent);
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_fave) {
             Intent intent = new Intent(ChangePassword.this , ViewFavouritesActivity.class);
             startActivity(intent);
 
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_notif) {
             Intent intent = new Intent(ChangePassword.this , ViewOffers.class);
             startActivity(intent);
 
         }else if (id == R.id.nav_settings) {
             Intent intent = new Intent(ChangePassword.this , Settings.class);
+            startActivity(intent);
+
+        }else if (id == R.id.nav_signout) {
+            SharedPreferences preferences =getSharedPreferences("loginData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.clear();
+            editor.commit();
+            Intent intent = new Intent(ChangePassword.this , MainActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.nav_about) {
@@ -128,6 +138,7 @@ toggle.setDrawerIndicatorEnabled(false);
         } else if (id == R.id.nav_playstore) {
 
         }
+
 
 
 

@@ -61,7 +61,7 @@ public class specFragment extends Fragment {
 
         myrv = (RecyclerView) view.findViewById(R.id.spec_recycler);
         SpecRecyclerViewAdapter myAdapter = new SpecRecyclerViewAdapter(getContext(), specData);
-        myrv.setLayoutManager(new GridLayoutManager(getActivity(), 2,GridLayoutManager.HORIZONTAL, false));
+        myrv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         myrv.setAdapter(myAdapter);
 
         return view;

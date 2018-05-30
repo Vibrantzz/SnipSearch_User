@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".BookAppointment">
+
+    <ImageView
+        android:id="@+id/appticon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="false"
+        android:layout_marginTop="28dp"
+        app:srcCompat="@drawable/appticon" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/appticon"
+        android:layout_marginTop="18dp"
+        android:background="@color/framecolor"
+        android:id="@+id/frame1">
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/datelbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/frame1"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/lato"
+        android:text="Select date"
+        android:textAllCaps="true"
+        android:textStyle="bold" />
+
+    <devs.mulham.horizontalcalendar.HorizontalCalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/datelbl"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:defaultFocusHighlightEnabled="false"
+        app:textColorSelected="@color/colorPrimary" />
+
+    <TextView
+        android:id="@+id/slotlbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/calendarView"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="18dp"
+        android:fontFamily="@font/lato"
+        android:text="Select slot"
+        android:textAllCaps="true"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/slot1off"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/slotlbl"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="8dp"
+        app:srcCompat="@drawable/slot1off" />
+    <ImageView
+        android:id="@+id/slot1on"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/slotlbl"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="8dp"
+        app:srcCompat="@drawable/slot1on"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/slot3off"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/slot1off"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="8dp"
+        app:srcCompat="@drawable/slot3off"
+        />
+
+    <ImageView
+        android:id="@+id/slot3on"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/slot1off"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="8dp"
+        app:srcCompat="@drawable/slot3on"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/slot2off"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/slotlbl"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@+id/slot1off"
+        app:srcCompat="@drawable/slot2off" />
+
+    <ImageView
+        android:id="@+id/slot4off"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/slot2off"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@+id/slot3off"
+        app:srcCompat="@drawable/slot4off" />
+
+
+    <ImageView
+        android:id="@+id/slot4on"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/slot2off"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@+id/slot3off"
+        android:visibility="gone"
+        app:srcCompat="@drawable/slot4on" />
+
+
+    <ImageView
+        android:id="@+id/slot2on"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/slotlbl"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@+id/slot1off"
+        android:visibility="gone"
+        app:srcCompat="@drawable/slot2off" />
+
+    <TextView
+        android:id="@+id/desclbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/slot3off"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="18dp"
+        android:fontFamily="@font/lato"
+        android:text="description"
+        android:textAllCaps="true"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/desctxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="false"
+        android:layout_below="@+id/desclbl"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/transparent"
+        android:ems="10"
+        android:fontFamily="@font/lato"
+        android:hint="Let us know what service you require."
+        android:inputType="textPersonName"
+        android:textSize="12sp" />
+
+    <FrameLayout
+        android:id="@+id/frameet"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/desctxt"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/framecolor">
+
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/bookbtn"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@+id/frameet"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="2dp"
+        app:srcCompat="@drawable/apptbtn" />
+</RelativeLayout>

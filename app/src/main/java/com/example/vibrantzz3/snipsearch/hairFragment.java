@@ -4,11 +4,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,7 +27,7 @@ import java.util.Map;
 
 public class hairFragment extends Fragment {
     View view;
-    List<Hair> hairData;
+    List <Salon> hairData;
     RecyclerViewAdapter myAdapter;
     RecyclerView myrv;
     private static final String url_spa = "http://test.epoqueapparels.com/Salon_App/hairFragment.php";
@@ -48,27 +50,58 @@ public class hairFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.hair_fragment, container, false);
+        view=inflater.inflate(R.layout.hair_fragment,container,false);
 
         super.onCreate(savedInstanceState);
-        //final Bundle args = getArguments();
-        //id = args.getString("id");
+        hairData=new ArrayList<>();
 
-        hairData = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-
-            //Parse the JSON response
-            hairData.add(new Hair( TAG_NAME,TAG_LOCATION,TAG_RATING,TAG_PIC,TAG_ID,id,TAG_RCOUNT));
-        }
-
-
-        myrv = (RecyclerView) view.findViewById(R.id.hair_recycler);
-        RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(getContext(), hairData);
-        myrv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        myrv.setAdapter(myAdapter);
+        new WelcomeAsyncTask().execute();
         return view;
 
     }
-}
+
+
+
+    private class WelcomeAsyncTask extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            HttpJsonParser httpJsonParser = new HttpJsonParser();
+            Map<String, String> httpParams = new HashMap<>();
+            jsonObject = httpJsonParser.makeHttpRequest(
+                    url_spa, "GET", null);
+
+            return null;
+        }
+
+        protected void onPostExecute(final String result) {
+
+
+            try {
+                JSONArray jArray = jsonObject.getJSONArray(TAG_PROFILE);
+
+                for (int i = 0; i < jArray.length(); i++) {
+                    JSONObject json_data = jArray.getJSONObject(i);
+                    //Parse the JSON response
+                    hairData.add(new Salon( json_data.getString(TAG_NAME), json_data.getString(TAG_LOCATION), json_data.getString(TAG_RATING), json_data.getString(TAG_PIC),json_data.getString(TAG_ID),"",json_data.getString(TAG_RCOUNT)));
+                }
+                myrv = (RecyclerView) view.findViewById(R.id.hair_recycler);
+                RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(getContext(), hairData);
+                myrv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+                myrv.setAdapter(myAdapter);
+
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }}
 
 

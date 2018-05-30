@@ -7,7 +7,7 @@
     android:layout_height="150dp"
 
     android:layout_marginBottom="5dp"
-    android:layout_marginStart="18dp"
+    android:layout_marginStart="5dp"
     android:layout_marginTop="5dp"
     app:cardCornerRadius="5dp">
 
@@ -34,7 +34,7 @@
             app:srcCompat="@drawable/imgoverlay" />
 
         <ImageView
-            android:id="@+id/imageView5"
+            android:id="@+id/ratebg"
             android:layout_width="30dp"
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
@@ -47,8 +47,8 @@
             android:id="@+id/txtrating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/imageView5"
-            android:layout_alignTop="@+id/imageView5"
+            android:layout_alignStart="@+id/ratebg"
+            android:layout_alignTop="@+id/ratebg"
             android:layout_centerVertical="false"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="12dp"

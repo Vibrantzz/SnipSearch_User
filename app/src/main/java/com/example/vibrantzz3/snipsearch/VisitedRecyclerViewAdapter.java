@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 /**
@@ -39,7 +41,15 @@ public class VisitedRecyclerViewAdapter extends RecyclerView.Adapter<VisitedRecy
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-              holder.cardview.setOnClickListener(new View.OnClickListener() {
+             holder.hname.setText(hData.get(position).getName());
+
+        holder.hlocation.setText(hData.get(position).getLocation());
+
+        holder.hrating.setText(hData.get(position).getRating());
+        Picasso.get()
+                .load(hData.get(position).getThumbnail())
+                .into(holder.himage);
+        holder.cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -66,8 +76,10 @@ public class VisitedRecyclerViewAdapter extends RecyclerView.Adapter<VisitedRecy
 
         public ViewHolder(View itemview)
         {   super(itemview);
-
-
+            hname=(TextView)itemview.findViewById(R.id.sname);
+            hlocation=(TextView)itemview.findViewById(R.id.saddress);
+            hrating=(TextView)itemview.findViewById(R.id.txtrate);
+            himage=(ImageView)itemview.findViewById(R.id.simg);
             cardview=(CardView) itemview.findViewById(R.id.visited_card);
         }
     }

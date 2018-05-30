@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/offerlist_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="1dp"
+        android:paddingTop="1dp">
+
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="1dp"
+            app:srcCompat="@drawable/offericon" />
+
+        <TextView
+            android:id="@+id/txtoffer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@+id/imageView3"
+            android:fontFamily="@font/lato"
+            android:text="Offer "
+            android:textColor="@color/txtoffers" />
+
+        <TextView
+            android:id="@+id/txtperiod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/txtoffer"
+            android:text="from period specified"
+            android:visibility="gone" />
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

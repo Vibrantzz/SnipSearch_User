@@ -1,6 +1,10 @@
 package com.example.vibrantzz3.snipsearch;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,9 +20,33 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    Bundle bundle;
+   public static final String KEY_SUCCESS = "success";
+    public static final String KEY_DATA = "data";
+    public static final String KEY_EMAIL = "email";
+    public static final String KEY_ID = "id";
+    public static final String KEY_NAME = "name";
+    public static final String KEY_PROFILEPIC = "profilepic";
+    String ServerURL = "http://test.epoqueapparels.com/CRUD/getSalonUserFilterData.php" ;
+    public static final String BASE_URL = "http://test.epoqueapparels.com/Salon_App/welcome.php";
+    private String emailStored, GetCityName;
+    private String UName,UID,userid,profile;
     private TextView uemail,uname,hairall,beautyall,spaall,academyall;
+    String forwardCityText;
+    TextView cityText;
+    LocationManager locationManager;
     ImageView img,touser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +55,9 @@ public class Home extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        SharedPreferences pref = getSharedPreferences("loginData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        emailStored = pref.getString("email", null);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -47,7 +77,7 @@ public class Home extends AppCompatActivity
             public void onClick(View view) {
 
                 Intent intent = new Intent(Home.this , User.class);
-
+                intent.putExtra("id",userid);
                 startActivity(intent);
 
                 //InsertLocation(UName, GetCityName);
@@ -94,6 +124,8 @@ public class Home extends AppCompatActivity
                 //finish();
             }
         });
+
+
 
         hairFragment hf =new hairFragment();
         android.support.v4.app.FragmentManager manager=getSupportFragmentManager();
@@ -149,10 +181,8 @@ public class Home extends AppCompatActivity
         StylistFragment stylef =new StylistFragment();
         android.support.v4.app.FragmentManager stfmanager=getSupportFragmentManager();
 
-        stfmanager.beginTransaction()
-                .replace(R.id.stylistframe,stylef,stylef.getTag())
-                .commit();
 
+        new WelcomeAsyncTask().execute();
 
 
     }
@@ -193,25 +223,35 @@ public class Home extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_appointment) {
             Intent intent = new Intent(Home.this , ViewAppointments.class);
             startActivity(intent);
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_bm) {
 
             Intent intent = new Intent(Home.this , ViewBookmarksActivity.class);
+            intent.putExtra("id",userid);
             startActivity(intent);
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_fave) {
             Intent intent = new Intent(Home.this , ViewFavouritesActivity.class);
+            intent.putExtra("id",userid);
             startActivity(intent);
 
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_notif) {
             Intent intent = new Intent(Home.this , ViewOffers.class);
             startActivity(intent);
 
         }else if (id == R.id.nav_settings) {
             Intent intent = new Intent(Home.this , Settings.class);
+            startActivity(intent);
+
+        }else if (id == R.id.nav_signout) {
+            SharedPreferences preferences =getSharedPreferences("loginData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.clear();
+            editor.commit();
+            Intent intent = new Intent(Home.this , MainActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.nav_about) {
@@ -228,4 +268,58 @@ public class Home extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-}
+    private class WelcomeAsyncTask extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //Display progress bar
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            HttpJsonParser httpJsonParser = new HttpJsonParser();
+            Map<String, String> httpParams = new HashMap<>();
+            httpParams.put(KEY_EMAIL, emailStored);
+            JSONObject jsonObject = httpJsonParser.makeHttpRequest(
+                    BASE_URL , "GET", httpParams);
+            try {
+                int success = jsonObject.getInt(KEY_SUCCESS);
+                JSONObject user;
+                if (success == 1) {
+                    //Parse the JSON response
+                    user = jsonObject.getJSONObject(KEY_DATA);
+                    UID = user.getString(KEY_ID);
+                    UName = user.getString(KEY_NAME);
+                    profile=user.getString(KEY_PROFILEPIC);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(String result) {
+
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    //Populate the Edit Texts once the network activity is finished executing
+                    uname.setText(UName);
+                    userid=UID;
+
+                    Picasso.get()
+                            .load(profile)
+                            .into(img);
+
+                    SharedPreferences sharedPreferences = getSharedPreferences("loginData", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("userid", userid);
+                    editor.putString("name", UName);
+                    editor.apply();
+
+                }
+            });
+        }
+
+
+    }}

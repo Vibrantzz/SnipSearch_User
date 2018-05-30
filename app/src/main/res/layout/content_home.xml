@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#f1efef"
+    android:background="@color/framecolor"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Home"
     tools:showIn="@layout/app_bar_home">
@@ -16,355 +16,410 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorRateText"
+            android:layout_marginTop="3dp"
+            android:background="@color/cardview_light_background"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="3dp">
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="18dp"
-                android:layout_marginTop="11dp"
-                android:fontFamily="@font/lato"
-                android:text="YOUR LOCATION"
-                android:textColor="@color/txtheadings"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignStart="@+id/textView2"
-                android:layout_below="@+id/textView2"
-                android:layout_marginTop="8dp"
-                app:srcCompat="@drawable/logo2" />
-
-            <TextView
-                android:id="@+id/txtuloc"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/imageView2"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="48dp"
-                android:fontFamily="@font/lato"
-                android:paddingBottom="2dp"
-                android:text="Sahara Star, Vile Parle East"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txtchangeloc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/imageView2"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="22dp"
-                android:fontFamily="@font/lato"
-                android:paddingBottom="2dp"
-                android:text="CHANGE"
-                android:textColor="@color/txtright"
-                android:textSize="12sp" />
-
-
-            <ImageView
-                android:id="@+id/rectanglesearch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="18dp"
-                android:paddingRight="18dp"
-                android:visibility="gone"
-                app:srcCompat="@drawable/rectangle14" />
-
-            <SearchView
+            <RelativeLayout
+                android:id="@+id/crescentoContainer"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_alignParentTop="false"
-                android:layout_below="@+id/txtuloc"
-                android:layout_centerHorizontal="false"
-                android:layout_marginLeft="18dp"
-                android:layout_marginRight="18dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/rectangle14"
-                android:focusableInTouchMode="false"
-                android:iconifiedByDefault="false"
-                android:inputType="text"
-                android:paddingBottom="3dp"
-                android:paddingTop="5dp"
-                android:queryHint="Search for salons, spas, etc">
+                android:layout_height="65dp"
+                android:background="@drawable/homebase"
+                android:elevation="20dp">
 
-            </SearchView>
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginTop="11dp"
+                    android:fontFamily="@font/lato"
+                    android:text="YOUR LOCATION"
+                    android:textColor="@color/txtheadings"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignBottom="@+id/txtuloc"
+                    android:layout_marginStart="20dp"
+                    android:layout_toEndOf="@+id/textView2"
+                    app:srcCompat="@drawable/logo2" />
+
+                <TextView
+                    android:id="@+id/txtuloc"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textView2"
+                    android:layout_marginTop="12dp"
+                    android:layout_toStartOf="@+id/txtchangeloc"
+                    android:fontFamily="@font/lato"
+                    android:paddingBottom="2dp"
+                    android:text="Sahara Star, Vile Parle East"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtchangeloc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/imageView2"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="22dp"
+                    android:fontFamily="@font/lato"
+                    android:paddingBottom="5dp"
+                    android:text="CHANGE"
+                    android:textColor="@color/txtright"
+                    android:textSize="12sp" />
+
+
+                <ImageView
+                    android:id="@+id/rectanglesearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="18dp"
+                    android:paddingRight="18dp"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/rectangle14" />
+
+            </RelativeLayout>
+
 
             <RelativeLayout
+                android:id="@+id/contentrel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="5dp">
+                android:layout_alignParentBottom="false"
+                android:layout_below="@+id/crescentoContainer"
+
+                >
+
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_below="@+id/frame_off"
+                    android:fontFamily="@font/lato"
+                    android:paddingLeft="18dp"
+                    android:paddingTop="8dp"
+                    android:text="Recommendations"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_below="@+id/textView7"
+                    android:fontFamily="@font/lato"
+                    android:paddingLeft="18dp"
+                    android:paddingTop="3dp"
+                    android:text="Hair"
+                    android:textColor="@color/txtheadings"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="invisible" />
+
+                <TextView
+                    android:id="@+id/hairseeall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/textView9"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/lato"
+                    android:paddingRight="18dp"
+                    android:text="See All"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
 
                 <RelativeLayout
-                    android:id="@+id/rlcontent"
+                    android:id="@+id/hairlayout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true">
+                    android:layout_height="170dp"
+                    android:layout_below="@+id/textView9"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/homebase2"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp">
 
-                    <TextView
-                        android:id="@+id/textView5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+
+                    <ImageView
+                        android:id="@+id/hairindicator"
+                        android:layout_width="50dp"
+                        android:layout_height="150dp"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
-                        android:layout_marginTop="110dp"
-                        android:fontFamily="@font/lato"
-                        android:paddingLeft="18dp"
-                        android:paddingTop="5dp"
-                        android:text="Offers Zone"
-                        android:textColor="@android:color/black"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        tools:layout_editor_absoluteX="0dp"
-                        tools:layout_editor_absoluteY="131dp" />
-
-                    <TextView
-                        android:id="@+id/textView7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:layout_below="@+id/frame_off"
-                        android:fontFamily="@font/lato"
-                        android:paddingLeft="18dp"
-                        android:paddingTop="8dp"
-                        android:text="Recommendations"
-                        android:textColor="@android:color/black"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textView9"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:layout_below="@+id/textView7"
-                        android:fontFamily="@font/lato"
-                        android:paddingLeft="18dp"
-                        android:paddingTop="3dp"
-                        android:text="Hair"
-                        android:textColor="@color/txtheadings"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/hairseeall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/textView9"
-                        android:layout_alignParentEnd="true"
-                        android:fontFamily="@font/lato"
-                        android:paddingRight="18dp"
-                        android:text="See All"
-                        android:textColor="@color/txtright"
-                        android:textSize="14sp" />
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        app:srcCompat="@drawable/hairindicator" />
 
                     <FrameLayout
                         android:id="@+id/hairframe"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/textView9">
+                        android:layout_toEndOf="@+id/hairindicator">
 
                     </FrameLayout>
 
-                    <TextView
-                        android:id="@+id/textView11"
-                        android:layout_width="wrap_content"
+                    <ImageView
+                        android:id="@+id/imageView20"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
-                        android:layout_below="@+id/hairframe"
-                        android:fontFamily="@font/lato"
-                        android:paddingLeft="18dp"
-                        android:paddingTop="5dp"
-                        android:text="Beauty"
-                        android:textColor="@color/txtheadings"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/beautyseeall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/textView11"
                         android:layout_alignParentEnd="true"
-                        android:fontFamily="@font/lato"
-                        android:paddingRight="18dp"
-                        android:text="See All"
-                        android:textColor="@color/txtright"
-                        android:textSize="14sp" />
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="577dp"
+                        app:srcCompat="@drawable/watermark" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_below="@+id/hairlayout"
+                    android:fontFamily="@font/lato"
+                    android:paddingLeft="18dp"
+                    android:paddingTop="5dp"
+                    android:text="Beauty"
+                    android:textColor="@color/txtheadings"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="invisible" />
+
+                <TextView
+                    android:id="@+id/beautyseeall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/textView11"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/lato"
+                    android:paddingRight="18dp"
+                    android:text="See All"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
+
+                <RelativeLayout
+                    android:id="@+id/beautylayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
+                    android:layout_below="@+id/textView11"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/homebase2"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp">
+
+
+                    <ImageView
+                        android:id="@+id/beautyindicator"
+                        android:layout_width="50dp"
+                        android:layout_height="150dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        app:srcCompat="@drawable/beautyindicator" />
 
                     <FrameLayout
                         android:id="@+id/beautyframe"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/textView11"></FrameLayout>
-
-                    <FrameLayout
-                        android:id="@+id/specsframe"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/beautyframe"
-                        android:layout_marginTop="5dp">
+                        android:layout_toEndOf="@+id/beautyindicator">
 
                     </FrameLayout>
+                </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/textView19"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="false"
-                        android:layout_below="@+id/specsframe"
-                        android:layout_centerVertical="false"
-                        android:fontFamily="@font/lato"
-                        android:paddingLeft="18dp"
-                        android:paddingTop="5dp"
-                        android:text="Know your Stylist"
-                        android:textColor="@color/txtheadings"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/spectext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/beautylayout"
+                    android:fontFamily="@font/lato"
+                    android:paddingLeft="18dp"
+                    android:paddingTop="5dp"
+                    android:text="Services"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/textView20"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/textView19"
-                        android:layout_alignParentEnd="true"
-                        android:paddingRight="18dp"
-                        android:text="See All"
-                        android:textColor="@color/txtright"
-                        android:textSize="14sp" />
+                <FrameLayout
+                    android:id="@+id/specsframe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/spectext"
+                    android:layout_marginTop="5dp">
 
-                    <FrameLayout
-                        android:id="@+id/stylistframe"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/textView19">
+                </FrameLayout>
 
-                    </FrameLayout>
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/specsframe"
+                    android:fontFamily="@font/lato"
+                    android:paddingLeft="18dp"
+                    android:paddingTop="5dp"
+                    android:text="Spa"
+                    android:textColor="@color/txtheadings"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="invisible" />
 
-                    <TextView
-                        android:id="@+id/textView13"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                <TextView
+                    android:id="@+id/spaseeall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/textView13"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/lato"
+                    android:paddingRight="18dp"
+                    android:text="See All"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
+
+                <RelativeLayout
+                    android:id="@+id/spalayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
+                    android:layout_below="@+id/textView13"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/homebase2"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp">
+
+
+                    <ImageView
+                        android:id="@+id/spaindicator"
+                        android:layout_width="50dp"
+                        android:layout_height="150dp"
                         android:layout_alignParentStart="true"
-                        android:layout_below="@+id/stylistframe"
-                        android:fontFamily="@font/lato"
-                        android:paddingLeft="18dp"
-                        android:paddingTop="5dp"
-                        android:text="Spa"
-                        android:textColor="@color/txtheadings"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/spaseeall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/textView13"
-                        android:layout_alignParentEnd="true"
-                        android:fontFamily="@font/lato"
-                        android:paddingRight="18dp"
-                        android:text="See All"
-                        android:textColor="@color/txtright"
-                        android:textSize="14sp" />
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        app:srcCompat="@drawable/spaindicator" />
 
                     <FrameLayout
                         android:id="@+id/spaframe"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="false"
-                        android:layout_below="@+id/textView13">
+                        android:layout_toEndOf="@+id/spaindicator">
 
                     </FrameLayout>
+                </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/textView15"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/spalayout"
+                    android:fontFamily="@font/lato"
+                    android:paddingLeft="18dp"
+                    android:paddingTop="5dp"
+                    android:text="Academy"
+                    android:textColor="@color/txtheadings"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="invisible" />
+
+                <TextView
+                    android:id="@+id/academyseeall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/textView15"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/lato"
+                    android:paddingRight="18dp"
+                    android:text="See All"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
+
+                <RelativeLayout
+                    android:id="@+id/academylayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
+                    android:layout_below="@+id/textView15"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/homebase2"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp">
+
+
+                    <ImageView
+                        android:id="@+id/academyindicator"
+                        android:layout_width="50dp"
+                        android:layout_height="150dp"
                         android:layout_alignParentStart="true"
-                        android:layout_below="@+id/spaframe"
-                        android:fontFamily="@font/lato"
-                        android:paddingLeft="18dp"
-                        android:paddingTop="5dp"
-                        android:text="Academy"
-                        android:textColor="@color/txtheadings"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/academyseeall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/textView15"
-                        android:layout_alignParentEnd="true"
-                        android:fontFamily="@font/lato"
-                        android:paddingRight="18dp"
-                        android:text="See All"
-                        android:textColor="@color/txtright"
-                        android:textSize="14sp" />
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        app:srcCompat="@drawable/academyindicator" />
 
                     <FrameLayout
                         android:id="@+id/academyframe"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="false"
-                        android:layout_alignParentStart="false"
-                        android:layout_below="@+id/textView15">
+                        android:layout_toEndOf="@+id/academyindicator">
 
                     </FrameLayout>
-
-                    <TextView
-                        android:id="@+id/textView17"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_below="@+id/academyframe"
-                        android:fontFamily="@font/lato"
-                        android:paddingLeft="18dp"
-                        android:paddingTop="5dp"
-                        android:text="Explore Brands"
-                        android:textColor="@color/txtheadings"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-
-                    <FrameLayout
-                        android:id="@+id/brandframe"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="false"
-                        android:layout_alignParentStart="false"
-                        android:layout_below="@+id/textView17"></FrameLayout>
-
-                    <FrameLayout
-                        android:id="@+id/frame_off"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/textView5">
-
-                    </FrameLayout>
-
                 </RelativeLayout>
 
-                <ImageView
-                    android:id="@+id/imageView20"
+                <TextView
+                    android:id="@+id/textView17"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/academylayout"
+                    android:fontFamily="@font/lato"
+                    android:paddingLeft="18dp"
+                    android:paddingTop="5dp"
+                    android:text="Explore Brands"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+
+                <FrameLayout
+                    android:id="@+id/brandframe"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/rlcontent"
-                    android:layout_marginTop="5dp"
-                    app:srcCompat="@drawable/watermark" />
+                    android:layout_alignParentBottom="false"
+                    android:layout_alignParentStart="false"
+                    android:layout_below="@+id/textView17"></FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/frame_off"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true">
+
+                </FrameLayout>
+
 
 
             </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/watermark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/contentrel"
+                android:background="@drawable/watermark" />
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

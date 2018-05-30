@@ -17,16 +17,21 @@ import android.os.AsyncTask;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +55,8 @@ import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 import com.squareup.picasso.Picasso;
 */
 
+import com.squareup.picasso.Picasso;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -59,20 +66,26 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 /*import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;*/
 
-public class SalonProfile extends AppCompatActivity {
-    private TextView s_name,s_addr,s_address,s_timings,soffers,s_payment,s_rating,s_contact,saddr,view,fave,bmtxt;
-    private ImageView simg,checkac,checkwifi,checkladies,checkpark,checkkids,svisited,sbookmarked,sbook,sbooked,sviewr,sunv,sunbm,sunfav,sfave, scalled, snotcalled;
+public class SalonProfile extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private TextView typelist,speclist,s_name,s_addr,s_address,s_timings,soffers,s_payment,s_rating,s_contact,saddr,view,fave,bmtxt;
+    private ImageView simg,onpark,offpark,onac,offac,onkids,offkids,onwifi,offwifi,onapp,offapp,svisited,sbookmarked,sbook,sbooked,rate,sviewr,sunv,sunbm,sunfav,sfave, scalled, snotcalled;
     private Toolbar toolbar;
     private CardView menucard;
+
     Button buttonScrollDown;
-    private String uname,visited,isbm,isfave,id,pricing,formatDate,profilepic,name,addr,address,timings,ac,kidsfriendly,wifi,parking,type,payment,rating,contact,uid,offers;
+    private String timing,uname,visited,isbm,isfave,id,pricing,rcount,formatDate,profilepic,name,addr,address,timings,ac,kidsfriendly,wifi,parking,type,payment,rating,contact,uid,offers,stype,servspecs;
     private static final String url_profile = "http://test.epoqueapparels.com/Salon_App/salondetails.php";
     private static final String url_visited = "http://test.epoqueapparels.com/Salon_App/addvisited.php";
     private static final String url_unvisited = "http://test.epoqueapparels.com/Salon_App/removevisited.php";
@@ -96,16 +109,18 @@ public class SalonProfile extends AppCompatActivity {
     private static final String TAG_WIFI = "wifi";
     private static final String TAG_PARK = "parking";
     private static final String TAG_AC = "ac";
-    private static final String TAG_TYPE = "type";
-    private static final String TAG_CONTACT = "contact";
+    private static final String TAG_APPT = "appointment";
+    private static final String TAG_CONTACT = "contactno";
     private static final String TAG_PAY = "payment";
     private static final String TAG_RATE = "rating";
+    private static final String TAG_RCOUNT = "rcount";
     private static final String TAG_PIC = "profilepic";
-    private static final String TAG_OFFERS = "offers";
-    private static final String TAG_PRICE = "pricing";
+    private static final String TAG_OFFERS = "title";
     private static final String TAG_VISITED = "isvisited";
     private static final String TAG_BOOKMARKED = "isbm";
     private static final String TAG_FAVE = "isfave";
+    private static final String TAG_TYPES = "typename";
+    private static final String TAG_SPECS = "specs";
     public static final String DEFAULT_IMAGES_FOLDER = "default_images";
     public static final String PICKED_IMAGES = "picked_images";
     private static final BitmapFactory.Options BITMAP_FACTORY_OPTIONS;
@@ -115,18 +130,18 @@ public class SalonProfile extends AppCompatActivity {
     }
     private ViewPager viewPager;
     public static final String TAG = SalonProfile.class.getSimpleName();
-    private ImageViewPagerAdapter imageViewPagerAdapter;
     private ArrayList<Uri> pickedImageUris;
     NestedScrollView myView;
     ScrollView scroll;
-    TextView scrollUp;
+    TextView scrollUp,viewreviews,viewservice,viewphotos;
     Spinner sp1;
-    ImageView backPress, rate;
+    ImageView backPress;
     CollapsingToolbarLayout c;
     private int success;
     //    FloatingActionMenu fam;
     Bundle bundle;
-
+    ImageView img, touser;
+    TextView username;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,24 +149,19 @@ public class SalonProfile extends AppCompatActivity {
 
         s_name=(TextView) findViewById(R.id.salonName);
         rate = (ImageView) findViewById(R.id.rate);
-        backPress = (ImageView) findViewById(R.id.backarrow);
+
         s_addr=(TextView) findViewById(R.id.salonAddr);
         s_timings=(TextView) findViewById(R.id.salonTimings);
         s_address=(TextView) findViewById(R.id.saddress);
         //s_contact=(TextView) findViewById(R.id.scontact);
-        soffers=(TextView) findViewById(R.id.sofferdesc);
         //saddr=(TextView) findViewById(R.id.addrev);
-        simg=(ImageView) findViewById(R.id.salonimage);
-        checkwifi=(ImageView) findViewById(R.id.checkwifi);
-        checkpark=(ImageView) findViewById(R.id.checkparking);
-        checkladies=(ImageView) findViewById(R.id.checkladies);
-        checkkids=(ImageView) findViewById(R.id.checkids);
-        checkac=(ImageView) findViewById(R.id.checkac);
+        simg=(ImageView) findViewById(R.id.logo);
+
         toolbar=(Toolbar) findViewById(R.id.toolbar);
         menucard=(CardView)findViewById(R.id.card_menu);
-        /*s_payment=(TextView) findViewById(R.id.spay);
-        s_rating=(TextView) findViewById(R.id.salonRate);
-        view=(TextView) findViewById(R.id.viewreviews);*/
+        //s_payment=(TextView) findViewById(R.id.spay);
+        s_rating=(TextView) findViewById(R.id.txtrate);
+
         svisited=(ImageView) findViewById(R.id.svisited);
         scrollUp = (TextView) findViewById(R.id.scrollup);
         sunv=(ImageView) findViewById(R.id.sunvisited);
@@ -163,10 +173,24 @@ public class SalonProfile extends AppCompatActivity {
         sunbm=(ImageView) findViewById(R.id.sunbm);
         scalled=(ImageView) findViewById(R.id.scall);
         snotcalled=(ImageView) findViewById(R.id.snotcall);
-        myView = (NestedScrollView)findViewById(R.id.scrollview1);
-        c = (CollapsingToolbarLayout)findViewById(R.id.collapstoolbar);
-        sp1 = (Spinner) findViewById(R.id.sp);
+       sp1 = (Spinner) findViewById(R.id.sp);
+       s_timings=(TextView)findViewById(R.id.timestat);
+        viewreviews=(TextView)findViewById(R.id.viewphotos3);
+        viewservice=(TextView)findViewById(R.id.viewservice);
+        viewphotos=(TextView)findViewById(R.id.viewphotos);
         //buttonScrollDown = (Button)findViewById(R.id.scrolldown);
+        onwifi=(ImageView)findViewById(R.id.wifion);
+        offwifi=(ImageView)findViewById(R.id.wifioff);
+        onac=(ImageView)findViewById(R.id.acon);
+        offac=(ImageView)findViewById(R.id.acoff);
+        onpark=(ImageView)findViewById(R.id.parkon);
+        offpark=(ImageView)findViewById(R.id.parkoff);
+        onapp=(ImageView)findViewById(R.id.appon);
+        offapp=(ImageView)findViewById(R.id.appoff);
+        onkids=(ImageView)findViewById(R.id.kidson);
+        offkids=(ImageView)findViewById(R.id.kidsoff);
+        typelist=(TextView)findViewById(R.id.typedesc);
+        speclist=(TextView)findViewById(R.id.servicedesc);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab1);
         fab.setImageResource(R.drawable.floatingbutton);
@@ -175,17 +199,13 @@ public class SalonProfile extends AppCompatActivity {
             public void onClick(View view) {
                 // Click action
                 Intent intent = new Intent(SalonProfile.this, Review.class);
+                intent.putExtra("uid",uid);
+                intent.putExtra("id",id);
+                intent.putExtra("name",name);
+                intent.putExtra("loc",addr);
                 startActivity(intent);
             }
         });
-
-        backPress.setOnClickListener(new Button.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                onBackPressed();
-            }});
 
         setSupportActionBar(toolbar);
         if(getSupportActionBar()!=null)
@@ -218,42 +238,47 @@ public class SalonProfile extends AppCompatActivity {
 
         final Toolbar tool = (Toolbar)findViewById(R.id.toolbar);
         /*c = (CollapsingToolbarLayout)findViewById(R.id.collapstoolbar);*/
-        AppBarLayout appbar = (AppBarLayout)findViewById(R.id.app_bar_layout);
+
         tool.setTitle("");
         setSupportActionBar(toolbar);
-        c.setTitleEnabled(true);
 
-        tool.setNavigationIcon(R.drawable.backarrow3);// your drawable
+        tool.setNavigationIcon(R.drawable.backarrownew);// your drawable
         tool.setTitleTextColor(Color.rgb(0, 0, 0));
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, tool, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        toggle.setDrawerIndicatorEnabled(false);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setItemIconTintList(null);
+        View headview=navigationView.getHeaderView(0);
+        img=headview.findViewById(R.id.imageView);
+        username=headview.findViewById(R.id.uname);
+        touser=headview.findViewById(R.id.imgto);
+        username.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(SalonProfile.this , User.class);
+
+                startActivity(intent);
+
+                //InsertLocation(UName, GetCityName);
+            }
+        });
+        Intent intent = getIntent();
+        id = intent.getExtras().getString("id");
+
         tool.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                onBackPressed(); // Implemented by activity
+            public void onClick(View view) {
+                finish();
             }
         });
 
-        appbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-
-            boolean isVisible = true;
-            int scrollRange = -1;
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (scrollRange == -1) {
-                    scrollRange = appBarLayout.getTotalScrollRange();
-                }
-                if (scrollRange + verticalOffset == 0) {
-                    c.setTitle("Happy in the Head Hair Studio");
-//                    c.setTitle();
-                    tool.setVisibility(View.VISIBLE);
-                    //c.setCollapsedTitleTextColor(Color.rgb(0, 0, 0));
-                    isVisible = true;
-                } else if(isVisible) {
-                    c.setTitle("");
-                    tool.setVisibility(View.INVISIBLE);
-                    isVisible = false;
-                }
-            }
-        });
 
 
         /*Intent intent = getIntent();
@@ -264,18 +289,21 @@ public class SalonProfile extends AppCompatActivity {
         /*bundle = new Bundle();
         bundle.putString("id",id);*/
 
-        /*Picasso.with(this)
+        Picasso.get()
                 .load(profilepic)
                 .placeholder(R.drawable.logo2) // optional
-                .into(simg);*/
+                .into(simg);
 
-       /* SharedPreferences pref = getSharedPreferences("loginData", MODE_PRIVATE);
+       SharedPreferences pref = getSharedPreferences("loginData", MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         uid = pref.getString("userid", null);
-        uname = pref.getString("    name", null);*/
+        uname = pref.getString("    name", null);
+
+        bundle = new Bundle();
+        bundle.putString("id",id);
 
 
-       /* MenuFragment mf =new MenuFragment();
+        MenuFragment mf =new MenuFragment();
         android.support.v4.app.FragmentManager mfmanager=getSupportFragmentManager();
         mf.setArguments(bundle);
         mfmanager.beginTransaction()
@@ -289,11 +317,6 @@ public class SalonProfile extends AppCompatActivity {
                 .replace(R.id.galleryframe,gf,gf.getTag())
                 .commit();
 
-
-        SReviewFragment srf =new SReviewFragment();
-        android.support.v4.app.FragmentManager srfmanager=getSupportFragmentManager();
-        srf.setArguments(bundle);
-        srfmanager.beginTransaction() .replace(R.id.reviewframes,srf,srf.getTag()).commit();*/
 
 
         /*saddr.setOnClickListener(new View.OnClickListener() {
@@ -322,10 +345,40 @@ public class SalonProfile extends AppCompatActivity {
 
                 /*new AddVisitedAsyncTask().execute();
                 new VNotifsAsyncTask().execute();*/
-                svisited.setVisibility(View.GONE);
+                svisited.setVisibility(GONE);
                 //myView.scrollTo(0,-20);
-                sunv.setVisibility(View.VISIBLE);
+                sunv.setVisibility(VISIBLE);
                 //scroll.fullScroll(View.FOCUS_DOWN);
+
+            }});
+
+        viewreviews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(SalonProfile.this , ViewReviewActivity.class);
+                intent.putExtra("id",id);
+                startActivity(intent);
+
+            }});
+
+        viewservice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(SalonProfile.this , UserPicsActivity.class);
+
+                startActivity(intent);
+
+            }});
+
+        viewphotos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(SalonProfile.this , UserPicsActivity.class);
+
+                startActivity(intent);
 
             }});
 
@@ -343,29 +396,18 @@ public class SalonProfile extends AppCompatActivity {
             public void onClick(View view) {
 
                // new DeleteVisitedAsyncTask().execute();
-                sunv.setVisibility(View.GONE);
-                svisited.setVisibility(View.VISIBLE);
+                sunv.setVisibility(GONE);
+                svisited.setVisibility(VISIBLE);
             }});
 
         scalled.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                /*new AddVisitedAsyncTask().execute();
-                new VNotifsAsyncTask().execute();*/
-                scalled.setVisibility(View.GONE);
-                snotcalled.setVisibility(View.VISIBLE);
 
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + contact));
+                startActivity(intent);
             }});
-        snotcalled.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                // new DeleteVisitedAsyncTask().execute();
-                snotcalled.setVisibility(View.GONE);
-                scalled.setVisibility(View.VISIBLE);
-            }});
-
 
         sfave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -373,8 +415,8 @@ public class SalonProfile extends AppCompatActivity {
 
                /* new AddFaveAsyncTask().execute();
                 new FNotifsAsyncTask().execute();*/
-                sfave.setVisibility(View.GONE);
-                sunfav.setVisibility(View.VISIBLE);
+                sfave.setVisibility(GONE);
+                sunfav.setVisibility(VISIBLE);
 
             }});
         sunfav.setOnClickListener(new View.OnClickListener() {
@@ -382,8 +424,8 @@ public class SalonProfile extends AppCompatActivity {
             public void onClick(View view) {
 
                 //new DeleteFaveAsyncTask().execute();
-                sunfav.setVisibility(View.GONE);
-                sfave.setVisibility(View.VISIBLE);
+                sunfav.setVisibility(GONE);
+                sfave.setVisibility(VISIBLE);
             }});
 
         sbookmarked.setOnClickListener(new View.OnClickListener() {
@@ -392,8 +434,8 @@ public class SalonProfile extends AppCompatActivity {
 
                /* new AddBMAsyncTask().execute();
                 new BNotifsAsyncTask().execute();*/
-                sbookmarked.setVisibility(View.GONE);
-                sunbm.setVisibility(View.VISIBLE);
+                sbookmarked.setVisibility(GONE);
+                sunbm.setVisibility(VISIBLE);
 
             }});
         sunbm.setOnClickListener(new View.OnClickListener() {
@@ -401,28 +443,36 @@ public class SalonProfile extends AppCompatActivity {
             public void onClick(View view) {
 
                 //new DeleteBMAsyncTask().execute();
-                sunbm.setVisibility(View.GONE);
-                sbookmarked.setVisibility(View.VISIBLE);
+                sunbm.setVisibility(GONE);
+                sbookmarked.setVisibility(VISIBLE);
             }});
 
         sbook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-               /* new AddBMAsyncTask().execute();
-                new BNotifsAsyncTask().execute();*/
-                sbook.setVisibility(View.GONE);
-                sbooked.setVisibility(View.VISIBLE);
+                Intent intent = new Intent(SalonProfile.this, BookAppointment.class);
+                intent.putExtra("uid",uid);
+                intent.putExtra("id",id);
+
+                startActivity(intent);
 
             }});
-        sbooked.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                //new DeleteBMAsyncTask().execute();
-                sbooked.setVisibility(View.GONE);
-                sbook.setVisibility(View.VISIBLE);
-            }});
+
+        VReviewFragment vf =new VReviewFragment();
+        android.support.v4.app.FragmentManager rfmanager=getSupportFragmentManager();
+        vf.setArguments(bundle);
+        rfmanager.beginTransaction()
+                .replace(R.id.framereview,vf,vf.getTag())
+                .commit();
+        SOffersFragment sof =new SOffersFragment();
+        android.support.v4.app.FragmentManager sofmanager=getSupportFragmentManager();
+
+        sofmanager.beginTransaction()
+                .replace(R.id.offerframe,sof,sof.getTag())
+                .commit();
+
         /*view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -430,146 +480,16 @@ public class SalonProfile extends AppCompatActivity {
                 intent.putExtra("id",id);
                 startActivity(intent);
             }});*/
-//        new WelcomeAsyncTask().execute();
-        List<Drawable> drawables = new ArrayList<>();
-        addDefaultImages(drawables);
+      new WelcomeAsyncTask().execute();
 
-        imageViewPagerAdapter = new ImageViewPagerAdapter(drawables);
-        viewPager = findViewById(R.id.pager);
-        viewPager.setOffscreenPageLimit(3);
-        viewPager.setAdapter(imageViewPagerAdapter);
 
-        if(savedInstanceState != null) {
-            pickedImageUris = savedInstanceState.getParcelableArrayList(PICKED_IMAGES);
-        }
 
-        if(pickedImageUris != null) {
-            for(Uri uri: pickedImageUris) {
-                try {
-                    addDrawableByUri(uri);
-                } catch (FileNotFoundException e) {
-                    Log.e(TAG, "File not found", e);
-                }
-            }
-        } else {
-            pickedImageUris = new ArrayList<>();
-        }
-    }
-
-    private void addDrawableByUri(Uri uri) throws FileNotFoundException {
-        InputStream is = getContentResolver().openInputStream(uri);
-        Bitmap bitmap = BitmapFactory.decodeStream(is, null, BITMAP_FACTORY_OPTIONS);
-        Drawable drawable = new BitmapDrawable(getResources(), bitmap);
-
-        // Add drawable to end of list
-        imageViewPagerAdapter.drawables.add(drawable);
-        imageViewPagerAdapter.notifyDataSetChanged();
-    }
-
-    /*@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if(R.id.add_photo == id) {
-            Intent intent = new Intent();
-            intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            intent.addCategory(Intent.CATEGORY_OPENABLE);
-            startActivityForResult(Intent.createChooser(intent, getResources().getString(R.string.add_photo)), PICK_IMAGE);
-        } else if(R.id.clear == id) {
-            List<Drawable> drawables = imageViewPagerAdapter.drawables;
-            drawables.clear();
-            addDefaultImages(drawables);
-            imageViewPagerAdapter.notifyDataSetChanged();
-            pickedImageUris.clear();
-        } else if(R.id.info == id) {
-            DialogFragment infoDialogFragment = new InfoDialogFragment();
-            infoDialogFragment.show(getFragmentManager(), "info");
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
-
-    private void addDefaultImages(List<Drawable> drawables) {
-        // Note: Images are stored as assets instead of as resources
-        // This because content should be in its raw format as opposed to UI elements
-        // and to have more control over the decoding of image files
-
-        AssetManager assets = getAssets();
-        Resources resources = getResources();
-        try {
-            List<String> images = Arrays.asList(assets.list(DEFAULT_IMAGES_FOLDER));
-            Collections.sort(images);
-            for(String image: images) {
-                InputStream is = null;
-                try {
-                    is = assets.open(DEFAULT_IMAGES_FOLDER + "/" + image);
-                    Bitmap bitmap = BitmapFactory.decodeStream(is, null, BITMAP_FACTORY_OPTIONS);
-                    //drawables.add(new BitmapDrawable(resources, bitmap));
-                } finally {
-                    if(is != null) {
-                        try {
-                            is.close();
-                        } catch(IOException ignored) {
-                        }
-                    }
-                }
-            }
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static class ImageViewPagerAdapter extends PagerAdapter {
-
-        private List<Drawable> drawables;
-
-        public ImageViewPagerAdapter(List<Drawable> drawables) {
-            this.drawables = drawables;
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            Context context = container.getContext();
-            LayoutInflater layoutInflater = LayoutInflater.from(context);
-            View view = layoutInflater.inflate(R.layout.activity_salon_profile, null);
-            container.addView(view);
-
-            ImageView imageView = view.findViewById(R.id.salonimage);
-            imageView.setImageDrawable(drawables.get(position));
-
-            /*ImageMatrixTouchHandler imageMatrixTouchHandler = new ImageMatrixTouchHandler(context);
-            imageView.setOnTouchListener(imageMatrixTouchHandler);*/
-
-            return view;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            View view = (View) object;
-
-            ImageView imageView = view.findViewById(R.id.image);
-            imageView.setImageResource(0);
-
-            container.removeView(view);
-        }
-
-        @Override
-        public int getCount() {
-            return drawables.size();
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view == object;
-        }
-
-        @Override
-        public int getItemPosition (Object object) {
-            return POSITION_NONE;
-        }
     }
 
 
-    /*private class WelcomeAsyncTask extends AsyncTask<String, String, String> {
+
+
+    private class WelcomeAsyncTask extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -598,17 +518,19 @@ public class SalonProfile extends AppCompatActivity {
                     kidsfriendly = user.getString(TAG_KIDS);
                     wifi = user.getString(TAG_WIFI);
                     contact = user.getString(TAG_CONTACT);
-                    type = user.getString(TAG_TYPE);
+                    type = user.getString(TAG_APPT);
                     parking = user.getString(TAG_PARK);
                     payment = user.getString(TAG_PAY);
                     rating = user.getString(TAG_RATE);
                     profilepic=user.getString(TAG_PIC);
                     offers=user.getString(TAG_OFFERS);
-                    pricing=user.getString(TAG_PRICE);
                     ac=user.getString(TAG_AC);
                     visited=user.getString(TAG_VISITED);
                     isbm=user.getString(TAG_BOOKMARKED);
                     isfave=user.getString(TAG_FAVE);
+                    stype=user.getString(TAG_TYPES);
+                    servspecs=user.getString(TAG_SPECS);
+                    rcount=user.getString(TAG_RCOUNT);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -623,135 +545,139 @@ public class SalonProfile extends AppCompatActivity {
                     //Populate the Edit Texts once the network activity is finished executing
                     s_name.setText(name);
                     s_addr.setText(addr);
-                    s_timings.setText(timings);
-                    s_address.setText(address);
+                   s_address.setText(address);
                     if(wifi=="1")
                     {
-                        checkwifi.setImageResource(R.drawable.check);
+                        offwifi.setImageResource(R.drawable.onwifi);
                     }
                     else
                     {
-                        checkwifi.setImageResource(R.drawable.uncheck);
+                        offwifi.setImageResource(R.drawable.offwifi);
                     }
                     if(parking=="1")
                     {
-                        checkpark.setImageResource(R.drawable.check);
+                        offpark.setImageResource(R.drawable.onparking);
+
                     }
                     else
                     {
-                        checkpark.setImageResource(R.drawable.uncheck);
+                        offpark.setImageResource(R.drawable.offparking);
                     }
                     if(ac=="1")
                     {
-                        checkac.setImageResource(R.drawable.check);
+                        offac.setImageResource(R.drawable.onac);
+
                     }
                     else
                     {
-                        checkac.setImageResource(R.drawable.uncheck);
+                        offac.setImageResource(R.drawable.offac);
+
                     }
                     if(kidsfriendly=="1")
                     {
-                        checkkids.setImageResource(R.drawable.check);
+                        offkids.setImageResource(R.drawable.onkids);
                     }
                     else
                     {
-                        checkkids.setImageResource(R.drawable.uncheck);
+                        offkids.setImageResource(R.drawable.offkids);
                     }
-                    if(type=="0")
+                    if(type=="1")
                     {
-                        checkladies.setImageResource(R.drawable.check);
+                        offapp.setImageResource(R.drawable.onappt);
                     }
                     else
                     {
-                        checkladies.setImageResource(R.drawable.uncheck);
+                        offapp.setImageResource(R.drawable.offappt);
                     }
-                    s_contact.setText(contact);
-                    s_payment.setText(payment);
+
                     s_rating.setText(rating);
 
-
+                    if(Float.parseFloat(rating)<=1.0 && Float.parseFloat(rating)>0.0)
+                    {
+                        rate.setImageResource(R.drawable.bgred);
+                    }
                     if(Float.parseFloat(rating)<2.0 && Float.parseFloat(rating)>=1.0)
                     {
-                        s_rating.setBackgroundResource(R.color.coloronetwo);
-                        s_rating.setTextColor(Color.parseColor("#eeeeee"));
+                        rate.setImageResource(R.drawable.bgorange);
                     }
                     else if(Float.parseFloat(rating)<3.0 && Float.parseFloat(rating)>=2.0)
                     {
-                        s_rating.setBackgroundResource(R.color.colortwothree);
-                        s_rating.setTextColor(Color.parseColor("#eeeeee"));
+                        rate.setImageResource(R.drawable.bgyellow);
                     }
 
                     else if(Float.parseFloat(rating)<4.0 && Float.parseFloat(rating)>=3.0)
                     {
-                        s_rating.setBackgroundResource(R.color.colorthreefour);
-                        s_rating.setTextColor(Color.parseColor("#eeeeee"));
+                        rate.setImageResource(R.drawable.ratingellipse);
                     }
                     else if(Float.parseFloat(rating)<=5.0 && Float.parseFloat(rating)>=4.0)
                     {
-                        s_rating.setBackgroundResource(R.color.colorfourfive);
-                        s_rating.setTextColor(Color.parseColor("#eeeeee"));
+                        rate.setImageResource(R.drawable.bgdgreen);
                     }
                     else {
-                        s_rating.setBackgroundResource(R.color.colorna);
-                        s_rating.setTextColor(Color.parseColor("#eeeeee"));
+                        rate.setImageResource(R.drawable.bgred);
                     }
-                    Picasso.with(SalonProfile.this)
+                    Picasso.get()
                             .load(profilepic)
                             .placeholder(R.drawable.logo2) // optional
                             .into(simg);
-                    soffers.setText(offers + " From "+ pricing);
+                    timing=timings.replace("separate", "\n");
 
+                    typelist.setText(stype);
+                    speclist.setText(servspecs);
                     switch(visited){
                         case "Yes":
-                            svisited.setVisibility(View.GONE);
-                            sunv.setVisibility(View.VISIBLE);
+                            svisited.setVisibility(GONE);
+                            sunv.setVisibility(VISIBLE);
                             break;  //optional
                         case "No":
-                            sunv.setVisibility(View.GONE);
-                            svisited.setVisibility(View.VISIBLE);;
+                            sunv.setVisibility(GONE);
+                            svisited.setVisibility(VISIBLE);;
                             break;  //optional
                         default:
-                            sunv.setVisibility(View.GONE);
-                            svisited.setVisibility(View.VISIBLE);;
+                            sunv.setVisibility(GONE);
+                            svisited.setVisibility(VISIBLE);;
 
                     }
+
+                    viewreviews.setText("See All "+"("+rcount+")");
+
                     switch(isbm){
                         case "Yes":
-                            sbookmarked.setVisibility(View.GONE);
-                            sunbm.setVisibility(View.VISIBLE);
+                            sbookmarked.setVisibility(GONE);
+                            sunbm.setVisibility(VISIBLE);
                             break;  //optional
                         case "No":
-                            sunbm.setVisibility(View.GONE);
-                            sbookmarked.setVisibility(View.VISIBLE);
+                            sunbm.setVisibility(GONE);
+                            sbookmarked.setVisibility(VISIBLE);
                             break;  //optional
                         default:
-                            sunbm.setVisibility(View.GONE);
-                            sbookmarked.setVisibility(View.VISIBLE);
+                            sunbm.setVisibility(GONE);
+                            sbookmarked.setVisibility(VISIBLE);
 
                     }
                     switch(isfave){
                         case "Yes":
-                            sfave.setVisibility(View.GONE);
-                            sunfav.setVisibility(View.VISIBLE);
+                            sfave.setVisibility(GONE);
+                            sunfav.setVisibility(VISIBLE);
                             break;  //optional
                         case "No":
-                            sunfav.setVisibility(View.GONE);
-                            sfave.setVisibility(View.VISIBLE);
+                            sunfav.setVisibility(GONE);
+                            sfave.setVisibility(VISIBLE);
                             break;  //optional
                         default:
-                            sunfav.setVisibility(View.GONE);
-                            sfave.setVisibility(View.VISIBLE);
+                            sunfav.setVisibility(GONE);
+                            sfave.setVisibility(VISIBLE);
                     }
                 }
             });
         }
 
 
-    }*/
+    }
 
 
 
-    /*private class AddVisitedAsyncTask extends AsyncTask<String, String, String> {
+    private class AddVisitedAsyncTask extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -787,9 +713,9 @@ public class SalonProfile extends AppCompatActivity {
                 }
             });
         }
-    }*/
+    }
 
-    /*private class DeleteVisitedAsyncTask extends AsyncTask<String, String, String> {
+    private class DeleteVisitedAsyncTask extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -832,8 +758,9 @@ public class SalonProfile extends AppCompatActivity {
                 }
             });
         }
-    }*/
-    /*private class AddBMAsyncTask extends AsyncTask<String, String, String> {
+    }
+
+    private class AddBMAsyncTask extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -870,8 +797,8 @@ public class SalonProfile extends AppCompatActivity {
             });
         }
     }
-*/
-    /*private class DeleteBMAsyncTask extends AsyncTask<String, String, String> {
+
+    private class DeleteBMAsyncTask extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -912,8 +839,8 @@ public class SalonProfile extends AppCompatActivity {
                 }
             });
         }
-    }*/
-    /*private class AddFaveAsyncTask extends AsyncTask<String, String, String> {
+    }
+    private class AddFaveAsyncTask extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -949,9 +876,9 @@ public class SalonProfile extends AppCompatActivity {
                 }
             });
         }
-    }*/
+    }
 
-    /*private class DeleteFaveAsyncTask extends AsyncTask<String, String, String> {
+    private class DeleteFaveAsyncTask extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -991,9 +918,9 @@ public class SalonProfile extends AppCompatActivity {
                 }
             });
         }
-    }*/
+    }
     //sending notifs
-    /*private class BNotifsAsyncTask extends AsyncTask<String, String, String> {
+    private class BNotifsAsyncTask extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -1034,9 +961,9 @@ public class SalonProfile extends AppCompatActivity {
                 }
             });
         }
-    }*/
+    }
     //sending notifs
-    /*private class FNotifsAsyncTask extends AsyncTask<String, String, String> {
+    private class FNotifsAsyncTask extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -1078,9 +1005,9 @@ public class SalonProfile extends AppCompatActivity {
             });
         }
     }
-*/
+
     //sending notifs
-    /*private class VNotifsAsyncTask extends AsyncTask<String, String, String> {
+    private class VNotifsAsyncTask extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -1121,7 +1048,87 @@ public class SalonProfile extends AppCompatActivity {
                 }
             });
         }
-    }*/
+    }
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_appointment) {
+            Intent intent = new Intent(SalonProfile.this , BookAppointment.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_bm) {
+
+            Intent intent = new Intent(SalonProfile.this , ViewBookmarksActivity.class);
+            startActivity(intent);
+
+        } else if (id == R.id.nav_fave) {
+            Intent intent = new Intent(SalonProfile.this , ViewFavouritesActivity.class);
+            startActivity(intent);
+
+
+        } else if (id == R.id.nav_notif) {
+            Intent intent = new Intent(SalonProfile.this , ViewOffers.class);
+            startActivity(intent);
+
+        }else if (id == R.id.nav_settings) {
+            Intent intent = new Intent(SalonProfile.this , Settings.class);
+            startActivity(intent);
+
+        }else if (id == R.id.nav_signout) {
+            SharedPreferences preferences =getSharedPreferences("loginData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.clear();
+            editor.commit();
+            Intent intent = new Intent(SalonProfile.this , MainActivity.class);
+            startActivity(intent);
+
+        } else if (id == R.id.nav_about) {
+
+        } else if (id == R.id.nav_feedback) {
+
+        } else if (id == R.id.nav_playstore) {
+
+        }
+
+
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
 }
+
 
 

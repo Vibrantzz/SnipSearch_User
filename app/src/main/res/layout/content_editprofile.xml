@@ -71,7 +71,7 @@
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:layout_marginTop="5dp"
-        android:background="@color/txtheadings">
+        android:background="@color/framecolor">
 
     </FrameLayout>
 
@@ -112,7 +112,7 @@
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:layout_marginTop="5dp"
-        android:background="@color/txtheadings">
+        android:background="@color/framecolor">
 
     </FrameLayout>
 
@@ -153,7 +153,7 @@
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:layout_marginTop="5dp"
-        android:background="@color/txtheadings">
+        android:background="@color/framecolor">
 
     </FrameLayout>
     <TextView
@@ -193,12 +193,12 @@
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:layout_marginTop="5dp"
-        android:background="@color/txtheadings">
+        android:background="@color/framecolor">
 
     </FrameLayout>
 
     <ImageView
-        android:id="@+id/imageView21"
+        android:id="@+id/submitbtn"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_below="@+id/frame4"

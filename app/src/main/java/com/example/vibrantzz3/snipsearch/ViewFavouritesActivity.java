@@ -1,6 +1,8 @@
 package com.example.vibrantzz3.snipsearch;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -93,7 +95,10 @@ public class ViewFavouritesActivity extends AppCompatActivity implements Navigat
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                Intent intent = new Intent(ViewFavouritesActivity.this , Home.class);
+
+                startActivity(intent);
+
             }
         });
         //Intent intent = getIntent();
@@ -156,25 +161,33 @@ public class ViewFavouritesActivity extends AppCompatActivity implements Navigat
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_appointment) {
             Intent intent = new Intent(ViewFavouritesActivity.this , ViewAppointments.class);
             startActivity(intent);
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_bm) {
 
             Intent intent = new Intent(ViewFavouritesActivity.this , ViewBookmarksActivity.class);
             startActivity(intent);
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_fave) {
             Intent intent = new Intent(ViewFavouritesActivity.this , ViewFavouritesActivity.class);
             startActivity(intent);
 
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_notif) {
             Intent intent = new Intent(ViewFavouritesActivity.this , ViewOffers.class);
             startActivity(intent);
 
         }else if (id == R.id.nav_settings) {
             Intent intent = new Intent(ViewFavouritesActivity.this , Settings.class);
+            startActivity(intent);
+
+        }else if (id == R.id.nav_signout) {
+            SharedPreferences preferences =getSharedPreferences("loginData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.clear();
+            editor.commit();
+            Intent intent = new Intent(ViewFavouritesActivity.this , MainActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.nav_about) {

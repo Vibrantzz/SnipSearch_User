@@ -32,6 +32,33 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
         title=(ImageView)findViewById(R.id.imgtitle);
 
 
+        SharedPreferences pref = getSharedPreferences("loginData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        //editor.clear();  //for bebugging
+        //editor.commit(); //for bebugging
+        emailStored = pref.getString("email", null);
+        passwordStored = pref.getString("password", null);
+
+
+
+
+        new Handler().postDelayed(new Runnable(){
+            @Override
+            public void run() {
+
+                if(emailStored == null){
+                    Intent in = new Intent(getApplicationContext(), login.class);
+                    startActivity(in);
+                }
+                else{
+                    Intent in = new Intent(getApplicationContext(), Home.class);
+                    startActivity(in);
+                }
+                MainActivity.this.finish();
+            }
+        }, 3000);
+
+
         //---------------animation code--------------
 
         slideUp = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_up);
@@ -50,30 +77,59 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
         fadein = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_in);
         fadein.setAnimationListener(this);
         //--------------------------------------------
-
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                new Handler().postDelayed(new Runnable(){
+                    @Override
+                    public void run() {
 
-                Intent in = new Intent(getApplicationContext(), login.class);
-                startActivity(in);
-            }});
+
+                        Intent in = new Intent(getApplicationContext(), login.class);
+                        startActivity(in);
+
+                        MainActivity.this.finish();
+
+                    }
+                }, 3000);
+            }
+        });
+
+
 
     }
 
 
+
+
     @Override
-    protected void onStart() {
+    protected void onStart()
+    {
         super.onStart();
         //salon_title.setVisibility(View.VISIBLE);
         //salon_title.startAnimation(slideDown);
-        title.setVisibility(View.VISIBLE);
-        title.startAnimation(fadein);
-        pin.setVisibility(View.VISIBLE);
-        pin.startAnimation(bounce);
-        btn.setVisibility(View.VISIBLE);
-        btn.startAnimation(slideUp);
+
+
+        if(emailStored!=null)
+        {
+            title.setVisibility(View.VISIBLE);
+            title.startAnimation(fadein);
+            pin.setVisibility(View.VISIBLE);
+            pin.startAnimation(bounce);
+            btn.setVisibility(View.INVISIBLE);
+        }
+        else
+        {
+            title.setVisibility(View.VISIBLE);
+            title.startAnimation(fadein);
+            pin.setVisibility(View.VISIBLE);
+            pin.startAnimation(bounce);
+            btn.setVisibility(View.VISIBLE);
+            btn.startAnimation(slideUp);
+        }
+
+
     }
 
     @Override
@@ -91,3 +147,4 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
 
     }
 }
+

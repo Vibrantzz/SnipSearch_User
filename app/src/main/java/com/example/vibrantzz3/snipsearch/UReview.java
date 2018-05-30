@@ -6,16 +6,34 @@ package com.example.vibrantzz3.snipsearch;
 
 public class UReview {
 
-    public String ID, Name, City, Thumbnail, Review, Rating,RID;
+    public String UID, UName,ID, Name, City, Thumbnail, Review, Rating,RID;
 
-    public UReview(String id, String name, String city, String thumbnail, String review, String rating,String rid) {
+    public UReview(String uid, String uname,String id, String name, String city, String thumbnail, String review, String rating,String rid) {
         Name = name;
         ID=id;
         City = city;
         Thumbnail = thumbnail;
         Review = review;
+        UName = uname;
+        UID=uid;
         Rating=rating;
         RID=rid;
+    }
+
+    public String getUID() {
+        return UID;
+    }
+
+    public void setUID(String UID) {
+        this.UID = UID;
+    }
+
+    public String getUName() {
+        return UName;
+    }
+
+    public void setUName(String UName) {
+        this.UName = UName;
     }
 
     public String getRating() {

@@ -67,16 +67,16 @@
         android:id="@+id/btnsignip"
         android:layout_width="320dp"
         android:layout_height="73dp"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/imageView11"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="70dp"
         app:srcCompat="@drawable/signup" />
 
     <TextView
         android:id="@+id/txtloginredirect1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/txtloginredirect"
+        android:layout_alignBaseline="@+id/txtloginredirect"
+        android:layout_alignBottom="@+id/txtloginredirect"
         android:layout_toStartOf="@+id/txtloginredirect"
         android:text="Already have an account?"
         android:textColor="#ed2067" />

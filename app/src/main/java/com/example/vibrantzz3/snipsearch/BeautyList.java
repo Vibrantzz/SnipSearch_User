@@ -1,6 +1,8 @@
 package com.example.vibrantzz3.snipsearch;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -27,9 +29,9 @@ import java.util.List;
 import java.util.Map;
 
 public class BeautyList extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    List<Beauty> hData;
+    List<Salon> hData;
     String id;
-    BeautyListRecyclerViewAdapter myAdapter;
+    SalonListRecyclerViewAdapter myAdapter;
     RecyclerView myrv;
     private static final String url_beautylist = "http://test.epoqueapparels.com/Salon_App/beauty.php";
     JSONObject jsonObject;
@@ -40,9 +42,9 @@ public class BeautyList extends AppCompatActivity implements NavigationView.OnNa
     private static final String TAG_RATE = "rating";
     private static final String TAG_PIC = "profilepic";
     private static final String TAG_RCOUNT = "rcount";
-
     ImageView img, touser;
     TextView uname;
+
 
 
     @Override
@@ -92,30 +94,12 @@ public class BeautyList extends AppCompatActivity implements NavigationView.OnNa
         hData=new ArrayList<>();
 
 
-        for(int i=0;i<5;i++){
-            //JSONObject json_data = jArray.getJSONObject(i);
-            //Parse the JSON response
-            hData.add(new Beauty(TAG_NAME, TAG_LOC, TAG_RATE, TAG_PIC, TAG_ID, "string", TAG_RCOUNT));
-        }
-
-
-        myrv=(RecyclerView) findViewById(R.id.bl_recycler);
-        myAdapter=new BeautyListRecyclerViewAdapter(BeautyList.this,hData);
-        myrv.setLayoutManager(new LinearLayoutManager(BeautyList.this));
-        myrv.setAdapter(myAdapter);
-
+        new WelcomeAsyncTask().execute();
 
 
     }
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -143,25 +127,33 @@ public class BeautyList extends AppCompatActivity implements NavigationView.OnNa
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_appointment) {
             Intent intent = new Intent(BeautyList.this , ViewAppointments.class);
             startActivity(intent);
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_bm) {
 
             Intent intent = new Intent(BeautyList.this , ViewBookmarksActivity.class);
             startActivity(intent);
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_fave) {
             Intent intent = new Intent(BeautyList.this , ViewFavouritesActivity.class);
             startActivity(intent);
 
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_notif) {
             Intent intent = new Intent(BeautyList.this , ViewOffers.class);
             startActivity(intent);
 
         }else if (id == R.id.nav_settings) {
             Intent intent = new Intent(BeautyList.this , Settings.class);
+            startActivity(intent);
+
+        }else if (id == R.id.nav_signout) {
+            SharedPreferences preferences =getSharedPreferences("loginData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.clear();
+            editor.commit();
+            Intent intent = new Intent(BeautyList.this , MainActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.nav_about) {
@@ -178,4 +170,51 @@ public class BeautyList extends AppCompatActivity implements NavigationView.OnNa
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    private class WelcomeAsyncTask extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //Display progress bar
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            HttpJsonParser httpJsonParser = new HttpJsonParser();
+            Map<String, String> httpParams = new HashMap<>();
+            jsonObject = httpJsonParser.makeHttpRequest(
+                    url_beautylist, "GET", null);
+
+            return null;
+        }
+
+        protected void onPostExecute(final String result) {
+
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    try {
+                        JSONArray jArray = jsonObject.getJSONArray(TAG_PROFILE);
+
+                        for(int i=0;i<jArray.length();i++){
+                            JSONObject json_data = jArray.getJSONObject(i);
+                            //Parse the JSON response
+                            hData.add(new Salon( json_data.getString(TAG_NAME), json_data.getString(TAG_LOC), json_data.getString(TAG_RATE), json_data.getString(TAG_PIC),json_data.getString(TAG_ID),"",json_data.getString(TAG_RCOUNT) ));
+                        }
+
+
+                        myrv=(RecyclerView) findViewById(R.id.bl_recycler);
+                        myAdapter=new SalonListRecyclerViewAdapter(BeautyList.this,hData);
+                        myrv.setLayoutManager(new LinearLayoutManager(BeautyList.this));
+                        myrv.setAdapter(myAdapter);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+
+
+    }
+
 }

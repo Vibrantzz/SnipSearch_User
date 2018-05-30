@@ -1,6 +1,8 @@
 package com.example.vibrantzz3.snipsearch;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -33,7 +35,7 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
                 this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-toggle.setDrawerIndicatorEnabled(false);
+        toggle.setDrawerIndicatorEnabled(false);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
@@ -58,7 +60,9 @@ toggle.setDrawerIndicatorEnabled(false);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                Intent intent = new Intent(Settings.this , Home.class);
+
+                startActivity(intent);
             }
         });
 
@@ -120,25 +124,33 @@ toggle.setDrawerIndicatorEnabled(false);
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_appointment) {
             Intent intent = new Intent(Settings.this , ViewAppointments.class);
             startActivity(intent);
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_bm) {
 
             Intent intent = new Intent(Settings.this , ViewBookmarksActivity.class);
             startActivity(intent);
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_fave) {
             Intent intent = new Intent(Settings.this , ViewFavouritesActivity.class);
             startActivity(intent);
 
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_notif) {
             Intent intent = new Intent(Settings.this , ViewOffers.class);
             startActivity(intent);
 
         }else if (id == R.id.nav_settings) {
             Intent intent = new Intent(Settings.this , Settings.class);
+            startActivity(intent);
+
+        }else if (id == R.id.nav_signout) {
+            SharedPreferences preferences =getSharedPreferences("loginData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.clear();
+            editor.commit();
+            Intent intent = new Intent(Settings.this , MainActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.nav_about) {

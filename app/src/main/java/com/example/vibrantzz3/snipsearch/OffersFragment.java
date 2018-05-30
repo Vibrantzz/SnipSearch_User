@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.rbrooks.indefinitepagerindicator.IndefinitePagerIndicator;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,7 +40,7 @@ public class OffersFragment extends Fragment {
     private static final String TAG_PIC = "profilepic";
     private static final String TAG_RCOUNT = "rcount";
     String uid;
-
+IndefinitePagerIndicator indicator;
     public OffersFragment() {
 
 
@@ -66,7 +68,8 @@ public class OffersFragment extends Fragment {
         OffersRecyclerViewAdapter myAdapter = new OffersRecyclerViewAdapter(getContext(), sData);
         myrv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         myrv.setAdapter(myAdapter);
-
+        indicator=(IndefinitePagerIndicator) view.findViewById(R.id.recyclerview_pager_indicator);
+        indicator.attachToRecyclerView(myrv);
         return view;
 
     }}

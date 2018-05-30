@@ -1,6 +1,8 @@
 package com.example.vibrantzz3.snipsearch;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -80,7 +82,7 @@ public class ViewVisitedActivity extends AppCompatActivity implements Navigation
             public void onClick(View view) {
 
                 Intent intent = new Intent(ViewVisitedActivity.this , User.class);
-
+                intent.putExtra("id",id);
                 startActivity(intent);
 
                 //InsertLocation(UName, GetCityName);
@@ -95,24 +97,14 @@ public class ViewVisitedActivity extends AppCompatActivity implements Navigation
                 finish();
             }
         });
-        //Intent intent = getIntent();
-        //id = intent.getExtras().getString("id");
+        Intent intent = getIntent();
+        id = intent.getExtras().getString("id");
 
         visitedData=new ArrayList<>();
 
 
-        for(int i=0;i<5;i++){
-            //JSONObject json_data = jArray.getJSONObject(i);
-            //Parse the JSON response
-            visitedData.add(new Visited( TAG_NAME,TAG_CITY,TAG_RATE,TAG_PIC,TAG_ID,id,TAG_RCOUNT));
-        }
 
-
-        myrv=(RecyclerView) findViewById(R.id.visited_recycler);
-        myAdapter=new VisitedRecyclerViewAdapter(ViewVisitedActivity.this,visitedData);
-        myrv.setLayoutManager(new LinearLayoutManager(ViewVisitedActivity.this));
-        myrv.setAdapter(myAdapter);
-
+        new WelcomeAsyncTask().execute();
 
 
     }
@@ -153,25 +145,35 @@ public class ViewVisitedActivity extends AppCompatActivity implements Navigation
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_appointment) {
             Intent intent = new Intent(ViewVisitedActivity.this , ViewAppointments.class);
             startActivity(intent);
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_bm) {
 
             Intent intent = new Intent(ViewVisitedActivity.this , ViewBookmarksActivity.class);
+            intent.putExtra("id",id);
             startActivity(intent);
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_fave) {
             Intent intent = new Intent(ViewVisitedActivity.this , ViewFavouritesActivity.class);
+            intent.putExtra("id",id);
             startActivity(intent);
 
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_notif) {
             Intent intent = new Intent(ViewVisitedActivity.this , ViewOffers.class);
             startActivity(intent);
 
         }else if (id == R.id.nav_settings) {
             Intent intent = new Intent(ViewVisitedActivity.this , Settings.class);
+            startActivity(intent);
+
+        }else if (id == R.id.nav_signout) {
+            SharedPreferences preferences =getSharedPreferences("loginData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.clear();
+            editor.commit();
+            Intent intent = new Intent(ViewVisitedActivity.this , MainActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.nav_about) {
@@ -184,8 +186,58 @@ public class ViewVisitedActivity extends AppCompatActivity implements Navigation
 
 
 
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    private class WelcomeAsyncTask extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //Display progress bar
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            HttpJsonParser httpJsonParser = new HttpJsonParser();
+            Map<String, String> httpParams = new HashMap<>();
+            httpParams.put(TAG_ID, id);
+            jsonObject = httpJsonParser.makeHttpRequest(
+                    url_visited , "GET", httpParams);
+
+            return null;
+        }
+
+        protected void onPostExecute(final String result) {
+
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    try {
+                        JSONArray jArray = jsonObject.getJSONArray(TAG_PROFILE);
+
+                        for(int i=0;i<jArray.length();i++){
+                            JSONObject json_data = jArray.getJSONObject(i);
+                            //Parse the JSON response
+                            visitedData.add(new Visited( json_data.getString(TAG_NAME), json_data.getString(TAG_CITY), json_data.getString(TAG_RATE), json_data.getString(TAG_PIC),json_data.getString(TAG_ID),id," Based on "+ json_data.getString(TAG_RCOUNT) +" Reviews"));
+                        }
+
+
+                        myrv=(RecyclerView) findViewById(R.id.visited_recycler);
+                        myAdapter=new VisitedRecyclerViewAdapter(ViewVisitedActivity.this,visitedData);
+                        myrv.setLayoutManager(new LinearLayoutManager(ViewVisitedActivity.this));
+                        myrv.setAdapter(myAdapter);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+
+
+    }
+
 }

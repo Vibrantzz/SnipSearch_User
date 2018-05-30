@@ -1,6 +1,8 @@
 package com.example.vibrantzz3.snipsearch;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -29,7 +31,7 @@ import java.util.Map;
 public class ViewOffers extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     List<VOffers> vData;
     String id;
-    VOffersRecyclerViewAdapter myAdapter;
+    ViewOffersRecyclerViewAdapter myAdapter;
     RecyclerView myrv;
     private String uName;
     private String uID;
@@ -94,7 +96,11 @@ public class ViewOffers extends AppCompatActivity implements NavigationView.OnNa
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+
+                Intent intent = new Intent(ViewOffers.this , Home.class);
+
+                startActivity(intent);
+
             }
         });
 
@@ -109,7 +115,7 @@ public class ViewOffers extends AppCompatActivity implements NavigationView.OnNa
 
 
         myrv=(RecyclerView) findViewById(R.id.voffers_recycler);
-        myAdapter=new VOffersRecyclerViewAdapter(ViewOffers.this,vData);
+        myAdapter=new ViewOffersRecyclerViewAdapter(ViewOffers.this,vData);
         myrv.setLayoutManager(new LinearLayoutManager(ViewOffers.this));
         myrv.setAdapter(myAdapter);
 
@@ -152,25 +158,33 @@ public class ViewOffers extends AppCompatActivity implements NavigationView.OnNa
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_appointment) {
             Intent intent = new Intent(ViewOffers.this , ViewAppointments.class);
             startActivity(intent);
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_bm) {
 
             Intent intent = new Intent(ViewOffers.this , ViewBookmarksActivity.class);
             startActivity(intent);
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_fave) {
             Intent intent = new Intent(ViewOffers.this , ViewFavouritesActivity.class);
             startActivity(intent);
 
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_notif) {
             Intent intent = new Intent(ViewOffers.this , ViewOffers.class);
             startActivity(intent);
 
         }else if (id == R.id.nav_settings) {
             Intent intent = new Intent(ViewOffers.this , Settings.class);
+            startActivity(intent);
+
+        }else if (id == R.id.nav_signout) {
+            SharedPreferences preferences =getSharedPreferences("loginData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.clear();
+            editor.commit();
+            Intent intent = new Intent(ViewOffers.this , MainActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.nav_about) {
@@ -180,6 +194,7 @@ public class ViewOffers extends AppCompatActivity implements NavigationView.OnNa
         } else if (id == R.id.nav_playstore) {
 
         }
+
 
 
 

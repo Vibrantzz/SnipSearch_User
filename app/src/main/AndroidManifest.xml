@@ -18,7 +18,6 @@
 
     <application
         android:allowBackup="true"
-        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
@@ -47,8 +46,8 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".HairList"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".BeautyList"
             android:theme="@style/AppTheme.NoActionBar"
@@ -63,49 +62,67 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".SalonProfile"
-
             android:colorMode="@color/colorPrimary"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ViewFavouritesActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".ViewBookmarksActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".ViewVisitedActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".User"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ViewFavouritesActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ViewBookmarksActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ViewVisitedActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".User"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".EditProfile"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
-        <activity android:name=".ViewOffers"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".UserPicsActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".ViewAppointments"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".Settings"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".ChangePassword"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".SalonProfile"
-            android:colorMode="@color/colorPrimary"
+            android:name=".EditProfile"
             android:theme="@style/AppTheme.NoActionBar" />
-
+        <activity
+            android:name=".ViewOffers"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".UserPicsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ViewAppointments"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Settings"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ChangePassword"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Review"
             android:colorMode="@color/colorPrimary"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".Preview"
             android:colorMode="@color/colorPrimary"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ViewReviewActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <service android:name=".FirebaseToken">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".BookAppointment"></activity>
     </application>
 
 </manifest>

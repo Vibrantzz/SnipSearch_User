@@ -51,7 +51,13 @@ public class login extends AppCompatActivity {
     ImageView login;
     EditText email , password;
     String personName,personEmail,user_name,user_email;
-
+    private final String serverUrl = "http://test.epoqueapparels.com/Salon_App/index1.php";
+    private static final String url_token = "http://test.epoqueapparels.com/Salon_App/token_update.php";
+    private static final String TAG_SUCCESS = "success";
+    private static final String TAG_EMAIL = "email";
+    private static final String TAG_TOKEN = "token";
+    int success;
+    protected String enteredUsername, enteredPassword,token;
     private static final int RC_SIGN_IN = 007;
 
     //---------------------------
@@ -71,7 +77,7 @@ public class login extends AppCompatActivity {
         login=(ImageView) findViewById(R.id.btnlogin);
         email = (EditText) findViewById(R.id.et_email);
         password = (EditText) findViewById(R.id.et_pass);
-        //token = TokenManager.getInstance(this).getDeviceToken();
+        String token = TokenManager.getInstance(this).getDeviceToken();
         new_user.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,13 +91,209 @@ public class login extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                enteredUsername = email.getText().toString();
+                enteredPassword = password.getText().toString();
+
+                //-----validations---------
+                enteredUsername = email.getText().toString();
+                if (TextUtils.isEmpty(enteredUsername)) {
+                    email.setError("Invalid Email");
+                }
+                if(!isValidEmail(enteredUsername))
+                {
+                    email.setError("Invalid Email");
+                }
+
+                enteredPassword = password.getText().toString();
+                if (!isValidPassword(enteredPassword)) {
+                    password.setError("Invalid Password");
+                    password.setText("");
+                }
+                HashMap<String, String> loginData = new HashMap<>();
+                loginData.put("email", enteredUsername);
+                loginData.put("password", enteredPassword);
+                // request authentication with remote server4
+                AsyncDataClass asyncRequestObject = new AsyncDataClass();
+                asyncRequestObject.execute(serverUrl, enteredUsername, enteredPassword);
+                new UpdateAsyncTask().execute();
+            }
+        });}
+
+
+
+        // validating email id
+    private boolean isValidEmail(String email) {
+        String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    // validating password with retype password
+    private boolean isValidPassword(String pass) {
+        if (pass != null && pass.length() > 6) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //---------------------------------------------
+    private class AsyncDataClass extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            HttpParams httpParameters = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(httpParameters, 5000);
+            HttpConnectionParams.setSoTimeout(httpParameters, 5000);
+            HttpClient httpClient = new DefaultHttpClient(httpParameters);
+            HttpPost httpPost = new HttpPost(params[0]);
+            String jsonResult = "";
+
+            try {
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                nameValuePairs.add(new BasicNameValuePair("email", params[1]));
+                nameValuePairs.add(new BasicNameValuePair("password", params[2]));
+                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                HttpResponse response = httpClient.execute(httpPost);
+                jsonResult = inputStreamToString(response.getEntity().getContent()).toString();
+
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return jsonResult;
+        }
+
+        @Override
+
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            System.out.println("Resulted Value: " + result);
+            if(result.equals("") || result == null){
+                Toast.makeText(login.this, "Server connection failed", Toast.LENGTH_LONG).show();
+                return;
+            }
+            int jsonResult = returnParsedJsonObject(result);
+
+            if(jsonResult == 0){
+                Toast.makeText(login.this, "Invalid username or password", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if(jsonResult == 1){
+
+                Log.d(TAG, result);
+                SharedPreferences pref = getSharedPreferences("loginData", MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString("email", enteredUsername);
+                editor.putString("emailid", personEmail );
+                editor.putString("password", enteredPassword);
+                editor.commit();
+
                 Intent intent = new Intent(login.this , Home.class);
                 startActivity(intent);
-                finish();
+
+                /*
+                //for calling home
+                Intent intent = new Intent(login.this , Home.class);
+                intent.putExtra("USERNAME",enteredUsername);
+                intent.putExtra("MESSAGE","You have been successfully login");
+                startActivity(intent);
+                */
+
+
+
+                return;
 
             }
-        });
+
+        }
+
+        private StringBuilder inputStreamToString(InputStream is) {
+            String rLine = "";
+            StringBuilder answer = new StringBuilder();
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            try {
+                while ((rLine = br.readLine()) != null) {
+                    answer.append(rLine);
+                }
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return answer;
+        }
+    }
+
+    private int returnParsedJsonObject(String result){
+        JSONObject resultObject = null;
+        int returnedResult = 0;
+        try {
+            resultObject = new JSONObject(result);
+            returnedResult = resultObject.getInt("success");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return returnedResult;
+    }
+
+
+    class UpdateAsyncTask extends AsyncTask<String, String, String> {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //Display progress bar
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            HttpJsonParser httpJsonParser = new HttpJsonParser();
+            Map<String, String> httpParams = new HashMap<>();
+            //Populating request parameters
+            httpParams.put(TAG_EMAIL, enteredUsername);
+            httpParams.put(TAG_TOKEN, token);
+
+            JSONObject jsonObject = httpJsonParser.makeHttpRequest(
+                    url_token, "POST", httpParams);
+            try {
+                success = jsonObject.getInt(TAG_SUCCESS);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(String result) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    if (success == 1) {
+                        //Display success message
+
+
+                    } else {
+
+                    }
+                }
+            });
+        }
+
+
     }}
+
+
+
+
+
+
 
 
 

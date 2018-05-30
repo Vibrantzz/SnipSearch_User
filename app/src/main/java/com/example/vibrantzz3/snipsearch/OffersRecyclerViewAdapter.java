@@ -47,7 +47,16 @@ public class OffersRecyclerViewAdapter extends RecyclerView.Adapter<OffersRecycl
         //holder.sname.setText(sData.get(position).getName());
         //final String rating=sData.get(position).getRating();
 
+        holder.cardview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                Intent intent = new Intent(mContext,ViewOffers.class);
+
+                mContext.startActivity(intent);
+
+            }
+        });
 
     }
 
@@ -64,7 +73,7 @@ public class OffersRecyclerViewAdapter extends RecyclerView.Adapter<OffersRecycl
         public MyViewHolder(View itemview)
         {   super(itemview);
 
-
+            cardview=(CardView)itemview.findViewById(R.id.maincard);
         }
     }
 }

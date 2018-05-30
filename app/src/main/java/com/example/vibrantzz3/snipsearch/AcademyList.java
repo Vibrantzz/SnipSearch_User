@@ -1,12 +1,13 @@
 package com.example.vibrantzz3.snipsearch;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,11 +29,11 @@ import java.util.List;
 import java.util.Map;
 
 public class AcademyList extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    List<Academy> hData;
+    List<Salon> hData;
     String id;
-    AcademyListRecyclerViewAdapter myAdapter;
+    SalonListRecyclerViewAdapter myAdapter;
     RecyclerView myrv;
-    private static final String url_academylist = "http://test.epoqueapparels.com/Salon_App/academyfragment.php";
+    private static final String url_academylist = "http://test.epoqueapparels.com/Salon_App/academyFragment.php";
     JSONObject jsonObject;
     private static final String TAG_PROFILE = "data";
     private static final String TAG_ID = "id";
@@ -41,9 +42,9 @@ public class AcademyList extends AppCompatActivity implements NavigationView.OnN
     private static final String TAG_RATE = "rating";
     private static final String TAG_PIC = "profilepic";
     private static final String TAG_RCOUNT = "rcount";
-
     ImageView img, touser;
     TextView uname;
+
 
 
     @Override
@@ -93,33 +94,12 @@ public class AcademyList extends AppCompatActivity implements NavigationView.OnN
         hData=new ArrayList<>();
 
 
-        hData=new ArrayList<>();
-
-
-        for(int i=0;i<5;i++){
-            //JSONObject json_data = jArray.getJSONObject(i);
-            //Parse the JSON response
-            hData.add(new Academy(TAG_NAME, TAG_LOC, TAG_RATE, TAG_PIC, TAG_ID, "string", TAG_RCOUNT));
-        }
-
-        myrv=(RecyclerView) findViewById(R.id.al_recycler);
-        myAdapter=new AcademyListRecyclerViewAdapter(AcademyList.this,hData);
-        myrv.setLayoutManager(new LinearLayoutManager(AcademyList.this));
-        myrv.setAdapter(myAdapter);
-
-
+        new WelcomeAsyncTask().execute();
 
 
     }
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -147,25 +127,33 @@ public class AcademyList extends AppCompatActivity implements NavigationView.OnN
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_appointment) {
             Intent intent = new Intent(AcademyList.this , ViewAppointments.class);
             startActivity(intent);
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_bm) {
 
             Intent intent = new Intent(AcademyList.this , ViewBookmarksActivity.class);
             startActivity(intent);
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_fave) {
             Intent intent = new Intent(AcademyList.this , ViewFavouritesActivity.class);
             startActivity(intent);
 
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_notif) {
             Intent intent = new Intent(AcademyList.this , ViewOffers.class);
             startActivity(intent);
 
         }else if (id == R.id.nav_settings) {
             Intent intent = new Intent(AcademyList.this , Settings.class);
+            startActivity(intent);
+
+        }else if (id == R.id.nav_signout) {
+            SharedPreferences preferences =getSharedPreferences("loginData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.clear();
+            editor.commit();
+            Intent intent = new Intent(AcademyList.this , MainActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.nav_about) {
@@ -182,4 +170,51 @@ public class AcademyList extends AppCompatActivity implements NavigationView.OnN
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    private class WelcomeAsyncTask extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //Display progress bar
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            HttpJsonParser httpJsonParser = new HttpJsonParser();
+            Map<String, String> httpParams = new HashMap<>();
+            jsonObject = httpJsonParser.makeHttpRequest(
+                    url_academylist, "GET", null);
+
+            return null;
+        }
+
+        protected void onPostExecute(final String result) {
+
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    try {
+                        JSONArray jArray = jsonObject.getJSONArray(TAG_PROFILE);
+
+                        for(int i=0;i<jArray.length();i++){
+                            JSONObject json_data = jArray.getJSONObject(i);
+                            //Parse the JSON response
+                            hData.add(new Salon( json_data.getString(TAG_NAME), json_data.getString(TAG_LOC), json_data.getString(TAG_RATE), json_data.getString(TAG_PIC),json_data.getString(TAG_ID),"",json_data.getString(TAG_RCOUNT) ));
+                        }
+
+
+                        myrv=(RecyclerView) findViewById(R.id.al_recycler);
+                        myAdapter=new SalonListRecyclerViewAdapter(AcademyList.this,hData);
+                        myrv.setLayoutManager(new LinearLayoutManager(AcademyList.this));
+                        myrv.setAdapter(myAdapter);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+
+
+    }
+
 }
