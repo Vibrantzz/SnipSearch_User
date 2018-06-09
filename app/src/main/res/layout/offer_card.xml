@@ -11,7 +11,7 @@
 
 
         <ImageView
-            android:id="@+id/offerimg"
+            android:id="@+id/salonimg"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentStart="true"
@@ -24,9 +24,9 @@
             android:id="@+id/titletxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/offerimg"
+            android:layout_alignTop="@+id/salonimg"
             android:layout_marginStart="5dp"
-            android:layout_toEndOf="@+id/offerimg"
+            android:layout_toEndOf="@+id/salonimg"
             android:fontFamily="@font/lato"
             android:text="Get 40% off on your first visit!"
             android:textColor="@android:color/black" />
@@ -38,7 +38,7 @@
             android:layout_below="@+id/titletxt"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:layout_toEndOf="@+id/offerimg"
+            android:layout_toEndOf="@+id/salonimg"
             android:fontFamily="@font/lato"
             android:text="Valid till:"
             android:textSize="12sp" />
@@ -79,7 +79,7 @@
             android:id="@+id/separator"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/offerimg"
+            android:layout_below="@+id/salonimg"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@color/framecolor">

@@ -28,7 +28,7 @@ public class franchiseFragment extends Fragment {
     List<Franchise> franData;
     RecyclerViewAdapter myAdapter;
     RecyclerView myrv;
-    private static final String url_fran = "http://test.epoqueapparels.com/Salon_App/franchisefragment.php";
+    private static final String url_fran = "http://test.epoqueapparels.com/Salon/Salon_App/franchisefragment.php";
     JSONObject jsonObject;
     private static final String TAG_PROFILE = "data";
     private static final String TAG_ID = "id";
@@ -48,23 +48,63 @@ public class franchiseFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_franchise, container, false);
 
         super.onCreate(savedInstanceState);
-       // final Bundle args = getArguments();
-        //id = args.getString("id");
+       //final Bundle args = getArguments();
+       //id = args.getString("id");
 
-        franData = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-
-            //Parse the JSON response
-            franData.add(new Franchise( TAG_ID,TAG_PIC,TAG_COUNT + " Branches"));
-        }
-
-
-        myrv = (RecyclerView) view.findViewById(R.id.franchise_recycler);
-        FranchiseRecyclerViewAdapter myAdapter = new FranchiseRecyclerViewAdapter(getContext(), franData);
-        myrv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        myrv.setAdapter(myAdapter);
+        franData=new ArrayList<>();
+        new WelcomeAsyncTask().execute();
         return view;
 
     }
-}
+    private class WelcomeAsyncTask extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            HttpJsonParser httpJsonParser = new HttpJsonParser();
+            Map<String, String> httpParams = new HashMap<>();
+
+            jsonObject = httpJsonParser.makeHttpRequest(
+                    url_fran, "GET", null);
+
+            return null;
+        }
+
+        protected void onPostExecute(final String result) {
+
+
+            try {
+                JSONArray jArray = jsonObject.getJSONArray(TAG_PROFILE);
+
+                for (int i = 0; i < jArray.length(); i++) {
+                    JSONObject json_data = jArray.getJSONObject(i);
+                    //Parse the JSON response
+                    franData.add(new Franchise( json_data.getString(TAG_ID), json_data.getString(TAG_PIC), json_data.getString(TAG_COUNT)));
+                }
+                myrv = (RecyclerView) view.findViewById(R.id.franchise_recycler);
+                FranchiseRecyclerViewAdapter myAdapter = new FranchiseRecyclerViewAdapter(getContext(), franData);
+                myrv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+                myrv.setAdapter(myAdapter);
+
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }}
+
+
+
+
+
+
+
+
+
 

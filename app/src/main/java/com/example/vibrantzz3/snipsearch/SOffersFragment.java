@@ -1,12 +1,9 @@
 package com.example.vibrantzz3.snipsearch;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,7 +26,7 @@ public class SOffersFragment extends Fragment {
     String id;
     SOffersRecyclerViewAdapter myAdapter;
     RecyclerView myrv;
-    private static final String url_offers = "http://test.epoqueapparels.com/Salon_App/offersfragment.php";
+    private static final String url_offers = "http://test.epoqueapparels.com/Salon/Salon_App/offersfragment.php";
     JSONObject jsonObject;
     private static final String TAG_PROFILE = "data";
     private static final String TAG_ID = "id";
@@ -48,9 +45,9 @@ public class SOffersFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_offer, container, false);
 
         super.onCreate(savedInstanceState);
-        //final Bundle args = getArguments();
-        //id = args.getString("id");
-        id="2";
+        final Bundle args = getArguments();
+        id = args.getString("id");
+        //id="2";
 
         oData = new ArrayList<>();
 

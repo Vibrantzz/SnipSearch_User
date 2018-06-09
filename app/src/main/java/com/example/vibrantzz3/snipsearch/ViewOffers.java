@@ -3,7 +3,6 @@ package com.example.vibrantzz3.snipsearch;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,18 +18,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
+import com.squareup.picasso.Picasso;
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ViewOffers extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     List<VOffers> vData;
-    String id;
+    String id,uid,fname,upic;
     ViewOffersRecyclerViewAdapter myAdapter;
     RecyclerView myrv;
     private String uName;
@@ -39,7 +36,7 @@ public class ViewOffers extends AppCompatActivity implements NavigationView.OnNa
     private String uFcount;
     private String uRcount;
     private String uVcount;
-    private static final String url_bm = "http://test.epoqueapparels.com/Salon_App/bookmarks.php";
+    private static final String url_bm = "http://test.epoqueapparels.com/Salon/Salon_App/bookmarks.php";
     JSONObject jsonObject;
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_PROFILE = "data";
@@ -66,6 +63,13 @@ public class ViewOffers extends AppCompatActivity implements NavigationView.OnNa
 
 
 
+        SharedPreferences pref = getSharedPreferences("loginData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        uid = pref.getString("userid", null);
+        fname = pref.getString("name", null);
+        upic = pref.getString("profilepic", null);
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -84,23 +88,22 @@ public class ViewOffers extends AppCompatActivity implements NavigationView.OnNa
             public void onClick(View view) {
 
                 Intent intent = new Intent(ViewOffers.this , User.class);
-
-                startActivity(intent);
-
+                intent.putExtra("id",uid)
+                ;                startActivity(intent);
                 //InsertLocation(UName, GetCityName);
             }
         });
-        //Intent intent = getIntent();
-        // id = intent.getExtras().getString("id");
+        Picasso.get()
+                .load(upic)
+                .into(img);
+        uname.setText(fname);
+
+
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent intent = new Intent(ViewOffers.this , Home.class);
-
-                startActivity(intent);
-
+                finish();
             }
         });
 
@@ -160,14 +163,17 @@ public class ViewOffers extends AppCompatActivity implements NavigationView.OnNa
 
         if (id == R.id.nav_appointment) {
             Intent intent = new Intent(ViewOffers.this , ViewAppointments.class);
+            intent.putExtra("id",uid);
             startActivity(intent);
         } else if (id == R.id.nav_bm) {
 
             Intent intent = new Intent(ViewOffers.this , ViewBookmarksActivity.class);
+            intent.putExtra("id",uid);
             startActivity(intent);
 
         } else if (id == R.id.nav_fave) {
             Intent intent = new Intent(ViewOffers.this , ViewFavouritesActivity.class);
+            intent.putExtra("id",uid);
             startActivity(intent);
 
 

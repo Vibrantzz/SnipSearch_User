@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -43,8 +42,8 @@ public class User extends AppCompatActivity implements NavigationView.OnNavigati
     private String uFcount;
     private String uRcount;
     private String uVcount;
-    private static final String url_profile = "http://test.epoqueapparels.com/Salon_App/userdetails.php";
-    public String email,id,user_id,user_name;
+    private static final String url_profile = "http://test.epoqueapparels.com/Salon/Salon_App/userdetails.php";
+    public String email,id,user_id,user_name,fname,upic;
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_PROFILE = "data";
     private static final String TAG_ID = "id";
@@ -65,6 +64,11 @@ public class User extends AppCompatActivity implements NavigationView.OnNavigati
         mToolbar.setNavigationIcon(R.drawable.backarrow1);
         setSupportActionBar(mToolbar);
 
+        SharedPreferences pref = getSharedPreferences("loginData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        id = pref.getString("userid", null);
+        fname = pref.getString("name", null);
+        upic = pref.getString("profilepic", null);
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -85,14 +89,17 @@ public class User extends AppCompatActivity implements NavigationView.OnNavigati
             public void onClick(View view) {
 
                 Intent intent = new Intent(User.this , User.class);
-
-                startActivity(intent);
-
+                intent.putExtra("id",id)
+                ;                startActivity(intent);
                 //InsertLocation(UName, GetCityName);
             }
         });
-        //Intent intent = getIntent();
-        // id = intent.getExtras().getString("id");
+        Picasso.get()
+                .load(upic)
+                .into(img);
+        uname.setText(fname);
+
+
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -199,6 +206,7 @@ public class User extends AppCompatActivity implements NavigationView.OnNavigati
 
         if (id == R.id.nav_appointment) {
             Intent intent = new Intent(User.this , ViewAppointments.class);
+            intent.putExtra("id",id);
             startActivity(intent);
         } else if (id == R.id.nav_bm) {
 

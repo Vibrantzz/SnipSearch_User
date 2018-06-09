@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,9 +26,9 @@ public class UReviewFragment extends Fragment {
     UReviewRecyclerViewAdapter myAdapter;
     RecyclerView myrv;
     String id,rid,u_id,u_name;
-    private static final String url_ureview = "http://test.epoqueapparels.com/Salon_App/ureviewlist.php";
-    private static final String url_like = "http://test.epoqueapparels.com/Salon_App/like.php";
-    private static final String url_unlike = "http://test.epoqueapparels.com/Salon_App/unlike.php";
+    private static final String url_ureview = "http://test.epoqueapparels.com/Salon/Salon_App/ureviewlist.php";
+    private static final String url_like = "http://test.epoqueapparels.com/Salon/Salon_App/like.php";
+    private static final String url_unlike = "http://test.epoqueapparels.com/Salon/Salon_App/unlike.php";
 
     JSONObject jsonObject;
     private static final String TAG_PROFILE = "data";

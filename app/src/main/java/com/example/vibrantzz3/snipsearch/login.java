@@ -2,14 +2,12 @@ package com.example.vibrantzz3.snipsearch;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,6 +17,19 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -48,17 +59,22 @@ import java.util.regex.Pattern;
 public class login extends AppCompatActivity {
     final String TAG = "LoginActivity";
     TextView new_user;
+    LoginButton fbloginbtn;
     ImageView login;
     EditText email , password;
     String personName,personEmail,user_name,user_email;
-    private final String serverUrl = "http://test.epoqueapparels.com/Salon_App/index1.php";
-    private static final String url_token = "http://test.epoqueapparels.com/Salon_App/token_update.php";
+    private final String serverUrl = "http://test.epoqueapparels.com/Salon/Salon_App/index1.php";
+    private static final String url_token = "http://test.epoqueapparels.com/Salon/Salon_App/token_update.php";
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_EMAIL = "email";
     private static final String TAG_TOKEN = "token";
     int success;
     protected String enteredUsername, enteredPassword,token;
     private static final int RC_SIGN_IN = 007;
+    CallbackManager callbackManager;
+    private static final String EMAIL = "email";
+    AccessTokenTracker accessTokenTracker;
+    ProfileTracker profileTracker;
 
     //---------------------------
 
@@ -72,6 +88,28 @@ public class login extends AppCompatActivity {
         //to get in full screen
         //this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
+        callbackManager = CallbackManager.Factory.create();
+
+        accessTokenTracker= new AccessTokenTracker() {
+            @Override
+            protected void onCurrentAccessTokenChanged(AccessToken oldToken, AccessToken newToken) {
+
+            }
+        };
+
+        profileTracker = new ProfileTracker() {
+            @Override
+            protected void onCurrentProfileChanged(Profile oldProfile, Profile newProfile) {
+                //displayMessage(newProfile);
+            }
+        };
+
+        accessTokenTracker.startTracking();
+        profileTracker.startTracking();
+
+        callbackManager = CallbackManager.Factory.create();
 
         new_user =(TextView) findViewById(R.id.txtsignup);
         login=(ImageView) findViewById(R.id.btnlogin);
@@ -86,6 +124,60 @@ public class login extends AppCompatActivity {
                 finish();
             }
         });
+        fbloginbtn=(LoginButton)findViewById(R.id.fblogin);
+        fbloginbtn.setReadPermissions("email");
+
+        fbloginbtn.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+
+            public void onSuccess(LoginResult loginResult) {
+
+
+                GraphRequest request =  GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject me, GraphResponse response) {
+
+                                if (response.getError() != null) {
+                                    // handle error
+                                } else {
+
+                                    user_name = me.optString("name");
+                                    user_email =response.getJSONObject().optString("email");
+
+                                    /*textView.setText(user_name);
+                                    textView1.setText(user_email);*/
+
+                                    TempGo(user_name, user_email);
+
+                                    Intent meIntent = new Intent(login.this, Home.class);
+                                    SharedPreferences pref = getSharedPreferences("loginData", MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = pref.edit();
+                                    editor.putString("email", user_email );
+                                    editor.commit();
+                                    startActivity(meIntent);
+
+                                }
+                            }
+                        });
+
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "name,email");
+                request.setParameters(parameters);
+                request.executeAsync();
+            }
+
+            @Override
+            public void onCancel() {
+                // App code
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                // App code
+            }
+        });
+
 
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -130,6 +222,13 @@ public class login extends AppCompatActivity {
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     // validating password with retype password
@@ -244,7 +343,48 @@ public class login extends AppCompatActivity {
         return returnedResult;
     }
 
+    public void TempGo(final String name,final String email) {
 
+        class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
+            @Override
+            protected String doInBackground(String... params) {
+
+                String NameHolder = name ;
+                String NameHolder1 = email ;
+
+
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+                nameValuePairs.add(new BasicNameValuePair("name", NameHolder));
+                nameValuePairs.add(new BasicNameValuePair("email", NameHolder1));
+
+
+                try {
+                    HttpClient httpClient = new DefaultHttpClient();
+                    HttpPost httpPost = new HttpPost(serverUrl);
+                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                    HttpResponse httpResponse = httpClient.execute(httpPost);
+                    HttpEntity httpEntity = httpResponse.getEntity();
+                } catch (ClientProtocolException e) {
+                } catch (IOException e) {
+                }
+                return "Data Inserted Successfully";
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+
+                super.onPostExecute(result);
+
+                Toast.makeText(login.this, "Data Submit Successfully", Toast.LENGTH_LONG).show();
+
+            }
+        }
+
+        SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();
+
+        sendPostReqAsyncTask.execute(name);
+    }
     class UpdateAsyncTask extends AsyncTask<String, String, String> {
 
 

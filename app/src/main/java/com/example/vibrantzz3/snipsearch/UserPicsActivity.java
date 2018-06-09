@@ -11,14 +11,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,25 +31,18 @@ import java.util.Map;
 
 public class UserPicsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     List<userPhotos> uData;
-    String id;
+    String id,uid,fname,upic,userid,sid;
     userPhotosRecyclerViewAdapter myAdapter;
     RecyclerView myrv;
-    private String uName;
-    private String uID;
-    private String uCity;
-    private String uFcount;
-    private String uRcount;
-    private String uVcount;
-    private static final String url_bm = "http://test.epoqueapparels.com/Salon_App/bookmarks.php";
+    private static final String url_menu = "http://test.epoqueapparels.com/Salon/Salon_App/usergallery.php";
     JSONObject jsonObject;
-    private static final String TAG_SUCCESS = "success";
     private static final String TAG_PROFILE = "data";
     private static final String TAG_ID = "id";
-    private static final String TAG_NAME = "name";
-    private static final String TAG_CITY = "city";
-    private static final String TAG_PIC = "profilepic";
-    private static final String TAG_RATE = "rating";
-    private static final String TAG_RCOUNT = "rcount";
+    private static final String TAG_PHOTO = "photo";
+    private static final String TAG_UNAME = "uname";
+    private static final String TAG_SNAME = "sname";
+    private static final String TAG_USERID = "userid";
+    private static final String TAG_SID = "salonid";
     ImageView img, touser;
     TextView uname;
 
@@ -65,6 +58,13 @@ public class UserPicsActivity extends AppCompatActivity implements NavigationVie
         mToolbar.setNavigationIcon(R.drawable.backarrow1);
         setSupportActionBar(mToolbar);
 
+
+
+        SharedPreferences pref = getSharedPreferences("loginData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        uid = pref.getString("userid", null);
+        fname = pref.getString("name", null);
+        upic = pref.getString("profilepic", null);
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -85,14 +85,17 @@ public class UserPicsActivity extends AppCompatActivity implements NavigationVie
             public void onClick(View view) {
 
                 Intent intent = new Intent(UserPicsActivity.this , User.class);
-
-                startActivity(intent);
-
+                intent.putExtra("id",uid)
+                ;                startActivity(intent);
                 //InsertLocation(UName, GetCityName);
             }
         });
-        //Intent intent = getIntent();
-        // id = intent.getExtras().getString("id");
+        Picasso.get()
+                .load(upic)
+                .into(img);
+        uname.setText(fname);
+
+
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,25 +103,68 @@ public class UserPicsActivity extends AppCompatActivity implements NavigationVie
                 finish();
             }
         });
-
+        Intent intent = getIntent();
+        id = intent.getExtras().getString("id");
         uData=new ArrayList<>();
 
 
-        for(int i=0;i<5;i++){
-            //SONObject json_data = jArray.getJSONObject(i);
-            //Parse the JSON response
-            uData.add(new userPhotos( "id","uid","name","thumbnail","location") );
-        }
-
-
-        myrv=(RecyclerView) findViewById(R.id.uphotos_recycler);
-        myAdapter=new userPhotosRecyclerViewAdapter(UserPicsActivity.this,uData);
-        myrv.setLayoutManager(new GridLayoutManager(UserPicsActivity.this, 4,GridLayoutManager.VERTICAL, false));
-        myrv.setAdapter(myAdapter);
+        new WelcomeAsyncTask().execute();
 
 
 
     }
+
+    private class WelcomeAsyncTask extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //Display progress bar
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            HttpJsonParser httpJsonParser = new HttpJsonParser();
+            Map<String, String> httpParams = new HashMap<>();
+            httpParams.put(TAG_ID, id);
+            jsonObject = httpJsonParser.makeHttpRequest(
+                    url_menu , "GET", httpParams);
+
+            return null;
+        }
+
+        protected void onPostExecute(final String result) {
+
+
+
+            try {
+                JSONArray jArray = jsonObject.getJSONArray(TAG_PROFILE);
+
+                for(int i=0;i<jArray.length();i++){
+                    JSONObject json_data = jArray.getJSONObject(i);
+                    //Parse the JSON response
+                    uData.add(new userPhotos( json_data.getString(TAG_ID),json_data.getString(TAG_PHOTO),json_data.getString(TAG_UNAME)+ " at ",json_data.getString(TAG_SNAME),json_data.getString(TAG_USERID),json_data.getString(TAG_SID)));
+                }
+
+
+                myrv=(RecyclerView) findViewById(R.id.uphotos_recycler);
+                myAdapter=new userPhotosRecyclerViewAdapter(UserPicsActivity.this,uData);
+                myrv.setLayoutManager(new GridLayoutManager(UserPicsActivity.this, 4,GridLayoutManager.VERTICAL, false));
+                myrv.setAdapter(myAdapter);
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+
+
+
+
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -126,14 +172,17 @@ public class UserPicsActivity extends AppCompatActivity implements NavigationVie
 
         if (id == R.id.nav_appointment) {
             Intent intent = new Intent(UserPicsActivity.this , ViewAppointments.class);
+            intent.putExtra("id",uid);
             startActivity(intent);
         } else if (id == R.id.nav_bm) {
 
             Intent intent = new Intent(UserPicsActivity.this , ViewBookmarksActivity.class);
+            intent.putExtra("id",uid);
             startActivity(intent);
 
         } else if (id == R.id.nav_fave) {
             Intent intent = new Intent(UserPicsActivity.this , ViewFavouritesActivity.class);
+            intent.putExtra("id",uid);
             startActivity(intent);
 
 

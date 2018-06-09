@@ -4,7 +4,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,7 +29,7 @@ public class beautyFragment extends Fragment {
     List <Salon> hairData;
     RecyclerViewAdapter myAdapter;
     RecyclerView myrv;
-    private static final String url_spa = "http://test.epoqueapparels.com/Salon_App/beauty.php";
+    private static final String url_spa = "http://test.epoqueapparels.com/Salon/Salon_App/beauty.php";
     JSONObject jsonObject;
     private static final String TAG_PROFILE = "data";
     private static final String TAG_ID = "id";

@@ -34,7 +34,8 @@
         android:fontFamily="@font/lato"
         android:text="Mumbai"
         android:textAllCaps="true"
-        android:textColor="@color/txtheadings" />
+        android:textColor="@color/txtheadings"
+        android:visibility="invisible"/>
 
     <FrameLayout
         android:id="@+id/frame1"

@@ -19,6 +19,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,10 +32,10 @@ import java.util.Map;
 
 public class AcademyList extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     List<Salon> hData;
-    String id;
+    String id,fname,upic;
     SalonListRecyclerViewAdapter myAdapter;
     RecyclerView myrv;
-    private static final String url_academylist = "http://test.epoqueapparels.com/Salon_App/academyFragment.php";
+    private static final String url_academylist = "http://test.epoqueapparels.com/Salon/Salon_App/academyFragment.php";
     JSONObject jsonObject;
     private static final String TAG_PROFILE = "data";
     private static final String TAG_ID = "id";
@@ -56,6 +58,11 @@ public class AcademyList extends AppCompatActivity implements NavigationView.OnN
         mToolbar.setNavigationIcon(R.drawable.backarrow1);
         setSupportActionBar(mToolbar);
 
+        SharedPreferences pref = getSharedPreferences("loginData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        id = pref.getString("userid", null);
+        fname = pref.getString("name", null);
+        upic = pref.getString("profilepic", null);
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -76,14 +83,17 @@ public class AcademyList extends AppCompatActivity implements NavigationView.OnN
             public void onClick(View view) {
 
                 Intent intent = new Intent(AcademyList.this , User.class);
-
-                startActivity(intent);
-
+                intent.putExtra("id",id)
+;                startActivity(intent);
                 //InsertLocation(UName, GetCityName);
             }
         });
-        //Intent intent = getIntent();
-        // id = intent.getExtras().getString("id");
+        Picasso.get()
+                .load(upic)
+                .into(img);
+        uname.setText(fname);
+
+
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,14 +139,17 @@ public class AcademyList extends AppCompatActivity implements NavigationView.OnN
 
         if (id == R.id.nav_appointment) {
             Intent intent = new Intent(AcademyList.this , ViewAppointments.class);
+            intent.putExtra("id",id);
             startActivity(intent);
         } else if (id == R.id.nav_bm) {
 
             Intent intent = new Intent(AcademyList.this , ViewBookmarksActivity.class);
+            intent.putExtra("id",id);
             startActivity(intent);
 
         } else if (id == R.id.nav_fave) {
             Intent intent = new Intent(AcademyList.this , ViewFavouritesActivity.class);
+            intent.putExtra("id",id);
             startActivity(intent);
 
 
@@ -198,7 +211,7 @@ public class AcademyList extends AppCompatActivity implements NavigationView.OnN
                         for(int i=0;i<jArray.length();i++){
                             JSONObject json_data = jArray.getJSONObject(i);
                             //Parse the JSON response
-                            hData.add(new Salon( json_data.getString(TAG_NAME), json_data.getString(TAG_LOC), json_data.getString(TAG_RATE), json_data.getString(TAG_PIC),json_data.getString(TAG_ID),"",json_data.getString(TAG_RCOUNT) ));
+                            hData.add(new Salon( json_data.getString(TAG_NAME), json_data.getString(TAG_LOC), json_data.getString(TAG_RATE), json_data.getString(TAG_PIC),json_data.getString(TAG_ID),id,json_data.getString(TAG_RCOUNT) ));
                         }
 
 

@@ -16,9 +16,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 public class Settings extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     ImageView img,touser;
-    TextView uname;
+    TextView uname,username;
+    String id,fname,upic;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +31,12 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
         mToolbar.setNavigationIcon(R.drawable.backarrow1);
         setSupportActionBar(mToolbar);
 
+
+        SharedPreferences pref = getSharedPreferences("loginData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        id = pref.getString("userid", null);
+        fname = pref.getString("name", null);
+        upic = pref.getString("profilepic", null);
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -48,21 +57,23 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View view) {
 
                 Intent intent = new Intent(Settings.this , User.class);
-
-                startActivity(intent);
-
+                intent.putExtra("id",id)
+                ;                startActivity(intent);
                 //InsertLocation(UName, GetCityName);
             }
         });
-        //Intent intent = getIntent();
-        // id = intent.getExtras().getString("id");
+        Picasso.get()
+                .load(upic)
+                .into(img);
+        uname.setText(fname);
+
+        username=(TextView) findViewById(R.id.txtname);
+        username.setText(fname);
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Settings.this , Home.class);
-
-                startActivity(intent);
+                finish();
             }
         });
 
@@ -126,14 +137,17 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
 
         if (id == R.id.nav_appointment) {
             Intent intent = new Intent(Settings.this , ViewAppointments.class);
+            intent.putExtra("id",id);
             startActivity(intent);
         } else if (id == R.id.nav_bm) {
 
             Intent intent = new Intent(Settings.this , ViewBookmarksActivity.class);
+            intent.putExtra("id",id);
             startActivity(intent);
 
         } else if (id == R.id.nav_fave) {
             Intent intent = new Intent(Settings.this , ViewFavouritesActivity.class);
+            intent.putExtra("id",id);
             startActivity(intent);
 
 

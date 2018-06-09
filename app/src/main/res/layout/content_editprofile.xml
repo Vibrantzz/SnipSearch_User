@@ -49,7 +49,7 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/etname"
+        android:id="@+id/etold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="false"
@@ -67,7 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignParentStart="false"
-        android:layout_below="@+id/etname"
+        android:layout_below="@+id/etold"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:layout_marginTop="5dp"
@@ -90,7 +90,7 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/etcity"
+        android:id="@+id/etnew"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="false"
@@ -108,7 +108,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignParentStart="false"
-        android:layout_below="@+id/etcity"
+        android:layout_below="@+id/etnew"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:layout_marginTop="5dp"
@@ -131,7 +131,7 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/etphone"
+        android:id="@+id/etconfirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="false"
@@ -149,7 +149,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignParentStart="false"
-        android:layout_below="@+id/etphone"
+        android:layout_below="@+id/etconfirm"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:layout_marginTop="5dp"

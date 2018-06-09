@@ -19,6 +19,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,9 +30,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ViewBookmarksActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
-    List<Bookmarks> bmData;
-    String id;
+public class ViewBookmarksActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    List<Bookmarks> visitedData;
+    String id,uid,fname,upic;
     BookmarkRecyclerViewAdapter myAdapter;
     RecyclerView myrv;
     private String uName;
@@ -39,7 +41,7 @@ public class ViewBookmarksActivity extends AppCompatActivity implements Navigati
     private String uFcount;
     private String uRcount;
     private String uVcount;
-    private static final String url_bm = "http://test.epoqueapparels.com/Salon_App/bookmarks.php";
+    private static final String url_visited = "http://test.epoqueapparels.com/Salon/Salon_App/bookmarks.php";
     JSONObject jsonObject;
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_PROFILE = "data";
@@ -50,7 +52,6 @@ public class ViewBookmarksActivity extends AppCompatActivity implements Navigati
     private static final String TAG_RATE = "rating";
     private static final String TAG_RCOUNT = "rcount";
 
-
     ImageView img, touser;
     TextView uname;
 
@@ -58,12 +59,18 @@ public class ViewBookmarksActivity extends AppCompatActivity implements Navigati
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookmarks);
-
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("Bookmarks");
         mToolbar.setNavigationIcon(R.drawable.backarrow1);
         setSupportActionBar(mToolbar);
 
+
+
+        SharedPreferences pref = getSharedPreferences("loginData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        uid = pref.getString("userid", null);
+        fname = pref.getString("name", null);
+        upic = pref.getString("profilepic", null);
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -84,42 +91,36 @@ public class ViewBookmarksActivity extends AppCompatActivity implements Navigati
             public void onClick(View view) {
 
                 Intent intent = new Intent(ViewBookmarksActivity.this , User.class);
-
-                startActivity(intent);
-
+                intent.putExtra("id",uid)
+                ;                startActivity(intent);
                 //InsertLocation(UName, GetCityName);
             }
         });
-        //Intent intent = getIntent();
-        // id = intent.getExtras().getString("id");
+        Picasso.get()
+                .load(upic)
+                .into(img);
+        uname.setText(fname);
+
+
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ViewBookmarksActivity.this , Home.class);
-
-                startActivity(intent);
+                finish();
             }
         });
+        Intent intent = getIntent();
+        id = intent.getExtras().getString("id");
 
-        bmData=new ArrayList<>();
-
-
-        for(int i=0;i<5;i++){
-            //SONObject json_data = jArray.getJSONObject(i);
-            //Parse the JSON response
-            bmData.add(new Bookmarks( TAG_NAME,TAG_CITY,TAG_RATE,TAG_PIC,TAG_ID,id,TAG_RCOUNT) );
-        }
+        visitedData=new ArrayList<>();
 
 
-        myrv=(RecyclerView) findViewById(R.id.bookmark_recycler);
-        myAdapter=new BookmarkRecyclerViewAdapter(ViewBookmarksActivity.this,bmData);
-        myrv.setLayoutManager(new LinearLayoutManager(ViewBookmarksActivity.this));
-        myrv.setAdapter(myAdapter);
 
+        new WelcomeAsyncTask().execute();
 
 
     }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -158,14 +159,17 @@ public class ViewBookmarksActivity extends AppCompatActivity implements Navigati
 
         if (id == R.id.nav_appointment) {
             Intent intent = new Intent(ViewBookmarksActivity.this , ViewAppointments.class);
+            intent.putExtra("id",uid);
             startActivity(intent);
         } else if (id == R.id.nav_bm) {
 
             Intent intent = new Intent(ViewBookmarksActivity.this , ViewBookmarksActivity.class);
+            intent.putExtra("id",uid);
             startActivity(intent);
 
         } else if (id == R.id.nav_fave) {
             Intent intent = new Intent(ViewBookmarksActivity.this , ViewFavouritesActivity.class);
+            intent.putExtra("id",uid);
             startActivity(intent);
 
 
@@ -195,8 +199,58 @@ public class ViewBookmarksActivity extends AppCompatActivity implements Navigati
 
 
 
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    private class WelcomeAsyncTask extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //Display progress bar
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            HttpJsonParser httpJsonParser = new HttpJsonParser();
+            Map<String, String> httpParams = new HashMap<>();
+            httpParams.put(TAG_ID, id);
+            jsonObject = httpJsonParser.makeHttpRequest(
+                    url_visited , "GET", httpParams);
+
+            return null;
+        }
+
+        protected void onPostExecute(final String result) {
+
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    try {
+                        JSONArray jArray = jsonObject.getJSONArray(TAG_PROFILE);
+
+                        for(int i=0;i<jArray.length();i++){
+                            JSONObject json_data = jArray.getJSONObject(i);
+                            //Parse the JSON response
+                            visitedData.add(new Bookmarks( json_data.getString(TAG_NAME), json_data.getString(TAG_CITY), json_data.getString(TAG_RATE), json_data.getString(TAG_PIC),json_data.getString(TAG_ID),id," Based on "+ json_data.getString(TAG_RCOUNT) +" Reviews"));
+                        }
+
+
+                        myrv=(RecyclerView) findViewById(R.id.bookmark_recycler);
+                        myAdapter=new BookmarkRecyclerViewAdapter(ViewBookmarksActivity.this,visitedData);
+                        myrv.setLayoutManager(new LinearLayoutManager(ViewBookmarksActivity.this));
+                        myrv.setAdapter(myAdapter);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+
+
+    }
+
 }

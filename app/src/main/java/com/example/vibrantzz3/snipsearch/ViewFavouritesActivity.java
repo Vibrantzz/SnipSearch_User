@@ -19,6 +19,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,9 +30,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ViewFavouritesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
-    List<Favourites> fData;
-    String id;
+public class ViewFavouritesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    List<Favourites> visitedData;
+    String id,uid,fname,upic;
     FavouritesRecyclerViewAdapter myAdapter;
     RecyclerView myrv;
     private String uName;
@@ -39,7 +41,7 @@ public class ViewFavouritesActivity extends AppCompatActivity implements Navigat
     private String uFcount;
     private String uRcount;
     private String uVcount;
-    private static final String url_fav = "http://test.epoqueapparels.com/Salon_App/favourites.php";
+    private static final String url_visited = "http://test.epoqueapparels.com/Salon/Salon_App/favourites.php";
     JSONObject jsonObject;
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_PROFILE = "data";
@@ -53,7 +55,6 @@ public class ViewFavouritesActivity extends AppCompatActivity implements Navigat
     ImageView img, touser;
     TextView uname;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +64,13 @@ public class ViewFavouritesActivity extends AppCompatActivity implements Navigat
         mToolbar.setNavigationIcon(R.drawable.backarrow1);
         setSupportActionBar(mToolbar);
 
+
+
+        SharedPreferences pref = getSharedPreferences("loginData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        uid = pref.getString("userid", null);
+        fname = pref.getString("name", null);
+        upic = pref.getString("profilepic", null);
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -83,47 +91,35 @@ public class ViewFavouritesActivity extends AppCompatActivity implements Navigat
             public void onClick(View view) {
 
                 Intent intent = new Intent(ViewFavouritesActivity.this , User.class);
-
-                startActivity(intent);
-
+                intent.putExtra("id",uid)
+                ;                startActivity(intent);
                 //InsertLocation(UName, GetCityName);
             }
         });
-        //Intent intent = getIntent();
-        // id = intent.getExtras().getString("id");
+        Picasso.get()
+                .load(upic)
+                .into(img);
+        uname.setText(fname);
+
+
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ViewFavouritesActivity.this , Home.class);
-
-                startActivity(intent);
-
+                finish();
             }
         });
-        //Intent intent = getIntent();
-        //id = intent.getExtras().getString("id");
+        Intent intent = getIntent();
+        id = intent.getExtras().getString("id");
 
-        fData=new ArrayList<>();
-
-
-        for(int i=0;i<5;i++){
-
-            //Parse the JSON response
-            fData.add(new Favourites( TAG_NAME,TAG_CITY,TAG_RATE,TAG_PIC,TAG_ID,id,TAG_RCOUNT));
-        }
+        visitedData=new ArrayList<>();
 
 
-        myrv=(RecyclerView) findViewById(R.id.favourites_recycler);
-        myAdapter=new FavouritesRecyclerViewAdapter(ViewFavouritesActivity.this,fData);
-        myrv.setLayoutManager(new LinearLayoutManager(ViewFavouritesActivity.this));
-        myrv.setAdapter(myAdapter);
 
-
+        new WelcomeAsyncTask().execute();
 
 
     }
-
 
     @Override
     public void onBackPressed() {
@@ -163,14 +159,17 @@ public class ViewFavouritesActivity extends AppCompatActivity implements Navigat
 
         if (id == R.id.nav_appointment) {
             Intent intent = new Intent(ViewFavouritesActivity.this , ViewAppointments.class);
+            intent.putExtra("id",uid);
             startActivity(intent);
         } else if (id == R.id.nav_bm) {
 
             Intent intent = new Intent(ViewFavouritesActivity.this , ViewBookmarksActivity.class);
+            intent.putExtra("id",uid);
             startActivity(intent);
 
         } else if (id == R.id.nav_fave) {
             Intent intent = new Intent(ViewFavouritesActivity.this , ViewFavouritesActivity.class);
+            intent.putExtra("id",uid);
             startActivity(intent);
 
 
@@ -200,8 +199,58 @@ public class ViewFavouritesActivity extends AppCompatActivity implements Navigat
 
 
 
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    private class WelcomeAsyncTask extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //Display progress bar
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            HttpJsonParser httpJsonParser = new HttpJsonParser();
+            Map<String, String> httpParams = new HashMap<>();
+            httpParams.put(TAG_ID, id);
+            jsonObject = httpJsonParser.makeHttpRequest(
+                    url_visited , "GET", httpParams);
+
+            return null;
+        }
+
+        protected void onPostExecute(final String result) {
+
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    try {
+                        JSONArray jArray = jsonObject.getJSONArray(TAG_PROFILE);
+
+                        for(int i=0;i<jArray.length();i++){
+                            JSONObject json_data = jArray.getJSONObject(i);
+                            //Parse the JSON response
+                            visitedData.add(new Favourites( json_data.getString(TAG_NAME), json_data.getString(TAG_CITY), json_data.getString(TAG_RATE), json_data.getString(TAG_PIC),json_data.getString(TAG_ID),id," Based on "+ json_data.getString(TAG_RCOUNT) +" Reviews"));
+                        }
+
+
+                        myrv=(RecyclerView) findViewById(R.id.favourites_recycler);
+                        myAdapter=new FavouritesRecyclerViewAdapter(ViewFavouritesActivity.this,visitedData);
+                        myrv.setLayoutManager(new LinearLayoutManager(ViewFavouritesActivity.this));
+                        myrv.setAdapter(myAdapter);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+
+
+    }
+
 }

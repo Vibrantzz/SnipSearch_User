@@ -19,6 +19,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,7 +32,7 @@ import java.util.Map;
 
 public class ViewVisitedActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     List<Visited> visitedData;
-    String id;
+    String id,uid,fname,upic;
     VisitedRecyclerViewAdapter myAdapter;
     RecyclerView myrv;
     private String uName;
@@ -39,7 +41,7 @@ public class ViewVisitedActivity extends AppCompatActivity implements Navigation
     private String uFcount;
     private String uRcount;
     private String uVcount;
-    private static final String url_visited = "http://test.epoqueapparels.com/Salon_App/visited.php";
+    private static final String url_visited = "http://test.epoqueapparels.com/Salon/Salon_App/visited.php";
     JSONObject jsonObject;
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_PROFILE = "data";
@@ -64,6 +66,13 @@ public class ViewVisitedActivity extends AppCompatActivity implements Navigation
 
 
 
+        SharedPreferences pref = getSharedPreferences("loginData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        uid = pref.getString("userid", null);
+        fname = pref.getString("name", null);
+        upic = pref.getString("profilepic", null);
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -82,14 +91,17 @@ public class ViewVisitedActivity extends AppCompatActivity implements Navigation
             public void onClick(View view) {
 
                 Intent intent = new Intent(ViewVisitedActivity.this , User.class);
-                intent.putExtra("id",id);
-                startActivity(intent);
-
+                intent.putExtra("id",uid)
+                ;                startActivity(intent);
                 //InsertLocation(UName, GetCityName);
             }
         });
-        //Intent intent = getIntent();
-        // id = intent.getExtras().getString("id");
+        Picasso.get()
+                .load(upic)
+                .into(img);
+        uname.setText(fname);
+
+
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,16 +159,17 @@ public class ViewVisitedActivity extends AppCompatActivity implements Navigation
 
         if (id == R.id.nav_appointment) {
             Intent intent = new Intent(ViewVisitedActivity.this , ViewAppointments.class);
+            intent.putExtra("id",uid);
             startActivity(intent);
         } else if (id == R.id.nav_bm) {
 
             Intent intent = new Intent(ViewVisitedActivity.this , ViewBookmarksActivity.class);
-            intent.putExtra("id",id);
+            intent.putExtra("id",uid);
             startActivity(intent);
 
         } else if (id == R.id.nav_fave) {
             Intent intent = new Intent(ViewVisitedActivity.this , ViewFavouritesActivity.class);
-            intent.putExtra("id",id);
+            intent.putExtra("id",uid);
             startActivity(intent);
 
 

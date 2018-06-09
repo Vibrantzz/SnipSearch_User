@@ -1,6 +1,5 @@
 package com.example.vibrantzz3.snipsearch;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,14 +11,10 @@ import android.view.ViewGroup;
 
 import com.rbrooks.indefinitepagerindicator.IndefinitePagerIndicator;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Vibrantzz3 on 2/5/2018.
@@ -30,7 +25,7 @@ public class OffersFragment extends Fragment {
     List <Offers> sData;
     OffersRecyclerViewAdapter myAdapter;
     RecyclerView myrv;
-    private static final String url_spa = "http://test.epoqueapparels.com/Salon_App/spaFragment.php";
+    private static final String url_spa = "http://test.epoqueapparels.com/Salon/Salon_App/spaFragment.php";
     JSONObject jsonObject;
     private static final String TAG_PROFILE = "data";
     private static final String TAG_ID = "id";

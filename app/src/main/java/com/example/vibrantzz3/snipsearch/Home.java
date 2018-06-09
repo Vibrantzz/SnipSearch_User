@@ -1,13 +1,11 @@
 package com.example.vibrantzz3.snipsearch;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,9 +18,9 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.squareup.picasso.Picasso;
+import com.vistrav.ask.Ask;
 
 import org.json.JSONObject;
 
@@ -33,6 +31,7 @@ public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Bundle bundle;
+    private GoogleApiClient mGoogleApiClient;
    public static final String KEY_SUCCESS = "success";
     public static final String KEY_DATA = "data";
     public static final String KEY_EMAIL = "email";
@@ -40,13 +39,12 @@ public class Home extends AppCompatActivity
     public static final String KEY_NAME = "name";
     public static final String KEY_PROFILEPIC = "profilepic";
     String ServerURL = "http://test.epoqueapparels.com/CRUD/getSalonUserFilterData.php" ;
-    public static final String BASE_URL = "http://test.epoqueapparels.com/Salon_App/welcome.php";
+    public static final String BASE_URL = "http://test.epoqueapparels.com/Salon/Salon_App/welcome.php";
     private String emailStored, GetCityName;
     private String UName,UID,userid,profile;
     private TextView uemail,uname,hairall,beautyall,spaall,academyall;
     String forwardCityText;
-    TextView cityText;
-    LocationManager locationManager;
+    TextView cityText,changeloc;
     ImageView img,touser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +52,19 @@ public class Home extends AppCompatActivity
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        setSupportActionBar(toolbar);
+
+        Ask.on(this)
+                .forPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
+                .go();
+
+        Ask.on(this)
+                .forPermissions(Manifest.permission.ACCESS_COARSE_LOCATION)
+                .go();
+
+
+
 
         SharedPreferences pref = getSharedPreferences("loginData", MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
@@ -126,7 +137,8 @@ public class Home extends AppCompatActivity
         });
 
 
-
+        cityText = (TextView) findViewById(R.id.txtuloc);
+        changeloc = (TextView) findViewById(R.id.txtchangeloc);
         hairFragment hf =new hairFragment();
         android.support.v4.app.FragmentManager manager=getSupportFragmentManager();
 
@@ -184,8 +196,12 @@ public class Home extends AppCompatActivity
 
         new WelcomeAsyncTask().execute();
 
-
     }
+
+
+
+
+
 
     @Override
     public void onBackPressed() {
@@ -315,6 +331,7 @@ public class Home extends AppCompatActivity
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("userid", userid);
                     editor.putString("name", UName);
+                    editor.putString("profilepic", profile);
                     editor.apply();
 
                 }

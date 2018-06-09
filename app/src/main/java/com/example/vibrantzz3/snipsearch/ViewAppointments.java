@@ -18,10 +18,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 public class ViewAppointments extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 TabLayout tablayout;
 ViewPager viewpager;
 Bundle bundle;
+String id,fname,upic;
 ImageView img, touser;
 TextView uname;
     @Override
@@ -34,6 +37,13 @@ TextView uname;
         mToolbar.setNavigationIcon(R.drawable.backarrow1);
         //setSupportActionBar(mToolbar);
 
+
+
+        SharedPreferences pref = getSharedPreferences("loginData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        id = pref.getString("userid", null);
+        fname = pref.getString("name", null);
+        upic = pref.getString("profilepic", null);
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -54,24 +64,27 @@ TextView uname;
             public void onClick(View view) {
 
                 Intent intent = new Intent(ViewAppointments.this , User.class);
-
-                startActivity(intent);
-
+                intent.putExtra("id",id)
+                ;                startActivity(intent);
                 //InsertLocation(UName, GetCityName);
             }
         });
-        //Intent intent = getIntent();
-        // id = intent.getExtras().getString("id");
+        Picasso.get()
+                .load(upic)
+                .into(img);
+        uname.setText(fname);
+
+
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent intent = new Intent(ViewAppointments.this , Home.class);
-
-                startActivity(intent);
+                finish();
             }
         });
+
+        Bundle bundle = new Bundle();
+        bundle.putString("id",id);
         tablayout = (TabLayout) findViewById(R.id.apptabs);
         viewpager = (ViewPager) findViewById(R.id.appviewpager);
         AppointmentViewPagerAdapter adapter = new AppointmentViewPagerAdapter(getSupportFragmentManager(),bundle);
@@ -122,14 +135,17 @@ TextView uname;
 
         if (id == R.id.nav_appointment) {
             Intent intent = new Intent(ViewAppointments.this , ViewAppointments.class);
+            intent.putExtra("id",id);
             startActivity(intent);
         } else if (id == R.id.nav_bm) {
 
             Intent intent = new Intent(ViewAppointments.this , ViewBookmarksActivity.class);
+            intent.putExtra("id",id);
             startActivity(intent);
 
         } else if (id == R.id.nav_fave) {
             Intent intent = new Intent(ViewAppointments.this , ViewFavouritesActivity.class);
+            intent.putExtra("id",id);
             startActivity(intent);
 
 

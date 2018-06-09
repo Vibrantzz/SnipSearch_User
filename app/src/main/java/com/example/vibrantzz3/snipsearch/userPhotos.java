@@ -6,14 +6,31 @@ package com.example.vibrantzz3.snipsearch;
 
 public class userPhotos {
 
-    public String ID, Name, City, Thumbnail, Image;
+    public String ID, Image, UName, SName,UID,SID;
 
-    public userPhotos(String id, String name, String city, String thumbnail, String image) {
-        Name = name;
+    public userPhotos(String id, String image, String uname, String sname, String uid, String sid) {
         ID=id;
-        City = city;
-        Thumbnail = thumbnail;
         Image = image;
+        UName=uname;
+        SName=sname;
+        UID=uid;
+        SID=sid;
+    }
+
+    public String getUID() {
+        return UID;
+    }
+
+    public void setUID(String UID) {
+        this.UID = UID;
+    }
+
+    public String getSID() {
+        return SID;
+    }
+
+    public void setSID(String SID) {
+        this.SID = SID;
     }
 
     public String getID() {
@@ -24,28 +41,20 @@ public class userPhotos {
         this.ID = ID;
     }
 
-    public String getName() {
-        return Name;
+    public String getUName() {
+        return UName;
     }
 
-    public void setName(String name) {
-        Name = name;
+    public void setUName(String UName) {
+        this.UName = UName;
     }
 
-    public String getCity() {
-        return City;
+    public String getSName() {
+        return SName;
     }
 
-    public void setCity(String city) {
-        City = city;
-    }
-
-    public String getThumbnail() {
-        return Thumbnail;
-    }
-
-    public void setThumbnail(String thumbnail) {
-        Thumbnail = thumbnail;
+    public void setSName(String SName) {
+        this.SName = SName;
     }
 
     public String getImage() {

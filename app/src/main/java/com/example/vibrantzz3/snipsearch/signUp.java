@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -43,7 +42,7 @@ public class signUp extends AppCompatActivity {
     ImageView btn_sign_up;
     //--for user register---
     protected String enteredUsername, enteredPassword, enteredEmail, enteredContact, passconfirm;
-    private final String serverUrl = "http://test.epoqueapparels.com/Salon_App/index1.php";
+    private final String serverUrl = "http://test.epoqueapparels.com/Salon/Salon_App/index1.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +53,7 @@ public class signUp extends AppCompatActivity {
         //this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_sign_up);
 
-        name = (EditText) findViewById(R.id.etname);
+        name = (EditText) findViewById(R.id.etold);
         email = (EditText) findViewById(R.id.etemail);
         password =(EditText) findViewById(R.id.etpass);
         confirmpwd=(EditText)findViewById(R.id.reetpass);

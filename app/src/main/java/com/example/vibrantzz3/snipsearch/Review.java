@@ -1,15 +1,19 @@
 package com.example.vibrantzz3.snipsearch;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
-import android.graphics.Color;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,26 +25,31 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.vistrav.ask.Ask;
+
+import net.gotev.uploadservice.MultipartUploadRequest;
+import net.gotev.uploadservice.UploadNotificationConfig;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class Review extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     ImageView imgUpload;
     Button submit;
-    ImageView img, touser;
+    ImageView img, touser, pic1,pic2,pic3,pic4,up1,up2,up3,up4,del1,del2,del3,del4;
     TextView uname;
     private ImageView addreview,addpic;
     private EditText reviewtext;
@@ -49,28 +58,40 @@ public class Review extends AppCompatActivity implements NavigationView.OnNaviga
     String review;
     String rate;
     String formatDate;
-    private static final String url_profile = "http://test.epoqueapparels.com/Salon_App/addreview.php";
-    private static final String url_notifs = "http://test.epoqueapparels.com/Salon_App/sendSalonPush.php";
+    String imgpath,id,pic,emailStored,ConvertImage,path,fname,upic;
+    private static final String url_profile = "http://test.epoqueapparels.com/Salon/Salon_App/addreview.php";
+    private static final String url_notifs = "http://test.epoqueapparels.com/Salon/Salon_App/sendSalonPush.php";
+    private static final String UPLOAD_URL = "http://test.epoqueapparels.com/Salon/Salon_App/imguploaduser.php";
+
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_PROFILE = "data";
     private static final String TAG_UID = "user_id";
     private static final String TAG_SID = "salon_id";
     private static final String TAG_REVIEW = "review_text";
     private static final String TAG_RATE = "rating";
+    private static final String TAG_PIC = "photo";
     private TextView sname,saddr;
     private int success;
-    private static final int REQUEST_CODE_CHOOSE = 23;
+    private static final int IMAGE_REQUEST_CODE = 3;
+    private static final int STORAGE_PERMISSION_CODE = 123;
     List<Uri> mSelected;
-    LinearLayout imglayout;
+    Bitmap bitmap;
+    private Uri filePath;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.review);
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("Hair");
+        mToolbar.setTitle("Review");
         mToolbar.setNavigationIcon(R.drawable.backarrow1);
         setSupportActionBar(mToolbar);
 
+
+        SharedPreferences pref = getSharedPreferences("loginData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        id = pref.getString("userid", null);
+        usname = pref.getString("name", null);
+        upic = pref.getString("profilepic", null);
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -91,14 +112,17 @@ public class Review extends AppCompatActivity implements NavigationView.OnNaviga
             public void onClick(View view) {
 
                 Intent intent = new Intent(Review.this , User.class);
-
-                startActivity(intent);
-
+                intent.putExtra("id",uid)
+                ;                startActivity(intent);
                 //InsertLocation(UName, GetCityName);
             }
         });
-        //Intent intent = getIntent();
-        // id = intent.getExtras().getString("id");
+        Picasso.get()
+                .load(upic)
+                .into(img);
+        uname.setText(usname);
+
+
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,8 +133,18 @@ public class Review extends AppCompatActivity implements NavigationView.OnNaviga
 
         imgUpload = (ImageView) findViewById(R.id.imageUpload);
         submit = (Button) findViewById(R.id.submit);
-
-
+        pic1 = (ImageView) findViewById(R.id.img1);
+        pic2 = (ImageView) findViewById(R.id.img2);
+        pic3 = (ImageView) findViewById(R.id.img3);
+        pic4 = (ImageView) findViewById(R.id.img4);
+        up1 = (ImageView) findViewById(R.id.up1);
+        up2 = (ImageView) findViewById(R.id.up2);
+        up3 = (ImageView) findViewById(R.id.up3);
+        up4 = (ImageView) findViewById(R.id.up4);
+        del1 = (ImageView) findViewById(R.id.del1);
+        del2 = (ImageView) findViewById(R.id.del2);
+        del3 = (ImageView) findViewById(R.id.del3);
+        del4 = (ImageView) findViewById(R.id.del4);
 
         imgUpload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,9 +169,7 @@ public class Review extends AppCompatActivity implements NavigationView.OnNaviga
         sid = intent.getExtras().getString("id");
         name = intent.getExtras().getString("name");
         addr = intent.getExtras().getString("loc");
-        SharedPreferences pref = getSharedPreferences("loginData", MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        usname = pref.getString("name", null);
+
 
 
         Calendar c = Calendar.getInstance();
@@ -145,7 +177,7 @@ public class Review extends AppCompatActivity implements NavigationView.OnNaviga
 
         sname=(TextView)findViewById(R.id.salonName);
         saddr=(TextView)findViewById(R.id.salonAddr);
-        reviewtext=(EditText)findViewById(R.id.etname);
+        reviewtext=(EditText)findViewById(R.id.etold);
         rating=(RatingBar)findViewById(R.id.rating);
 
         sname.setText(name);
@@ -156,6 +188,81 @@ public class Review extends AppCompatActivity implements NavigationView.OnNaviga
             @Override
             public void onClick(View view) {
                 addMovie();
+
+            }
+        });
+
+        pic1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requestStoragePermission();
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Complete action using"), IMAGE_REQUEST_CODE);
+
+            }
+        });
+
+        pic2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requestStoragePermission();
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Complete action using"), IMAGE_REQUEST_CODE);
+
+            }
+        });
+        pic3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requestStoragePermission();
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Complete action using"), IMAGE_REQUEST_CODE);
+
+            }
+        });
+        pic4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requestStoragePermission();
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Complete action using"), IMAGE_REQUEST_CODE);
+
+            }
+        });
+
+        up1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                uploadMultipart();
+
+            }
+        });
+        up2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                uploadMultipart();
+
+            }
+        });
+        up3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                uploadMultipart();
+
+            }
+        });
+        up4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                uploadMultipart();
 
             }
         });
@@ -265,6 +372,97 @@ public class Review extends AppCompatActivity implements NavigationView.OnNaviga
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == IMAGE_REQUEST_CODE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            filePath = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                pic1.setImageBitmap(bitmap);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void uploadMultipart() {
+
+
+        //getting the actual path of the image
+        String path = getPath(filePath);
+
+        //Uploading code
+        try {
+            String uploadId = UUID.randomUUID().toString();
+
+            //Creating a multi part request
+            new MultipartUploadRequest(this, uploadId, UPLOAD_URL)
+                    .addFileToUpload(path, "photo") //Adding file
+
+                    .addParameter(TAG_UID, sid) //Adding text parameter to the request
+                    .addParameter(TAG_SID, sid) //Adding text parameter to the request
+
+                    .setNotificationConfig(new UploadNotificationConfig())
+                    .setMaxRetries(2)
+                    .startUpload(); //Starting the upload
+        } catch (Exception exc) {
+            Toast.makeText(this, exc.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public String getPath(Uri uri) {
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        String document_id = cursor.getString(0);
+        document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
+        cursor.close();
+
+        cursor = getContentResolver().query(
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
+        cursor.moveToFirst();
+        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+        cursor.close();
+
+        return path;
+    }
+
+    private void requestStoragePermission() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+            return;
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            //If the user has denied the permission previously your code will come to this block
+            //Here you can explain why you need this permission
+            //Explain here why you need this permission
+        }
+        //And finally ask for the permission
+        ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
+    }
+
+    //This method will be called when the user will tap on allow or deny
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        //Checking the request code of our request
+        if (requestCode == STORAGE_PERMISSION_CODE) {
+
+            //If permission is granted
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //Displaying a toast
+            } else {
+                //Displaying another toast if permission is not granted
+                Toast.makeText(this, "Oops you just denied the permission", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+
+
+
+
+
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -302,14 +500,17 @@ public class Review extends AppCompatActivity implements NavigationView.OnNaviga
 
         if (id == R.id.nav_appointment) {
             Intent intent = new Intent(Review.this , ViewAppointments.class);
+            intent.putExtra("id",uid);
             startActivity(intent);
         } else if (id == R.id.nav_bm) {
 
             Intent intent = new Intent(Review.this , ViewBookmarksActivity.class);
+            intent.putExtra("id",uid);
             startActivity(intent);
 
         } else if (id == R.id.nav_fave) {
             Intent intent = new Intent(Review.this , ViewFavouritesActivity.class);
+            intent.putExtra("id",uid);
             startActivity(intent);
 
 

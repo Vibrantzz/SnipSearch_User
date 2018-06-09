@@ -1,26 +1,18 @@
 package com.example.vibrantzz3.snipsearch;
 
 
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.AssetManager;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
@@ -29,16 +21,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
-import android.widget.Scroller;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,17 +48,11 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import static android.view.View.GONE;
+import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
 /*import java.text.SimpleDateFormat;
@@ -79,21 +61,21 @@ import java.util.HashMap;
 import java.util.Map;*/
 
 public class SalonProfile extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private TextView typelist,speclist,s_name,s_addr,s_address,s_timings,soffers,s_payment,s_rating,s_contact,saddr,view,fave,bmtxt;
+    private TextView maps,typelist,speclist,s_name,s_addr,s_address,s_timings,soffers,s_payment,s_rating,s_contact,saddr,view,fave,bmtxt;
     private ImageView simg,onpark,offpark,onac,offac,onkids,offkids,onwifi,offwifi,onapp,offapp,svisited,sbookmarked,sbook,sbooked,rate,sviewr,sunv,sunbm,sunfav,sfave, scalled, snotcalled;
     private Toolbar toolbar;
     private CardView menucard;
 
     Button buttonScrollDown;
-    private String timing,uname,visited,isbm,isfave,id,pricing,rcount,formatDate,profilepic,name,addr,address,timings,ac,kidsfriendly,wifi,parking,type,payment,rating,contact,uid,offers,stype,servspecs;
-    private static final String url_profile = "http://test.epoqueapparels.com/Salon_App/salondetails.php";
-    private static final String url_visited = "http://test.epoqueapparels.com/Salon_App/addvisited.php";
-    private static final String url_unvisited = "http://test.epoqueapparels.com/Salon_App/removevisited.php";
-    private static final String url_addbm = "http://test.epoqueapparels.com/Salon_App/addbm.php";
-    private static final String url_notifs = "http://test.epoqueapparels.com/Salon_App/sendSalonPush.php";
-    private static final String url_removebm = "http://test.epoqueapparels.com/Salon_App/removebm.php";
-    private static final String url_addfave = "http://test.epoqueapparels.com/Salon_App/addfave.php";
-    private static final String url_removefave = "http://test.epoqueapparels.com/Salon_App/removefave.php";
+    private String fname,upic,timing,uname,visited,isbm,isfave,id,pricing,rcount,formatDate,profilepic,name,addr,address,timings,ac,kidsfriendly,wifi,parking,type,payment,rating,contact,uid,offers,stype,servspecs;
+    private static final String url_profile = "http://test.epoqueapparels.com/Salon/Salon_App/salondetails.php";
+    private static final String url_visited = "http://test.epoqueapparels.com/Salon/Salon_App/addvisited.php";
+    private static final String url_unvisited = "http://test.epoqueapparels.com/Salon/Salon_App/removevisited.php";
+    private static final String url_addbm = "http://test.epoqueapparels.com/Salon/Salon_App/addbm.php";
+    private static final String url_notifs = "http://test.epoqueapparels.com/Salon/Salon_App/sendSalonPush.php";
+    private static final String url_removebm = "http://test.epoqueapparels.com/Salon/Salon_App/removebm.php";
+    private static final String url_addfave = "http://test.epoqueapparels.com/Salon/Salon_App/addfave.php";
+    private static final String url_removefave = "http://test.epoqueapparels.com/Salon/Salon_App/removefave.php";
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_PROFILE = "data";
     private static final String TAG_ID = "id";
@@ -191,7 +173,7 @@ public class SalonProfile extends AppCompatActivity implements NavigationView.On
         offkids=(ImageView)findViewById(R.id.kidsoff);
         typelist=(TextView)findViewById(R.id.typedesc);
         speclist=(TextView)findViewById(R.id.servicedesc);
-
+        maps=(TextView)findViewById(R.id.mapsclick) ;
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab1);
         fab.setImageResource(R.drawable.floatingbutton);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -245,6 +227,13 @@ public class SalonProfile extends AppCompatActivity implements NavigationView.On
         tool.setNavigationIcon(R.drawable.backarrownew);// your drawable
         tool.setTitleTextColor(Color.rgb(0, 0, 0));
 
+        SharedPreferences pref = getSharedPreferences("loginData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        uid = pref.getString("userid", null);
+        uname = pref.getString("name", null);
+        upic = pref.getString("profilepic", null);
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, tool, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -263,12 +252,27 @@ public class SalonProfile extends AppCompatActivity implements NavigationView.On
             public void onClick(View view) {
 
                 Intent intent = new Intent(SalonProfile.this , User.class);
-
+                intent.putExtra("id",uid);
                 startActivity(intent);
 
                 //InsertLocation(UName, GetCityName);
             }
         });
+
+        Picasso.get()
+                .load(upic)
+                .into(img);
+        username.setText(uname);
+
+
+
+
+
+
+
+
+
+
         Intent intent = getIntent();
         id = intent.getExtras().getString("id");
 
@@ -294,10 +298,7 @@ public class SalonProfile extends AppCompatActivity implements NavigationView.On
                 .placeholder(R.drawable.logo2) // optional
                 .into(simg);
 
-       SharedPreferences pref = getSharedPreferences("loginData", MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        uid = pref.getString("userid", null);
-        uname = pref.getString("    name", null);
+
 
         bundle = new Bundle();
         bundle.putString("id",id);
@@ -338,6 +339,14 @@ public class SalonProfile extends AppCompatActivity implements NavigationView.On
                 // TODO Auto-generated method stub
                 myView.scrollBy(0, -40);
             }});*/
+        maps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SalonProfile.this , MapsActivity.class);
+                intent.putExtra("addr",address);
+                startActivity(intent);
+            }});
+
 
         svisited.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -345,12 +354,13 @@ public class SalonProfile extends AppCompatActivity implements NavigationView.On
 
                 /*new AddVisitedAsyncTask().execute();
                 new VNotifsAsyncTask().execute();*/
-                svisited.setVisibility(GONE);
+                svisited.setVisibility(INVISIBLE);
                 //myView.scrollTo(0,-20);
                 sunv.setVisibility(VISIBLE);
                 //scroll.fullScroll(View.FOCUS_DOWN);
 
             }});
+
 
         viewreviews.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -366,7 +376,8 @@ public class SalonProfile extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(SalonProfile.this , UserPicsActivity.class);
+                Intent intent = new Intent(SalonProfile.this , SalonMenuActivity.class);
+                intent.putExtra("id",id);
 
                 startActivity(intent);
 
@@ -376,7 +387,8 @@ public class SalonProfile extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(SalonProfile.this , UserPicsActivity.class);
+                Intent intent = new Intent(SalonProfile.this , SalonGallery.class);
+                intent.putExtra("id",id);
 
                 startActivity(intent);
 
@@ -396,7 +408,7 @@ public class SalonProfile extends AppCompatActivity implements NavigationView.On
             public void onClick(View view) {
 
                // new DeleteVisitedAsyncTask().execute();
-                sunv.setVisibility(GONE);
+                sunv.setVisibility(INVISIBLE);
                 svisited.setVisibility(VISIBLE);
             }});
 
@@ -415,7 +427,7 @@ public class SalonProfile extends AppCompatActivity implements NavigationView.On
 
                /* new AddFaveAsyncTask().execute();
                 new FNotifsAsyncTask().execute();*/
-                sfave.setVisibility(GONE);
+                sfave.setVisibility(INVISIBLE);
                 sunfav.setVisibility(VISIBLE);
 
             }});
@@ -424,7 +436,7 @@ public class SalonProfile extends AppCompatActivity implements NavigationView.On
             public void onClick(View view) {
 
                 //new DeleteFaveAsyncTask().execute();
-                sunfav.setVisibility(GONE);
+                sunfav.setVisibility(INVISIBLE);
                 sfave.setVisibility(VISIBLE);
             }});
 
@@ -434,7 +446,7 @@ public class SalonProfile extends AppCompatActivity implements NavigationView.On
 
                /* new AddBMAsyncTask().execute();
                 new BNotifsAsyncTask().execute();*/
-                sbookmarked.setVisibility(GONE);
+                sbookmarked.setVisibility(INVISIBLE);
                 sunbm.setVisibility(VISIBLE);
 
             }});
@@ -443,7 +455,7 @@ public class SalonProfile extends AppCompatActivity implements NavigationView.On
             public void onClick(View view) {
 
                 //new DeleteBMAsyncTask().execute();
-                sunbm.setVisibility(GONE);
+                sunbm.setVisibility(INVISIBLE);
                 sbookmarked.setVisibility(VISIBLE);
             }});
 
@@ -468,7 +480,7 @@ public class SalonProfile extends AppCompatActivity implements NavigationView.On
                 .commit();
         SOffersFragment sof =new SOffersFragment();
         android.support.v4.app.FragmentManager sofmanager=getSupportFragmentManager();
-
+            sof.setArguments(bundle);
         sofmanager.beginTransaction()
                 .replace(R.id.offerframe,sof,sof.getTag())
                 .commit();
@@ -622,19 +634,33 @@ public class SalonProfile extends AppCompatActivity implements NavigationView.On
                             .into(simg);
                     timing=timings.replace("separate", "\n");
 
-                    typelist.setText(stype);
-                    speclist.setText(servspecs);
+
+                    if(stype=="null")
+                    {
+                        typelist.setText("List of services provided by salon");
+                    }
+                    else
+                    {typelist.setText(stype);
+                    }
+
+                    if(servspecs=="null")
+                    {
+                        speclist.setText("Types of services provided by salon");
+                    }
+                    else
+                    {speclist.setText(servspecs);
+                    }
                     switch(visited){
                         case "Yes":
-                            svisited.setVisibility(GONE);
+                            svisited.setVisibility(INVISIBLE);
                             sunv.setVisibility(VISIBLE);
                             break;  //optional
                         case "No":
-                            sunv.setVisibility(GONE);
+                            sunv.setVisibility(INVISIBLE);
                             svisited.setVisibility(VISIBLE);;
                             break;  //optional
                         default:
-                            sunv.setVisibility(GONE);
+                            sunv.setVisibility(INVISIBLE);
                             svisited.setVisibility(VISIBLE);;
 
                     }
@@ -643,29 +669,29 @@ public class SalonProfile extends AppCompatActivity implements NavigationView.On
 
                     switch(isbm){
                         case "Yes":
-                            sbookmarked.setVisibility(GONE);
+                            sbookmarked.setVisibility(INVISIBLE);
                             sunbm.setVisibility(VISIBLE);
                             break;  //optional
                         case "No":
-                            sunbm.setVisibility(GONE);
+                            sunbm.setVisibility(INVISIBLE);
                             sbookmarked.setVisibility(VISIBLE);
                             break;  //optional
                         default:
-                            sunbm.setVisibility(GONE);
+                            sunbm.setVisibility(INVISIBLE);
                             sbookmarked.setVisibility(VISIBLE);
 
                     }
                     switch(isfave){
                         case "Yes":
-                            sfave.setVisibility(GONE);
+                            sfave.setVisibility(INVISIBLE);
                             sunfav.setVisibility(VISIBLE);
                             break;  //optional
                         case "No":
-                            sunfav.setVisibility(GONE);
+                            sunfav.setVisibility(INVISIBLE);
                             sfave.setVisibility(VISIBLE);
                             break;  //optional
                         default:
-                            sunfav.setVisibility(GONE);
+                            sunfav.setVisibility(INVISIBLE);
                             sfave.setVisibility(VISIBLE);
                     }
                 }
@@ -1087,14 +1113,17 @@ public class SalonProfile extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_appointment) {
             Intent intent = new Intent(SalonProfile.this , BookAppointment.class);
+            intent.putExtra("id",uid);
             startActivity(intent);
         } else if (id == R.id.nav_bm) {
 
             Intent intent = new Intent(SalonProfile.this , ViewBookmarksActivity.class);
+            intent.putExtra("id",uid);
             startActivity(intent);
 
         } else if (id == R.id.nav_fave) {
             Intent intent = new Intent(SalonProfile.this , ViewFavouritesActivity.class);
+            intent.putExtra("id",uid);
             startActivity(intent);
 
 

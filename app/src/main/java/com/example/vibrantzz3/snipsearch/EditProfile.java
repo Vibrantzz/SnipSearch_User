@@ -1,6 +1,5 @@
 package com.example.vibrantzz3.snipsearch;
 
-import android.*;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,7 +22,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -43,17 +41,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import static android.view.View.VISIBLE;
-
 public class EditProfile extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 ImageView img, touser,profilepic,done;
 TextView uname,edit;
 EditText fname, city,phno,gender;
 String txtfname,txtcity,txtphmo,txtgender,imgpath,id,pic,emailStored,ConvertImage,path;
 
-    private static final String url_profile = "http://test.epoqueapparels.com/Salon_App/editviewuser.php";
-    private static final String UPLOAD_URL = "http://test.epoqueapparels.com/Salon_App/user_update1.php";
-    private static final String url_edit = "http://test.epoqueapparels.com/Salon_App/user_update.php";
+    private static final String url_profile = "http://test.epoqueapparels.com/Salon/Salon_App/editviewuser.php";
+    private static final String UPLOAD_URL = "http://test.epoqueapparels.com/Salon/Salon_App/user_update1.php";
+    private static final String url_edit = "http://test.epoqueapparels.com/Salon/Salon_App/user_update.php";
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_PROFILE = "data";
     private static final String TAG_ID = "id";
@@ -99,7 +95,7 @@ toggle.setDrawerIndicatorEnabled(false);
             public void onClick(View view) {
 
                 Intent intent = new Intent(EditProfile.this , User.class);
-
+                intent.putExtra("id",id);
                 startActivity(intent);
 
                 //InsertLocation(UName, GetCityName);
@@ -116,9 +112,9 @@ toggle.setDrawerIndicatorEnabled(false);
         });
 
 
-        fname=(EditText) findViewById(R.id.etname);
-        phno=(EditText)findViewById(R.id.etphone);
-        city=(EditText)findViewById(R.id.etcity);
+        fname=(EditText) findViewById(R.id.etold);
+        phno=(EditText)findViewById(R.id.etconfirm);
+        city=(EditText)findViewById(R.id.etnew);
         gender=(EditText)findViewById(R.id.etgender);
 
         profilepic=(ImageView) findViewById(R.id.uimage);
@@ -214,7 +210,10 @@ toggle.setDrawerIndicatorEnabled(false);
                             .into(img);
                     Picasso.get()
                             .load(pic)
+                            .placeholder(R.drawable.uicon)
                             .into(profilepic);
+
+
                 }
             });
         }
@@ -253,6 +252,7 @@ toggle.setDrawerIndicatorEnabled(false);
                     .setNotificationConfig(new UploadNotificationConfig())
                     .setMaxRetries(2)
                     .startUpload(); //Starting the upload
+
         } catch (Exception exc) {
             Toast.makeText(this, exc.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -354,11 +354,12 @@ toggle.setDrawerIndicatorEnabled(false);
                 public void run() {
                     if (success == 1) {
                         //Display success message
-                        Toast.makeText(EditProfile.this,
-                                "User Updated", Toast.LENGTH_LONG).show();
-                        Intent i = getIntent();
-
-                        setResult(20, i);
+                        SharedPreferences sharedPreferences = getSharedPreferences("loginData", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.remove("name");
+                        editor.putString("name", txtfname);
+                        editor.remove("profilepic");
+                        editor.putString("profilepic", pic);
                         finish();
 
                     } else {
@@ -411,14 +412,17 @@ toggle.setDrawerIndicatorEnabled(false);
 
         if (id == R.id.nav_appointment) {
             Intent intent = new Intent(EditProfile.this , ViewAppointments.class);
+            intent.putExtra("id",id);
             startActivity(intent);
         } else if (id == R.id.nav_bm) {
 
             Intent intent = new Intent(EditProfile.this , ViewBookmarksActivity.class);
+            intent.putExtra("id",id);
             startActivity(intent);
 
         } else if (id == R.id.nav_fave) {
             Intent intent = new Intent(EditProfile.this , ViewFavouritesActivity.class);
+            intent.putExtra("id",id);
             startActivity(intent);
 
 

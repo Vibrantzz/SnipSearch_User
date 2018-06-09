@@ -70,13 +70,13 @@ public class SalonListRecyclerViewAdapter extends RecyclerView.Adapter<SalonList
         Picasso.get()
                 .load(hData.get(position).getThumbnail())
                 .into(holder.sthumbnail);
-
+        final String id=hData.get(position).getID();
         holder.cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent intent = new Intent(mContext,SalonProfile.class);
-
+                intent.putExtra("id",id);
                 mContext.startActivity(intent);
 
             }

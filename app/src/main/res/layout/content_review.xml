@@ -73,61 +73,6 @@
 -->
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="89dp"
-
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="78dp"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp">
-
-            <!--<ImageView
-            android:layout_width="348dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:paddingLeft="10dp"
-            android:src="@drawable/line" />-->
-
-            <TextView
-                android:id="@+id/ratetext"
-                android:layout_width="match_parent"
-                android:layout_height="74dp"
-                android:layout_marginLeft="10dp"
-                android:text="Rate this place"
-                android:textColor="@android:color/black"
-                android:textSize="15dp" />
-
-            <RatingBar
-                android:id="@+id/rating"
-                android:layout_width="240dp"
-                android:layout_height="46dp"
-                android:layout_alignBottom="@+id/ratetext"
-                android:layout_marginLeft="10dp"
-                android:numStars="5"
-                android:stepSize="1"
-                android:theme="@style/RatingBar" />
-
-
-            <!--<TextView
-            android:id="@+id/salonRate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="13dp"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp"
-            android:text="0.0"
-            android:textSize="24sp"
-            android:textStyle="bold" />-->
-
-        </RelativeLayout>
-
-        <RelativeLayout
             android:id="@+id/rel2"
             android:layout_width="match_parent"
 
@@ -197,14 +142,68 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rel1"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentTop="false"
+            android:layout_below="@+id/rel2"
+            android:paddingTop="10dp">
+
+            <!--<ImageView
+            android:layout_width="348dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:paddingLeft="10dp"
+            android:src="@drawable/line" />-->
+
+            <TextView
+                android:id="@+id/ratetext"
+                android:layout_width="match_parent"
+                android:layout_height="74dp"
+                android:layout_marginLeft="10dp"
+                android:text="Rate this place"
+                android:textColor="@android:color/black"
+                android:textSize="15dp" />
+
+            <RatingBar
+                android:id="@+id/rating"
+                android:layout_width="240dp"
+                android:layout_height="40dp"
+                android:layout_alignBottom="@+id/ratetext"
+                android:layout_marginLeft="10dp"
+                android:numStars="5"
+                android:stepSize="1"
+                android:theme="@style/RatingBar" />
+
+
+            <!--<TextView
+            android:id="@+id/salonRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="13dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:text="0.0"
+            android:textSize="24sp"
+            android:textStyle="bold" />-->
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/rel3"
             android:layout_width="match_parent"
 
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="180dp"
-            android:paddingBottom="10dp"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentTop="false"
+            android:layout_below="@+id/rel1"
             android:paddingTop="10dp">
 
             <!--<ImageView
@@ -233,9 +232,9 @@
                 android:textSize="15dp" />
 
             <EditText
-                android:id="@+id/etname"
+                android:id="@+id/etold"
                 android:layout_width="340dp"
-                android:layout_height="96dp"
+                android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
@@ -250,7 +249,7 @@
                 android:id="@+id/submit"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
-                android:layout_below="@+id/etname"
+                android:layout_below="@+id/etold"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/submitbutton" />
@@ -306,7 +305,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="Add Photots"
+                android:text="Add Photos"
                 android:textColor="@android:color/black"
                 android:textSize="15dp" />
 
@@ -317,42 +316,121 @@
                 android:layout_below="@+id/addphototstext"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/cameraadd" />
+                android:src="@drawable/cameraadd"
+                android:visibility="gone" />
 
             <ImageView
+                android:id="@+id/img1"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
+                android:layout_alignEnd="@+id/addphototstext"
                 android:layout_below="@+id/addphototstext"
-                android:layout_marginLeft="77dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="9dp"
                 android:src="@drawable/logo3" />
 
             <ImageView
+                android:id="@+id/img2"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_below="@+id/addphototstext"
-                android:layout_marginLeft="143dp"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/logo3" />
+                android:layout_alignTop="@+id/img3"
+                android:layout_toEndOf="@+id/addphototstext"
+                android:src="@drawable/logo3"
+                android:visibility="gone" />
 
 
             <ImageView
+                android:id="@+id/img3"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_below="@+id/addphototstext"
-                android:layout_marginLeft="210dp"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/logo3" />
+                android:layout_alignTop="@+id/img4"
+                android:layout_marginStart="14dp"
+                android:layout_toEndOf="@+id/img2"
+                android:src="@drawable/logo3"
+                android:visibility="gone" />
 
             <ImageView
+                android:id="@+id/img4"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_below="@+id/addphototstext"
-                android:layout_marginLeft="278dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/logo3" />
+                android:layout_toEndOf="@+id/img3"
+                android:src="@drawable/logo3"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/up1"
+                android:layout_width="100dp"
+                android:layout_height="20dp"
+                android:layout_alignTop="@+id/img1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                app:srcCompat="@drawable/uploadbtn" />
+
+            <ImageView
+                android:id="@+id/del1"
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:layout_alignStart="@+id/up1"
+                android:layout_below="@+id/up1"
+                android:visibility="gone"
+                app:srcCompat="@drawable/deletebtn" />
 
 
+            <ImageView
+                android:id="@+id/up2"
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:layout_alignStart="@+id/img2"
+                android:layout_below="@+id/img2"
+                android:visibility="gone"
+                app:srcCompat="@drawable/uploadbtn" />
+
+            <ImageView
+                android:id="@+id/del2"
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:layout_alignStart="@+id/up2"
+                android:layout_below="@+id/up2"
+                android:visibility="gone"
+                app:srcCompat="@drawable/deletebtn" />
+
+            <ImageView
+                android:id="@+id/up3"
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:layout_alignStart="@+id/img3"
+                android:layout_below="@+id/img3"
+                android:visibility="gone"
+                app:srcCompat="@drawable/uploadbtn" />
+
+            <ImageView
+                android:id="@+id/del3"
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:layout_alignStart="@+id/up3"
+                android:layout_below="@+id/up3"
+                android:visibility="gone"
+                app:srcCompat="@drawable/deletebtn" />
+
+            <ImageView
+                android:id="@+id/up4"
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:layout_alignStart="@+id/img4"
+                android:layout_below="@+id/img4"
+                android:visibility="gone"
+                app:srcCompat="@drawable/uploadbtn" />
+
+            <ImageView
+                android:id="@+id/del4"
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:layout_alignStart="@+id/up4"
+                android:layout_below="@+id/up4"
+                android:visibility="gone"
+                app:srcCompat="@drawable/deletebtn" />
             <!--<TextView
             android:id="@+id/salonRate"
             android:layout_width="wrap_content"

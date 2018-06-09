@@ -1,10 +1,7 @@
 package com.example.vibrantzz3.snipsearch;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -42,7 +39,7 @@ public class VisitedRecyclerViewAdapter extends RecyclerView.Adapter<VisitedRecy
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
              holder.hname.setText(hData.get(position).getName());
-
+            final String id=hData.get(position).getID();
         holder.hlocation.setText(hData.get(position).getLocation());
 
         holder.hrating.setText(hData.get(position).getRating());
@@ -54,6 +51,7 @@ public class VisitedRecyclerViewAdapter extends RecyclerView.Adapter<VisitedRecy
             public void onClick(View v) {
 
                 Intent intent = new Intent(mContext,SalonProfile.class);
+                intent.putExtra("id",id);
                 mContext.startActivity(intent);
 
             }

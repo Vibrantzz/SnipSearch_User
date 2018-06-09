@@ -1,10 +1,6 @@
 package com.example.vibrantzz3.snipsearch;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -40,8 +37,13 @@ public class AppointmentRecyclerViewAdapter extends RecyclerView.Adapter<Appoint
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-
-
+    holder.name.setText(hData.get(position).getName());
+    holder.location.setText(hData.get(position).getLocation());
+        Picasso.get()
+                .load(hData.get(position).getThumbnail())
+                .placeholder(R.drawable.logo2) // optional
+                .into(holder.himage);
+        holder.txt.setText(hData.get(position).getRequest()+hData.get(position).getUDate()+hData.get(position).getUTime());
 
     }
 
@@ -51,15 +53,20 @@ public class AppointmentRecyclerViewAdapter extends RecyclerView.Adapter<Appoint
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView hname,hlocation,hrating,hrcount;
+        TextView name,location,txt;
         ImageView himage;
         CardView cardview;
 
         public ViewHolder(View itemview)
         {   super(itemview);
-
-
+            name=(TextView)itemview.findViewById(R.id.txtname);
+            location=(TextView)itemview.findViewById(R.id.txtloc);
+            txt=(TextView)itemview.findViewById(R.id.txtapp);
+            himage=(ImageView)itemview.findViewById(R.id.simg);
             cardview=(CardView) itemview.findViewById(R.id.maincard);
+
+
+
         }
     }
 

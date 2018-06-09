@@ -6,15 +6,15 @@ package com.example.vibrantzz3.snipsearch;
 
 public class Spec {
 
-    private String ID,Thumbnail;
+    private String ID,Thumbnail, Name;
 
 
-    public Spec(String id, String thumbnail)
+    public Spec(String id,String name, String thumbnail)
     {
 
         Thumbnail=thumbnail;
         ID=id;
-
+        Name=name;
     }
 
 
@@ -32,5 +32,13 @@ public class Spec {
 
     public void setID(String ID) {
         this.ID = ID;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String name) {
+        Name = name;
     }
 }

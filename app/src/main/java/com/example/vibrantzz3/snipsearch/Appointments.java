@@ -6,10 +6,10 @@ package com.example.vibrantzz3.snipsearch;
 
 public class Appointments{
 
-    private String UID,ID,Name,Location,Thumbnail,UDate, UTime;
+    private String UID,ID,Name,Location,Thumbnail,UDate, UTime, Request;
 
 
-    public Appointments(String uid,String id, String name, String location, String thumbnail, String udate, String utime)
+    public Appointments(String uid,String id, String name, String location, String thumbnail, String udate, String utime,String request)
     {
         Name=name;
         Location=location;
@@ -18,6 +18,15 @@ public class Appointments{
         UID=uid;
         UDate=udate;
         UTime=utime;
+        Request=request;
+    }
+
+    public String getRequest() {
+        return Request;
+    }
+
+    public void setRequest(String request) {
+        Request = request;
     }
 
     public String getUID() {
